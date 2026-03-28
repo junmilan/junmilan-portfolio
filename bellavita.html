@@ -17,18 +17,18 @@
        ROOT & BASE
     ═══════════════════════════════ */
     :root {
-      --blue:        #3a7abf;
-      --blue-light:  #5c9fd4;
-      --blue-pale:   #ddeef8;
-      --green:       #2d4a3e;
-      --green-light: #3d6b57;
-      --green-pale:  #eaf2ed;
-      --cream:       #faf8f4;
-      --cream-mid:   #f0ebe2;
-      --cream-dark:  #ddd8cc;
-      --text:        #1c1c1c;
-      --text-mid:    #555;
-      --text-light:  #888;
+      --blue:        #1e3a5f;
+      --blue-light:  #2a5a8a;
+      --blue-pale:   #c8dae8;
+      --green:       #1a3328;
+      --green-light: #2a4f3f;
+      --green-pale:  #dce8e0;
+      --cream:       #f5f2ec;
+      --cream-mid:   #e8e2d6;
+      --cream-dark:  #cdc6b8;
+      --text:        #141414;
+      --text-mid:    #444;
+      --text-light:  #777;
       --white:       #ffffff;
     }
 
@@ -48,14 +48,14 @@
        NAVBAR
     ═══════════════════════════════ */
     #mainNav {
-      background: var(--blue);
+      background: linear-gradient(135deg, #0f1f33 0%, var(--blue) 50%, #162d4a 100%);
       padding: 0.7rem 1.5rem;
       transition: background 0.3s, box-shadow 0.3s;
     }
 
     #mainNav.scrolled {
-      background: rgba(44, 74, 110, 0.97);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+      background: linear-gradient(135deg, rgba(15,31,51,0.98) 0%, rgba(30,58,95,0.98) 50%, rgba(22,45,74,0.98) 100%);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.3);
     }
 
     .navbar-brand {
@@ -68,7 +68,7 @@
 
     .navbar-brand em {
       font-style: italic;
-      color: #a8c5da;
+      color: #8bafc8;
     }
 
     .navbar-nav .nav-link {
@@ -115,9 +115,9 @@
       inset: 0;
       background: linear-gradient(
         160deg,
-        rgba(20,35,55,0.25) 0%,
-        rgba(20,35,55,0.55) 60%,
-        rgba(20,35,55,0.72) 100%
+        rgba(10,18,30,0.35) 0%,
+        rgba(15,25,45,0.65) 50%,
+        rgba(10,15,28,0.82) 100%
       );
     }
 
@@ -191,12 +191,12 @@
     }
 
     .btn-hero-fill {
-      background: var(--blue);
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
       border-color: var(--blue);
     }
 
     .btn-hero-fill:hover {
-      background: var(--blue-light);
+      background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue) 100%);
       border-color: var(--blue-light);
     }
 
@@ -317,17 +317,18 @@
     }
 
     .btn-italian.filled {
-      background: var(--blue);
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
       color: white;
+      border-color: var(--blue);
     }
 
     .btn-italian.filled:hover {
-      background: var(--blue-light);
+      background: linear-gradient(135deg, var(--blue-light) 0%, var(--blue) 100%);
       border-color: var(--blue-light);
     }
 
     .btn-italian.green {
-      background: var(--green);
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
       color: white;
       border-color: var(--green);
     }
@@ -341,7 +342,7 @@
        ABOUT
     ═══════════════════════════════ */
     .section-about {
-      background: var(--white);
+      background: linear-gradient(180deg, var(--white) 0%, var(--cream) 100%);
       padding: 7rem 5%;
     }
 
@@ -427,7 +428,7 @@
        MENU
     ═══════════════════════════════ */
     .section-menu {
-      background: var(--cream);
+      background: linear-gradient(180deg, var(--cream) 0%, var(--cream-mid) 100%);
       padding: 7rem 5%;
     }
 
@@ -516,7 +517,7 @@
        BOOKING
     ═══════════════════════════════ */
     .section-booking {
-      background: var(--white);
+      background: linear-gradient(180deg, var(--cream-mid) 0%, var(--white) 50%, var(--cream) 100%);
       padding: 7rem 5%;
     }
 
@@ -606,7 +607,7 @@
       height: 75vh;
       min-height: 480px;
       overflow: hidden;
-      background: #111;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f0f0f 100%);
     }
 
     .gallery-slide {
@@ -804,7 +805,7 @@
        FOOTER / CONTACT
     ═══════════════════════════════ */
     .section-contact {
-      background: var(--green);
+      background: linear-gradient(160deg, #0d1e16 0%, var(--green) 40%, #122a1f 100%);
       padding: 6rem 5% 0;
     }
 
@@ -1209,7 +1210,7 @@
 
     /* ── Marquee strip ── */
     .marquee-strip {
-      background: var(--green);
+      background: linear-gradient(90deg, #0d1e16 0%, var(--green) 30%, var(--green-light) 70%, #0d1e16 100%);
       padding: 1.1rem 0;
       overflow: hidden;
       white-space: nowrap;
