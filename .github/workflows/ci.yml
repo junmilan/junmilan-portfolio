@@ -26,14 +26,13 @@ jobs:
 
       - name: Check file sizes
         run: |
-          MAX_SIZE=500000  # 500KB
-          for file in *.html *.css *.js 2>/dev/null; do
-            if [ -f "$file" ]; then
-              size=$(stat -c%s "$file")
-              if [ "$size" -gt "$MAX_SIZE" ]; then
-                echo "::warning::$file is ${size} bytes (limit: ${MAX_SIZE})"
-              else
-                echo "✓ $file — ${size} bytes"
-              fi
+          shopt -s nullglob
+          MAX_SIZE=500000
+          for file in *.html *.css *.js; do
+            size=$(stat -c%s "$file")
+            if [ "$size" -gt "$MAX_SIZE" ]; then
+              echo "::warning::$file is ${size} bytes (limit: ${MAX_SIZE})"
+            else
+              echo "✓ $file — ${size} bytes"
             fi
           done
