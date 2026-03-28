@@ -121,18 +121,18 @@
       background: transparent; border: none; cursor: pointer;
       position: relative;
     }
-    .nav-m button div {
+    .nav-m button span {
       transition: all 0.2s; height: 3px; width: 100%;
-      background: white; position: absolute;
+      background: white; position: absolute; display: block;
     }
-    .navbar.scrolled .nav-m button div { background: var(--text); }
-    .nav-m button div.first { top: 0; }
-    .nav-m button div.second { top: calc(50% - 1.5px); }
-    .nav-m button div.third { bottom: 0; }
-    .nav-m.open button div { background: var(--gradient); }
-    .nav-m.open button div.first { transform: rotate(45deg); top: 1.1rem; }
-    .nav-m.open button div.second { opacity: 0; }
-    .nav-m.open button div.third { transform: rotate(-45deg); bottom: 1.1rem; }
+    .navbar.scrolled .nav-m button span { background: var(--text); }
+    .nav-m button span.first { top: 0; }
+    .nav-m button span.second { top: calc(50% - 1.5px); }
+    .nav-m button span.third { bottom: 0; }
+    .nav-m.open button span { background: var(--gradient); }
+    .nav-m.open button span.first { transform: rotate(45deg); top: 1.1rem; }
+    .nav-m.open button span.second { opacity: 0; }
+    .nav-m.open button span.third { transform: rotate(-45deg); bottom: 1.1rem; }
 
     /* Mobile menu */
     .nav-mm {
@@ -600,9 +600,9 @@
     </div>
     <div class="nav-m" id="navM">
       <button id="menuBtn" aria-label="Otevřít menu">
-        <div class="first"></div>
-        <div class="second"></div>
-        <div class="third"></div>
+        <span class="first"></span>
+        <span class="second"></span>
+        <span class="third"></span>
       </button>
     </div>
   </div>
