@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8"/>
+  <title>Trenér Pro | Osobní trénink</title>
+  <meta name="description" content="Osobní trénink v Praze. Nechte mě vrátit pozornost zpátky k vám. Individuální přístup, kde vaše výsledky jsou jediným měřítkem."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #c8a84b;
+      --gold-light: #e8c840;
+      --black: #1a1a1a;
+      --white: #ffffff;
+      --grey-bg: #f5f5f3;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: var(--black);
+      background: var(--white);
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ─── NAVBAR ─── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3%;
+      height: 60px;
+    }
+
+    .brand {
+      font-family: 'Ubuntu', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--white);
+      letter-spacing: 3px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2.5rem;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--white);
+    }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .burger span { display: block; width: 24px; height: 2px; background: var(--white); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 7rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('trener_obrazky/landing_image.png');
+      background-size: cover;
+      background-position: center 30%;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.05) 0%,
+        rgba(0,0,0,0.45) 60%,
+        rgba(0,0,0,0.72) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 5%;
+    }
+
+    .hero h1 {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.0;
+      margin-bottom: 2rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.4rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 2px solid var(--white);
+      color: var(--black);
+      background: var(--white);
+      transition: all 0.22s;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: transparent;
+      color: var(--white);
+    }
+
+    .btn-dark {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--white);
+    }
+
+    .btn-dark:hover {
+      background: transparent;
+      color: var(--black);
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--white);
+    }
+
+    .btn-gold:hover {
+      background: transparent;
+      color: var(--gold);
+    }
+
+    .btn-ghost-light {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.5);
+      color: var(--white);
+    }
+
+    .btn-ghost-light:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    /* ─── INFO BAR ─── */
+    .info-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      background: var(--white);
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 1.4rem 2rem;
+      border-right: 1px solid #e5e5e5;
+      transition: background 0.2s;
+    }
+
+    .info-item:last-child { border-right: none; }
+    .info-item:hover { background: #fafaf8; }
+
+    .info-icon-svg {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      color: var(--gold);
+    }
+
+    .c-icon-svg {
+      width: 36px;
+      height: 36px;
+      color: var(--black);
+      margin-bottom: 0.8rem;
+    }
+
+    .info-item p {
+      font-size: 0.8rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--black);
+    }
+
+    /* ─── BACK TO BASICS ─── */
+    .section-basics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 6rem 5%;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .basics-left .small-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .basics-left .small-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .basics-left h2 {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      color: var(--black);
+    }
+
+    .basics-right p {
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: #444;
+      margin-bottom: 1.1rem;
+    }
+
+    .basics-right p em { font-style: italic; }
+    .basics-right p strong { font-weight: 700; color: var(--black); }
+
+    /* ─── PERSONAL TRAINING ─── */
+    .section-pt {
+      position: relative;
+      min-height: 480px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .pt-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .pt-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.75) 0%,
+        rgba(0,0,0,0.3) 60%,
+        rgba(0,0,0,0.05) 100%
+      );
+    }
+
+    .pt-content {
+      position: relative;
+      z-index: 2;
+      width: 55%;
+      padding: 5rem 5%;
+    }
+
+    .pt-content .small-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .pt-content .small-label::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .pt-content h2 {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 1.2rem;
+    }
+
+    .pt-content p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    /* ─── CONTACT ─── */
+    .section-contact {
+      background: var(--grey-bg);
+      padding: 5rem 5%;
+    }
+
+    .contact-top {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      gap: 3rem;
+      align-items: start;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .contact-top h2 {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.05;
+    }
+
+    .contact-options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    /* .c-icon-svg is defined above */
+
+    .contact-option h3 {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-option p {
+      font-size: 0.83rem;
+      color: #555;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .consultation-title {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      font-weight: 700;
+      text-align: center;
+      margin-top: 4.5rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Gold underline accent */
+    .gold-underline {
+      display: inline;
+      border-bottom: 3px solid var(--gold);
+      padding-bottom: 2px;
+    }
+
+    .calendly-placeholder {
+      background: var(--white);
+      border: 1px solid #ddd;
+      border-top: 3px solid var(--gold);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: #888;
+      font-size: 0.85rem;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .calendly-placeholder strong { color: var(--black); font-size: 1rem; }
+    .calendly-placeholder code {
+      font-size: 0.72rem;
+      background: #f0f0f0;
+      padding: 0.5rem 0.8rem;
+      display: block;
+      text-align: left;
+      margin-top: 0.5rem;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* ─── PRICING ─── */
+    .section-pricing {
+      padding: 6rem 5%;
+      background: var(--grey-bg);
+    }
+
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .pricing-header .small-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .pricing-header .small-label::before,
+    .pricing-header .small-label::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .pricing-header h2 {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.05;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: var(--white);
+      border: 1px solid #e8e8e4;
+      border-top: 3px solid transparent;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+
+    .pricing-card:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.09);
+      transform: translateY(-4px);
+    }
+
+    .pricing-card.featured {
+      border-top-color: var(--gold);
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -1px;
+      right: 2rem;
+      background: var(--gold);
+      color: var(--white);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+    }
+
+    .pricing-card:not(.featured) { border-top-color: #e0e0dc; }
+    .pricing-card:not(.featured):hover { border-top-color: var(--gold); }
+
+    .pricing-name {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .pricing-card.featured .pricing-name { color: var(--gold); }
+
+    .pricing-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .pricing-amount {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .pricing-currency {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .pricing-unit {
+      font-size: 0.78rem;
+      color: #888;
+      margin-bottom: 1.8rem;
+    }
+
+    .pricing-card.featured .pricing-unit { color: rgba(255,255,255,0.45); }
+
+    .pricing-divider {
+      width: 100%;
+      height: 1px;
+      background: #e8e8e4;
+      margin-bottom: 1.8rem;
+    }
+
+    .pricing-card.featured .pricing-divider { background: rgba(255,255,255,0.1); }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 2.2rem;
+      flex: 1;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.85rem;
+      color: #444;
+    }
+
+    .pricing-card.featured .pricing-features li { color: rgba(255,255,255,0.75); }
+
+    .pricing-features li::before {
+      content: '';
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c8a84b' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/contain no-repeat;
+      flex-shrink: 0;
+    }
+
+    .pricing-features li.muted { color: #bbb; }
+    .pricing-card.featured .pricing-features li.muted { color: rgba(255,255,255,0.25); }
+    .pricing-features li.muted::before {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ccc' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E");
+    }
+
+    .pricing-note {
+      font-size: 0.75rem;
+      color: #999;
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+    }
+
+    /* ─── RESERVATION FORM ─── */
+    .reservation-form {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group--full {
+      grid-column: 1 / -1;
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #444;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ddd;
+      border-top: 2px solid #ddd;
+      background: var(--white);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.88rem;
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--gold);
+      border-top-color: var(--gold);
+    }
+
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    .form-submit-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .form-note {
+      font-size: 0.75rem;
+      color: #888;
+    }
+
+    .form-success {
+      background: #f0faf0;
+      border-left: 3px solid #4caf50;
+      padding: 1rem 1.5rem;
+      font-size: 0.9rem;
+      color: #2e7d32;
+      margin-top: 1rem;
+    }
+
+    .form-error {
+      background: #fff5f5;
+      border-left: 3px solid #e53935;
+      padding: 1rem 1.5rem;
+      font-size: 0.9rem;
+      color: #c62828;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ABOUT ─── */
+    .section-about {
+      background: var(--black);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 620px;
+    }
+
+    .about-left {
+      position: relative;
+      background-image: url('trener_obrazky/about_me.png');
+      background-size: cover;
+      background-position: center top;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .about-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%);
+    }
+
+    .testimonial-box {
+      position: relative;
+      z-index: 2;
+      padding: 2rem 2.5rem;
+    }
+
+    .testimonial-box .slider-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .slider-arrow {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.4);
+      color: var(--white);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .slider-arrow:hover {
+      border-color: var(--gold);
+      background: rgba(200, 168, 75, 0.2);
+    }
+
+    .testimonial-box p {
+      font-style: italic;
+      font-size: 0.92rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 0.8rem;
+    }
+
+    .testimonial-box .author {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .slider-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: 1.2rem;
+    }
+
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s;
+    }
+
+    .dot.active { background: var(--gold); }
+
+    .about-right {
+      padding: 5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .about-right .small-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .about-right .small-label::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .about-right h2 {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 2rem;
+    }
+
+    .about-right p {
+      font-size: 0.87rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.9;
+      margin-bottom: 1rem;
+    }
+
+    .about-right p em { font-style: italic; color: rgba(255,255,255,0.8); }
+    .about-right p strong { color: var(--white); font-weight: 700; }
+
+    /* ─── GALLERY ─── */
+    .section-gallery {
+      padding: 5rem 5%;
+      text-align: center;
+    }
+
+    .section-gallery h2 {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+
+    .gallery-sub {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #666;
+      margin-bottom: 3rem;
+    }
+
+    /* Gold accent line under heading */
+    .heading-accent {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 3rem;
+    }
+
+    .heading-accent::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 3px;
+      background: var(--gold);
+      margin-top: 0.2rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.8rem;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 3/4;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover img { transform: scale(1.05); }
+
+    .gallery-ph {
+      width: 100%;
+      height: 100%;
+      background: #e0e0dc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: #888;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    /* Gold corner accent on gallery items */
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 0;
+      border-top: 28px solid var(--gold);
+      border-right: 28px solid transparent;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-item:hover::after { opacity: 1; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #111;
+      color: var(--white);
+      border-top: 1px solid #222;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: 3rem;
+      padding: 5rem 5% 4rem;
+    }
+
+    .footer-brand .brand {
+      font-size: 1.1rem;
+      letter-spacing: 4px;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .footer-brand p {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.8;
+      max-width: 260px;
+    }
+
+    .footer-gold-bar {
+      width: 36px;
+      height: 2px;
+      background: var(--gold);
+      margin: 1.5rem 0;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.55);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .footer-social a:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .footer-col h4 {
+      font-family: 'Ubuntu', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-col ul a {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.5);
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover { color: var(--white); }
+
+    .footer-col address {
+      font-style: normal;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+
+    .footer-contact-item svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--gold);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #222;
+      padding: 1.5rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-bottom p {
+      font-size: 0.73rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-bottom-links a {
+      font-size: 0.73rem;
+      color: rgba(255,255,255,0.25);
+      transition: color 0.2s;
+    }
+
+    .footer-bottom-links a:hover { color: rgba(255,255,255,0.6); }
+
+    @media (max-width: 900px) {
+      .footer-main { grid-template-columns: 1fr 1fr; gap: 2.5rem; padding: 3.5rem 5% 3rem; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 560px) {
+      .footer-main { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ANIMATIONS ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    .hero h1 {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: heroFadeUp 0.9s cubic-bezier(.4,0,.2,1) 0.3s forwards;
+    }
+
+    .hero .btn {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: heroFadeUp 0.7s cubic-bezier(.4,0,.2,1) 0.7s forwards;
+    }
+
+    @keyframes heroFadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .navbar {
+      transition: background 0.35s, box-shadow 0.35s;
+    }
+
+    .navbar.scrolled {
+      background: rgba(26,26,26,0.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.35);
+    }
+
+    .heading-accent::after {
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s cubic-bezier(.4,0,.2,1) 0.3s;
+    }
+
+    .heading-accent.is-visible::after {
+      transform: scaleX(1);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 60px; left: 0; right: 0; background: var(--black); }
+      .nav-links.open { display: flex; }
+      .nav-links.open li a { display: block; padding: 1rem 5%; border-top: 1px solid #222; }
+      .burger { display: flex; }
+
+      .info-bar { grid-template-columns: 1fr; }
+      .info-item { border-right: none; border-bottom: 1px solid #e5e5e5; }
+      .info-item:last-child { border-bottom: none; }
+
+      .section-basics { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 5%; }
+      .pt-content { width: 85%; }
+
+      .contact-top { grid-template-columns: 1fr; gap: 1.5rem; }
+      .contact-options { grid-template-columns: 1fr; gap: 1.5rem; }
+
+      .about-grid { grid-template-columns: 1fr; }
+      .about-left { min-height: 380px; }
+      .about-right { padding: 3rem 2rem; }
+
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="#" class="brand">TRENÉR PRO</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" class="active">Domů</a></li>
+      <li><a href="#o-mne">O mně</a></li>
+      <li><a href="#trenink">Osobní trénink</a></li>
+      <li><a href="#cenik">Ceník</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <button class="burger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <h1>Zpátky<br/>k základům.</h1>
+      <a href="#trenink" class="btn">Začít dnes</a>
+    </div>
+  </section>
+
+  <!-- INFO BAR -->
+  <div class="info-bar">
+    <a href="#trenink" class="info-item">
+      <svg class="info-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <p>Vy dnes vs. vy, kým chcete být</p>
+    </a>
+    <a href="#trenink" class="info-item">
+      <svg class="info-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/><path d="M2 12h4M18 12h4"/></svg>
+      <p>Osobní trénink v centru Prahy</p>
+    </a>
+    <a href="#kontakt" class="info-item">
+      <svg class="info-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <p>Online trénink odkudkoliv</p>
+    </a>
+  </div>
+
+  <!-- BACK TO BASICS -->
+  <div id="trenink" class="section-basics">
+    <div class="basics-left reveal">
+      <p class="small-label">Trenér Pro</p>
+      <h2>Zpátky<br/>k základům.</h2>
+    </div>
+    <div class="basics-right reveal reveal-delay-2">
+      <p>Dnes je snadné najít fitness profesionály, kteří se snaží vymyslet kolo znovu. Uprostřed nespočetných technik a tipů a nekonečných feedů instagramových influencerů je těžké najít jasno v takovém hluku.</p>
+      <p><em>Nechte mě vrátit pozornost zpátky k vám. Vašemu tělu. Vašim cílům. Vašemu životnímu stylu.</em></p>
+      <p>Zvolte individuální přístup, kde <strong>vaše vlastní výsledky jsou jediným měřítkem</strong> — jak by to vždy mělo být.</p>
+      <p>Vraťme se k přístupu orientovanému na výsledky. Vraťme se k základům.</p>
+      <a href="#kontakt" class="btn btn-dark" style="margin-top:0.8rem;">Začít</a>
+    </div>
+  </div>
+
+  <!-- PERSONAL TRAINING -->
+  <div id="pt" class="section-pt">
+    <div class="pt-bg"></div>
+    <div class="pt-content">
+      <p class="small-label">Osobní trénink</p>
+      <h2>Kde chcete<br/>být?</h2>
+      <p><strong style="color:#fff;">1:1</strong> Osobní trénink nebo skupinový trénink v <strong style="color:#fff;">centru Prahy</strong>.</p>
+      <a href="#kontakt" class="btn">Jsem připraven/a</a>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <section id="cenik" class="section-pricing">
+    <div class="pricing-header reveal">
+      <p class="small-label">Investice do sebe</p>
+      <h2>Ceník služeb</h2>
+    </div>
+    <div class="pricing-grid">
+
+      <div class="pricing-card reveal reveal-delay-1">
+        <p class="pricing-name">Osobní trénink</p>
+        <div class="pricing-price">
+          <span class="pricing-currency">Kč</span>
+          <span class="pricing-amount">990</span>
+        </div>
+        <p class="pricing-unit">/ 60 min lekce</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Individuální program na míru</li>
+          <li>1:1 lekce v centru Prahy</li>
+          <li>Průběžné sledování pokroku</li>
+          <li>Korekce techniky v reálném čase</li>
+          <li class="muted">Online podpora</li>
+          <li class="muted">Jídelní plán</li>
+        </ul>
+        <a href="#kontakt" class="btn btn-dark">Začít</a>
+      </div>
+
+      <div class="pricing-card featured reveal reveal-delay-2">
+        <span class="pricing-badge">Nejoblíbenější</span>
+        <p class="pricing-name">Měsíční balíček</p>
+        <div class="pricing-price">
+          <span class="pricing-currency">Kč</span>
+          <span class="pricing-amount">3 490</span>
+        </div>
+        <p class="pricing-unit">/ 4 lekce měsíčně</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Individuální program na míru</li>
+          <li>4× 60 min lekce měsíčně</li>
+          <li>Průběžné sledování pokroku</li>
+          <li>Korekce techniky v reálném čase</li>
+          <li>Online podpora mezi lekcemi</li>
+          <li class="muted">Jídelní plán</li>
+        </ul>
+        <a href="#kontakt" class="btn btn-gold">Začít</a>
+      </div>
+
+      <div class="pricing-card reveal reveal-delay-3">
+        <p class="pricing-name">Premium balíček</p>
+        <div class="pricing-price">
+          <span class="pricing-currency">Kč</span>
+          <span class="pricing-amount">5 990</span>
+        </div>
+        <p class="pricing-unit">/ 8 lekcí měsíčně</p>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li>Individuální program na míru</li>
+          <li>8× 60 min lekce měsíčně</li>
+          <li>Průběžné sledování pokroku</li>
+          <li>Korekce techniky v reálném čase</li>
+          <li>Online podpora 7 dní v týdnu</li>
+          <li>Personalizovaný jídelní plán</li>
+        </ul>
+        <a href="#kontakt" class="btn btn-dark">Začít</a>
+      </div>
+
+    </div>
+    <p class="pricing-note reveal">Online trénink od 690 Kč / měsíc · Bezplatná 30min konzultace zdarma · Ceny jsou uvedeny bez DPH</p>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="kontakt" class="section-contact">
+    <div class="contact-top">
+      <h2 class="reveal">Začněte<br/>konverzaci.</h2>
+      <div class="contact-options">
+        <div class="contact-option reveal reveal-delay-1">
+          <svg class="c-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <h3>Zavolejte nebo napište</h3>
+          <p>Nejrychlejší způsob, jak mě kontaktovat</p>
+          <a href="tel:+420000000000" class="btn btn-ghost-light" style="border-color:#bbb;color:#333;background:rgba(0,0,0,0.07);">Otevřít na telefonu</a>
+        </div>
+        <div class="contact-option reveal reveal-delay-2">
+          <svg class="c-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <h3>Email</h3>
+          <p>Klidně mi napište email</p>
+          <a href="mailto:trenerpro@email.cz?subject=Ahoj!" class="btn btn-dark">Napsat email</a>
+        </div>
+        <div class="contact-option reveal reveal-delay-3">
+          <svg class="c-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <h3>Instagram</h3>
+          <p>Pošlete mi přímou zprávu</p>
+          <a href="https://www.instagram.com/" target="_blank" class="btn btn-dark">Instagram</a>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="consultation-title reveal">
+      Rezervujte si <span class="gold-underline">bezplatnou konzultaci</span>:
+    </h2>
+
+    <form id="reservationForm" class="reservation-form reveal reveal-delay-1" action="https://formspree.io/f/xnjgkkdy" method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fname">Jméno a příjmení *</label>
+          <input type="text" id="fname" name="jmeno" required placeholder="Jan Novák"/>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail *</label>
+          <input type="email" id="email" name="email" required placeholder="jan@email.cz"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Telefon</label>
+          <input type="tel" id="phone" name="telefon" placeholder="+420 123 456 789"/>
+        </div>
+        <div class="form-group">
+          <label for="service">Typ tréninku *</label>
+          <select id="service" name="sluzba" required>
+            <option value="" disabled selected>Vyberte…</option>
+            <option value="Osobní trénink (1:1)">Osobní trénink (1:1)</option>
+            <option value="Skupinový trénink">Skupinový trénink</option>
+            <option value="Online trénink">Online trénink</option>
+            <option value="Bezplatná konzultace">Bezplatná konzultace (30 min)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="preferred_date">Preferovaný termín *</label>
+          <input type="date" id="preferred_date" name="termin" required/>
+        </div>
+        <div class="form-group">
+          <label for="preferred_time">Preferovaný čas *</label>
+          <select id="preferred_time" name="cas" required>
+            <option value="" disabled selected>Vyberte…</option>
+            <option>07:00 – 08:00</option>
+            <option>08:00 – 09:00</option>
+            <option>09:00 – 10:00</option>
+            <option>10:00 – 11:00</option>
+            <option>16:00 – 17:00</option>
+            <option>17:00 – 18:00</option>
+            <option>18:00 – 19:00</option>
+            <option>19:00 – 20:00</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group form-group--full">
+        <label for="message">Zpráva / cíle</label>
+        <textarea id="message" name="zprava" rows="4" placeholder="Řekněte mi o svých cílech, zkušenostech nebo otázkách…"></textarea>
+      </div>
+      <div class="form-group form-group--full form-submit-row">
+        <button type="submit" class="btn btn-gold">Odeslat rezervaci</button>
+        <p class="form-note">* Povinné pole. Ozvu se do 24 hodin.</p>
+      </div>
+      <div id="formSuccess" class="form-success" style="display:none;">
+        Děkuji! Vaše rezervace byla odeslána. Ozvu se do 24 hodin.
+      </div>
+      <div id="formError" class="form-error" style="display:none;">
+        Něco se pokazilo. Zkuste to prosím znovu nebo mě kontaktujte přímo.
+      </div>
+    </form>
+  </section>
+
+  <!-- ABOUT / ALFONSO PT -->
+  <section id="o-mne" class="section-about">
+    <div class="about-grid">
+
+      <!-- LEFT: photo + testimonial slider -->
+      <div class="about-left">
+        <div class="testimonial-box">
+          <div class="slider-nav">
+            <button class="slider-arrow" id="prevBtn">&#8592;</button>
+            <button class="slider-arrow" id="nextBtn">&#8594;</button>
+          </div>
+          <p id="testimonialText"><em>"Intenzivní a cílené tréninky pro zaneprázdněného člověka jako jsem já."</em></p>
+          <span class="author" id="testimonialAuthor">— Tomáš Dvořák</span>
+          <div class="slider-dots" id="sliderDots"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: bio -->
+      <div class="about-right">
+        <p class="small-label">Osobní trenér</p>
+        <h2>Poznejte<br/>mě.</h2>
+        <p>Od svých teenagerských let mě vždy fascinovala fyzická kondice. Za léta jsem vyzkoušel mnoho přístupů a uvědomil si, že cesta sama o sobě má stejnou hodnotu jako cíl — a že mít strukturovaný plán je naprosto zásadní.</p>
+        <p>Proto s jistotou říkám, že vás svými znalostmi a přímými zkušenostmi provedu k vašim cílům rychleji a bez zranění — vytvořením programů přesně na míru vašim potřebám a limitacím.</p>
+        <p>S více než <strong>10 lety zkušeností</strong> s tréninkem a koučováním jsem vyvinul ověřenou metodu orientovanou na výsledky. Výsledky a zpětná vazba mých klientů potvrzují její účinnost.</p>
+        <p><em>Nechte mě pomoci vám odemknout tu nejlepší verzi sebe sama.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="galerie" class="section-gallery">
+    <div class="heading-accent">
+      <h2>Naše galerie</h2>
+      <p class="gallery-sub">Podívejte se na výsledky našich klientů</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal reveal-delay-1">
+        <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?auto=format&fit=crop&w=800&q=80" alt="Cvičení 1"/>
+      </div>
+      <div class="gallery-item reveal reveal-delay-2">
+        <img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=80" alt="Cvičení 2"/>
+      </div>
+      <div class="gallery-item reveal reveal-delay-3">
+        <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=800&q=80" alt="Cvičení 3"/>
+      </div>
+      <div class="gallery-item reveal reveal-delay-4">
+        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80" alt="Cvičení 4"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-main">
+
+      <div class="footer-brand reveal">
+        <span class="brand">TRENÉR PRO</span>
+        <p>Osobní trénink v centru Prahy. Individuální přístup, kde vaše výsledky jsou jediným měřítkem.</p>
+        <div class="footer-gold-bar"></div>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="tel:+420000000000" aria-label="Telefon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </a>
+          <a href="mailto:trenerpro@email.cz" aria-label="Email">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col reveal reveal-delay-1">
+        <h4>Navigace</h4>
+        <ul>
+          <li><a href="#">Domů</a></li>
+          <li><a href="#trenink">Osobní trénink</a></li>
+          <li><a href="#o-mne">O mně</a></li>
+          <li><a href="#galerie">Galerie</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col reveal reveal-delay-2">
+        <h4>Služby</h4>
+        <ul>
+          <li><a href="#kontakt">Osobní trénink (1:1)</a></li>
+          <li><a href="#kontakt">Skupinový trénink</a></li>
+          <li><a href="#kontakt">Online trénink</a></li>
+          <li><a href="#kontakt">Bezplatná konzultace</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col reveal reveal-delay-3">
+        <h4>Kontakt</h4>
+        <address>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Praha, centrum
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.86-.86a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +420 000 000 000
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            trenerpro@email.cz
+          </div>
+        </address>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2024 Trenér Pro · Všechna práva vyhrazena.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Ochrana soukromí</a>
+        <a href="#">Obchodní podmínky</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const testimonials = [
+      { text: '"Intenzivní a cílené tréninky pro zaneprázdněného člověka jako jsem já."', author: '— Tomáš Dvořák' },
+      { text: '"Okamžitě pochopil, čeho chci dosáhnout. Výsledky předčily má očekávání."', author: '— Petra Horáková' },
+      { text: '"Profesionální přístup a vědecky podložený trénink. Doporučuji každému."', author: '— Jan Novák' },
+      { text: '"Naučil mě pravidelně cvičit a lépe jíst — trvalá změna životního stylu."', author: '— Lucie Malá' },
+      { text: '"Nejlepší osobní trenér, jakého jsem kdy měl. Výsledky mluví za vše."', author: '— Martin Svoboda' },
+      { text: '"Pokud chcete být skutečně tlačeni k vašim cílům, tohle je správná volba!"', author: '— Eva Procházková' },
+    ];
+
+    let cur = 0;
+    const textEl   = document.getElementById('testimonialText');
+    const authEl   = document.getElementById('testimonialAuthor');
+    const dotsEl   = document.getElementById('sliderDots');
+
+    testimonials.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => goTo(i));
+      dotsEl.appendChild(d);
+    });
+
+    function goTo(i) {
+      cur = (i + testimonials.length) % testimonials.length;
+      textEl.innerHTML = '<em>' + testimonials[cur].text + '</em>';
+      authEl.textContent = testimonials[cur].author;
+      dotsEl.querySelectorAll('.dot').forEach((d, j) => d.classList.toggle('active', j === cur));
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => goTo(cur - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => goTo(cur + 1));
+
+    setInterval(() => goTo(cur + 1), 4500);
+
+    // ─── SCROLL ANIMATIONS ───
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal, .heading-accent').forEach(el => revealObserver.observe(el));
+
+    // ─── NAVBAR SCROLL ───
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ─── RESERVATION FORM ───
+    const form = document.getElementById('reservationForm');
+    if (form) {
+      // Nastav minimální datum na dnešek
+      const dateInput = document.getElementById('preferred_date');
+      if (dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+      }
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const successEl = document.getElementById('formSuccess');
+        const errorEl   = document.getElementById('formError');
+        const submitBtn = form.querySelector('[type="submit"]');
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Odesílám…';
+        successEl.style.display = 'none';
+        errorEl.style.display   = 'none';
+
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (response.ok) {
+            form.reset();
+            successEl.style.display = 'block';
+            successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          } else {
+            errorEl.style.display = 'block';
+          }
+        } catch {
+          errorEl.style.display = 'block';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Odeslat rezervaci';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

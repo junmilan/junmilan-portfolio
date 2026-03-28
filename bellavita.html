@@ -1,0 +1,2166 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bellavita — Ristorante Italiano</title>
+  <meta name="description" content="Autentická italská restaurace v centru Prahy. Pasta, pizza, risotto, čerstvé mořské plody a výběrová italská vína.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    /* ═══════════════════════════════
+       ROOT & BASE
+    ═══════════════════════════════ */
+    :root {
+      --blue:        #3a7abf;
+      --blue-light:  #5c9fd4;
+      --blue-pale:   #ddeef8;
+      --green:       #2d4a3e;
+      --green-light: #3d6b57;
+      --green-pale:  #eaf2ed;
+      --cream:       #faf8f4;
+      --cream-mid:   #f0ebe2;
+      --cream-dark:  #ddd8cc;
+      --text:        #1c1c1c;
+      --text-mid:    #555;
+      --text-light:  #888;
+      --white:       #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--cream);
+    }
+
+    h1, h2, h3, h4, h5 { font-family: 'Cormorant Garamond', serif; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ═══════════════════════════════
+       NAVBAR
+    ═══════════════════════════════ */
+    #mainNav {
+      background: var(--blue);
+      padding: 0.7rem 1.5rem;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    #mainNav.scrolled {
+      background: rgba(44, 74, 110, 0.97);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+    }
+
+    .navbar-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem;
+      font-weight: 600;
+      color: var(--white) !important;
+      letter-spacing: 2px;
+    }
+
+    .navbar-brand em {
+      font-style: italic;
+      color: #a8c5da;
+    }
+
+    .navbar-nav .nav-link {
+      color: rgba(255,255,255,0.8) !important;
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 0.5rem 0.75rem !important;
+      transition: color 0.2s;
+    }
+
+    .navbar-nav .nav-link:hover { color: #fff !important; }
+
+    .nav-social { display: flex; align-items: center; gap: 0.8rem; padding-left: 1rem; }
+    .nav-social a { color: rgba(255,255,255,0.65); font-size: 1rem; transition: color 0.2s; }
+    .nav-social a:hover { color: #fff; }
+
+    .navbar-toggler { border-color: rgba(255,255,255,0.3); }
+    .navbar-toggler-icon { filter: invert(1); }
+
+    /* ═══════════════════════════════
+       HERO
+    ═══════════════════════════════ */
+    #home { position: relative; height: 100vh; min-height: 600px; }
+
+    #heroCarousel,
+    .hero-carousel-inner,
+    .hero-slide-wrap,
+    .hero-slide {
+      height: 100vh;
+      min-height: 600px;
+    }
+
+    .hero-slide {
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .hero-slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(20,35,55,0.25) 0%,
+        rgba(20,35,55,0.55) 60%,
+        rgba(20,35,55,0.72) 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 10%;
+      left: 0; right: 0;
+      z-index: 10;
+      text-align: center;
+      color: white;
+      padding: 0 5%;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1rem;
+      animation: fadeUp 0.9s cubic-bezier(.4,0,.2,1) 0.2s both;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 10vw, 8rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+      animation: fadeUp 0.9s cubic-bezier(.4,0,.2,1) 0.4s both;
+    }
+
+    .hero-sub {
+      font-size: 0.82rem;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.8s cubic-bezier(.4,0,.2,1) 0.6s both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s cubic-bezier(.4,0,.2,1) 0.8s both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .btn-hero {
+      display: inline-block;
+      padding: 0.85rem 2.4rem;
+      border: 1px solid rgba(255,255,255,0.65);
+      color: white;
+      font-size: 0.68rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      background: transparent;
+      transition: all 0.25s;
+    }
+
+    .btn-hero:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: white;
+      color: white;
+    }
+
+    .btn-hero-fill {
+      background: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .btn-hero-fill:hover {
+      background: var(--blue-light);
+      border-color: var(--blue-light);
+    }
+
+    /* ═══════════════════════════════
+       INFO BAR
+    ═══════════════════════════════ */
+    .info-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--cream-dark);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.4rem 2rem;
+      border-right: 1px solid var(--cream-dark);
+      transition: background 0.2s;
+    }
+
+    .info-item:last-child { border-right: none; }
+    .info-item:hover { background: var(--cream); }
+
+    .info-item i {
+      color: var(--blue);
+      font-size: 1.15rem;
+      width: 20px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .info-item strong {
+      display: block;
+      font-size: 0.65rem;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.15rem;
+      font-weight: 600;
+    }
+
+    .info-item p {
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════
+       SHARED SECTION ELEMENTS
+    ═══════════════════════════════ */
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.7rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .section-sub {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      line-height: 1.8;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-header .section-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+    }
+
+    .section-header .section-label::before,
+    .section-header .section-label::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--blue);
+    }
+
+    /* Buttons */
+    .btn-italian {
+      display: inline-block;
+      padding: 0.85rem 2.4rem;
+      font-size: 0.68rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      border: 1px solid var(--blue);
+      color: var(--blue);
+      background: transparent;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+
+    .btn-italian:hover, .btn-italian.filled:hover {
+      background: var(--blue);
+      color: white;
+      border-color: var(--blue);
+    }
+
+    .btn-italian.filled {
+      background: var(--blue);
+      color: white;
+    }
+
+    .btn-italian.filled:hover {
+      background: var(--blue-light);
+      border-color: var(--blue-light);
+    }
+
+    .btn-italian.green {
+      background: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+
+    .btn-italian.green:hover {
+      background: var(--green-light);
+      border-color: var(--green-light);
+    }
+
+    /* ═══════════════════════════════
+       ABOUT
+    ═══════════════════════════════ */
+    .section-about {
+      background: var(--white);
+      padding: 7rem 5%;
+    }
+
+    .about-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .about-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--blue);
+    }
+
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+
+    .about-text {
+      font-size: 0.88rem;
+      line-height: 1.95;
+      color: var(--text-mid);
+    }
+
+    .about-img-wrap {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .about-img-wrap img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      background: var(--blue);
+      color: white;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .about-badge .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .about-badge .lbl {
+      font-size: 0.58rem;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-top: 0.2rem;
+    }
+
+    /* ═══════════════════════════════
+       MENU
+    ═══════════════════════════════ */
+    .section-menu {
+      background: var(--cream);
+      padding: 7rem 5%;
+    }
+
+    .menu-tabs {
+      border-bottom: 1px solid var(--cream-dark);
+      margin-bottom: 3rem;
+      justify-content: center;
+      gap: 0.2rem;
+    }
+
+    .menu-tabs .nav-link {
+      color: var(--text-mid) !important;
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding: 0.65rem 1.4rem !important;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
+      background: transparent;
+      transition: all 0.2s;
+    }
+
+    .menu-tabs .nav-link.active {
+      color: var(--blue) !important;
+      border-bottom-color: var(--blue);
+    }
+
+    .menu-tabs .nav-link:hover { color: var(--blue) !important; }
+
+    .dish-card {
+      background: var(--white);
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+    }
+
+    .dish-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 32px rgba(44,74,110,0.12);
+    }
+
+    .dish-img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .dish-card:hover .dish-img { transform: scale(1.04); }
+
+    .dish-body { padding: 1.5rem; }
+
+    .dish-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .dish-desc {
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .dish-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--blue);
+    }
+
+    .menu-cta {
+      text-align: center;
+      margin-top: 3.5rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+
+    /* ═══════════════════════════════
+       BOOKING
+    ═══════════════════════════════ */
+    .section-booking {
+      background: var(--white);
+      padding: 7rem 5%;
+    }
+
+    .form-label-it {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-input-it {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--cream-dark);
+      border-radius: 3px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.87rem;
+      color: var(--text);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-input-it:focus {
+      border-color: var(--blue);
+      background: var(--white);
+    }
+
+    .form-group-it { margin-bottom: 1.1rem; }
+
+    .booking-note {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      font-style: italic;
+      margin-bottom: 2rem;
+    }
+
+    .phone-section {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+
+    .phone-section span {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .phone-section a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--blue);
+      transition: color 0.2s;
+    }
+
+    .phone-section a:hover { color: var(--blue-light); }
+
+    .booking-img {
+      width: 100%;
+      height: 100%;
+      min-height: 420px;
+      object-fit: cover;
+    }
+
+    /* ═══════════════════════════════
+       GALLERY
+    ═══════════════════════════════ */
+    .section-gallery {
+      background: var(--cream-mid);
+      padding: 7rem 5%;
+    }
+
+    /* Gallery full-width slider */
+    .gallery-slider {
+      position: relative;
+      width: 100%;
+      height: 75vh;
+      min-height: 480px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .gallery-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.9s cubic-bezier(.4,0,.2,1);
+    }
+
+    .gallery-slide.active { opacity: 1; }
+
+    .gallery-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 7s ease;
+    }
+
+    .gallery-slide.active img { transform: scale(1.04); }
+
+    .gallery-slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.05) 50%,
+        rgba(0,0,0,0.45) 100%
+      );
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 5rem;
+      left: 5%;
+      z-index: 5;
+      color: white;
+    }
+
+    .gallery-caption-label {
+      font-size: 0.62rem;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 0.3rem;
+    }
+
+    .gallery-caption-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .gallery-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: white;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .gallery-btn:hover {
+      background: rgba(255,255,255,0.22);
+      border-color: rgba(255,255,255,0.7);
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .gallery-prev { left: 2rem; }
+    .gallery-next { right: 2rem; }
+
+    .gallery-counter {
+      position: absolute;
+      bottom: 2rem;
+      right: 5%;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .gallery-counter-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 2px;
+    }
+
+    .gallery-counter-num span { color: white; font-size: 1.1rem; }
+
+    .gallery-dots-wrap {
+      display: flex;
+      gap: 6px;
+    }
+
+    .gallery-dot {
+      width: 28px;
+      height: 2px;
+      background: rgba(255,255,255,0.3);
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s, width 0.25s;
+      padding: 0;
+    }
+
+    .gallery-dot.active {
+      background: white;
+      width: 44px;
+    }
+
+    /* ═══════════════════════════════
+       FEEDBACK
+    ═══════════════════════════════ */
+    .section-feedback {
+      background: var(--white);
+      padding: 7rem 5%;
+    }
+
+    .stars-icon i { color: var(--blue-light); font-size: 1rem; }
+
+    .review-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-style: italic;
+      line-height: 1.75;
+      color: var(--text);
+      margin: 1.5rem 0 1rem;
+      transition: opacity 0.25s;
+    }
+
+    .review-author {
+      font-size: 0.7rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .review-nav {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .review-nav button {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--cream-dark);
+      background: transparent;
+      color: var(--text-mid);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .review-nav button:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    /* Star rating widget */
+    .star-rating {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      gap: 0.1rem;
+    }
+
+    .star-rating input { display: none; }
+
+    .star-rating label {
+      cursor: pointer;
+      font-size: 1.6rem;
+      color: var(--cream-dark);
+      transition: color 0.15s;
+      line-height: 1;
+    }
+
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+      color: var(--blue-light);
+    }
+
+    /* ═══════════════════════════════
+       FOOTER / CONTACT
+    ═══════════════════════════════ */
+    .section-contact {
+      background: var(--green);
+      padding: 6rem 5% 0;
+    }
+
+    .contact-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      font-style: italic;
+      color: white;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-info h6 {
+      font-size: 0.62rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 0.4rem;
+      margin-top: 1.6rem;
+    }
+
+    .contact-info p,
+    .contact-info a {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.65;
+      transition: color 0.2s;
+    }
+
+    .contact-info a:hover { color: white; }
+
+    .contact-divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+      margin: 2rem 0;
+    }
+
+    .contact-map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .contact-map-link:hover {
+      color: white;
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    .contact-social { display: flex; gap: 0.6rem; }
+
+    .contact-social a {
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .contact-social a:hover {
+      border-color: rgba(255,255,255,0.7);
+      color: white;
+    }
+
+    .voucher-box {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 1.5rem 1.8rem;
+      margin-top: 2rem;
+    }
+
+    .voucher-box h5 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .voucher-box p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .contact-img {
+      width: 100%;
+      height: 100%;
+      min-height: 400px;
+      object-fit: cover;
+      opacity: 0.55;
+    }
+
+    .footer-bottom {
+      background: rgba(0,0,0,0.2);
+      margin-top: 5rem;
+      padding: 1.4rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-bottom p {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ═══════════════════════════════
+       SCROLL ANIMATIONS
+    ═══════════════════════════════ */
+
+    /* Scroll progress bar */
+    #scrollProgress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--blue), var(--blue-light));
+      z-index: 9999;
+      transition: width 0.1s linear;
+    }
+
+    /* Base reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.75s cubic-bezier(.4,0,.2,1), transform 0.75s cubic-bezier(.4,0,.2,1);
+    }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.22s; }
+    .reveal-d3 { transition-delay: 0.34s; }
+
+    /* Directional reveals */
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.85s cubic-bezier(.4,0,.2,1), transform 0.85s cubic-bezier(.4,0,.2,1);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.85s cubic-bezier(.4,0,.2,1), transform 0.85s cubic-bezier(.4,0,.2,1);
+    }
+    .reveal-left.is-visible, .reveal-right.is-visible { opacity: 1; transform: none; }
+
+    /* Image curtain reveal */
+    .img-reveal { position: relative; overflow: hidden; }
+    .img-reveal::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--cream-mid);
+      transform-origin: right;
+      transform: scaleX(1);
+      transition: transform 0.9s cubic-bezier(.77,0,.18,1) 0.1s;
+      z-index: 2;
+    }
+    .img-reveal.is-visible::after { transform: scaleX(0); }
+
+    /* Floating badge */
+    @keyframes floatBadge {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+    .about-badge { animation: floatBadge 4s ease-in-out infinite; }
+
+    /* Counter number */
+    .about-badge .num { display: inline-block; }
+
+    /* Animated section divider line */
+    .anim-line {
+      display: block;
+      height: 1px;
+      background: var(--blue);
+      width: 0;
+      margin: 0.9rem auto 0;
+      transition: width 0.9s cubic-bezier(.4,0,.2,1) 0.4s;
+    }
+    .section-header.is-visible .anim-line { width: 60px; }
+
+    /* Nav link hover underline */
+    .navbar-nav .nav-link {
+      position: relative;
+    }
+    .navbar-nav .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0.75rem;
+      width: 0;
+      height: 1px;
+      background: rgba(255,255,255,0.6);
+      transition: width 0.25s ease;
+    }
+    .navbar-nav .nav-link:hover::after { width: calc(100% - 1.5rem); }
+
+    /* Dish card top accent */
+    .dish-card { position: relative; }
+    .dish-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--blue-light);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+      z-index: 1;
+    }
+    .dish-card:hover::before { transform: scaleX(1); }
+
+    /* Section label animated bars */
+    .section-header .section-label::before,
+    .section-header .section-label::after {
+      transition: width 0.7s cubic-bezier(.4,0,.2,1) 0.2s;
+      width: 0;
+    }
+    .section-header.is-visible .section-label::before,
+    .section-header.is-visible .section-label::after { width: 28px; }
+
+    /* About label bar */
+    .about-label::before {
+      transition: width 0.6s cubic-bezier(.4,0,.2,1) 0.5s;
+      width: 0;
+    }
+    .reveal-right.is-visible .about-label::before { width: 24px; }
+
+    /* Gallery slider reveal */
+    .gallery-slider.reveal { transform: translateY(28px); }
+
+    /* Review quote fade */
+    .review-quote { transition: opacity 0.3s; }
+
+    /* Hero parallax target */
+    .hero-slide { will-change: background-position; }
+
+    /* Smooth btn press */
+    .btn-italian, .btn-hero {
+      transition: all 0.25s ease, transform 0.1s ease;
+    }
+    .btn-italian:active, .btn-hero:active { transform: scale(0.97); }
+
+    /* ═══════════════════════════════
+       LUXURY DESIGN ELEMENTS
+    ═══════════════════════════════ */
+
+    /* ── Hero inner frame ── */
+    .hero-frame {
+      position: absolute;
+      inset: 2.5rem 2rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0;
+      animation: frameFadeIn 1.2s ease 1s forwards;
+    }
+
+    @keyframes frameFadeIn { to { opacity: 1; } }
+
+    .hero-frame::before { content: ''; position: absolute; top: -1px;    left: -1px;   width: 22px; height: 22px; border-top: 1px solid rgba(255,255,255,0.55); border-left: 1px solid rgba(255,255,255,0.55); }
+    .hero-frame::after  { content: ''; position: absolute; bottom: -1px; right: -1px;  width: 22px; height: 22px; border-bottom: 1px solid rgba(255,255,255,0.55); border-right: 1px solid rgba(255,255,255,0.55); }
+    .hero-frame-br { position: absolute; bottom: -1px; left: -1px;  width: 22px; height: 22px; border-bottom: 1px solid rgba(255,255,255,0.55); border-left: 1px solid rgba(255,255,255,0.55); }
+    .hero-frame-tr { position: absolute; top: -1px;    right: -1px; width: 22px; height: 22px; border-top: 1px solid rgba(255,255,255,0.55);    border-right: 1px solid rgba(255,255,255,0.55); }
+
+    /* ── Offset image frame ── */
+    .img-frame-outer {
+      position: relative;
+      padding: 0 1.8rem 1.8rem 0;
+    }
+
+    .img-frame-outer::before {
+      content: '';
+      position: absolute;
+      top: 1.8rem;
+      right: 0;
+      bottom: 0;
+      left: 1.8rem;
+      border: 1px solid var(--blue-light);
+      opacity: 0.45;
+      z-index: 0;
+      transition: opacity 0.6s 0.5s;
+    }
+
+    .img-frame-outer.is-visible::before { opacity: 0.7; }
+
+    .img-frame-outer .img-reveal,
+    .img-frame-outer .about-img-wrap {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      background: var(--blue);
+      padding: 4.5rem 5%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stats-bar::before {
+      content: 'BELLAVITA';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(5rem, 12vw, 10rem);
+      font-weight: 700;
+      font-style: italic;
+      color: rgba(255,255,255,0.035);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: 0.05em;
+    }
+
+    .stat-item { position: relative; }
+
+    .stat-item + .stat-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 1px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .stat-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      font-weight: 300;
+      color: white;
+      line-height: 1;
+      display: block;
+    }
+
+    .stat-val sup {
+      font-size: 0.45em;
+      vertical-align: super;
+      color: var(--blue-light);
+      font-weight: 400;
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.6rem;
+    }
+
+    .stat-item.reveal .stat-val { opacity: 0; transform: translateY(16px); transition: opacity 0.7s, transform 0.7s; }
+    .stat-item.reveal.is-visible .stat-val { opacity: 1; transform: none; }
+
+    /* ── Ornamental divider ── */
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      padding: 0.5rem 0;
+      color: var(--blue-light);
+    }
+
+    .ornament-line {
+      flex: 1;
+      max-width: 180px;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.3;
+    }
+
+    .ornament-line-short {
+      max-width: 70px;
+    }
+
+    .ornament svg { opacity: 0.55; }
+
+    .section-ornament {
+      padding: 2.8rem 5%;
+      background: var(--white);
+    }
+
+    .section-ornament-cream { background: var(--cream); }
+
+    /* ── Marquee strip ── */
+    .marquee-strip {
+      background: var(--green);
+      padding: 1.1rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .marquee-inner {
+      display: inline-flex;
+      animation: marqueeScroll 32s linear infinite;
+    }
+
+    .marquee-inner:hover { animation-play-state: paused; }
+
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 0 2rem;
+      font-size: 0.65rem;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+    }
+
+    .marquee-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--blue-light);
+      flex-shrink: 0;
+    }
+
+    /* ── Big decorative quote ── */
+    .review-wrap {
+      position: relative;
+    }
+
+    .deco-quote {
+      position: absolute;
+      top: -2rem;
+      left: -1.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14rem;
+      line-height: 1;
+      color: var(--blue-pale);
+      pointer-events: none;
+      z-index: 0;
+      font-style: italic;
+      font-weight: 700;
+      opacity: 0.8;
+    }
+
+    .review-wrap > * { position: relative; z-index: 1; }
+
+    /* ── Signature CTA band ── */
+    .cta-band {
+      background: var(--cream-mid);
+      padding: 5rem 5%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-band::before {
+      content: '';
+      position: absolute;
+      inset: 1.5rem;
+      border: 1px solid var(--cream-dark);
+      pointer-events: none;
+    }
+
+    .cta-band-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-style: italic;
+      font-weight: 400;
+      margin-bottom: 0.6rem;
+    }
+
+    .cta-band-sub {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      letter-spacing: 1.5px;
+      margin-bottom: 2rem;
+    }
+
+    /* ═══════════════════════════════
+       NOTIFICATION MODAL
+    ═══════════════════════════════ */
+    .noti-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .noti-overlay.hidden { display: none; }
+
+    .noti-box {
+      background: white;
+      border-top: 3px solid var(--blue);
+      padding: 2.5rem 2rem;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .noti-box h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 0.8rem;
+    }
+
+    .noti-box p {
+      font-size: 0.86rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ═══════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════ */
+    @media (max-width: 768px) {
+      .info-bar { grid-template-columns: 1fr; }
+      .info-item { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+      .info-item:last-child { border-bottom: none; }
+      .gallery-prev { left: 1rem; }
+      .gallery-next { right: 1rem; }
+      .about-badge { right: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-slider { height: 55vh; min-height: 360px; }
+      .hero-btns { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="scrollProgress"></div>
+
+  <!-- ═══════════════ NAVBAR ═══════════════ -->
+  <nav class="navbar navbar-expand-md fixed-top" id="mainNav">
+    <div class="container-fluid px-md-4">
+      <a class="navbar-brand" href="#home">Bella<em>vita</em></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-label="Menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item"><a class="nav-link" href="#about-us">O nás</a></li>
+          <li class="nav-item"><a class="nav-link" href="#menu">Menu</a></li>
+          <li class="nav-item"><a class="nav-link" href="#booking">Rezervace</a></li>
+          <li class="nav-item"><a class="nav-link" href="#gallery">Galerie</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Kontakt</a></li>
+          <li class="nav-item"><a class="nav-link" href="#voucher">Dárkový poukaz</a></li>
+          <li class="nav-item">
+            <div class="nav-social">
+              <a href="#" target="_blank" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+              <a href="#" target="_blank" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section id="home">
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5500">
+      <div class="carousel-inner hero-carousel-inner">
+        <div class="carousel-item active hero-slide-wrap">
+          <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80')"></div>
+        </div>
+        <div class="carousel-item hero-slide-wrap">
+          <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600&q=80')"></div>
+        </div>
+        <div class="carousel-item hero-slide-wrap">
+          <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=1600&q=80')"></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-frame">
+      <div class="hero-frame-br"></div>
+      <div class="hero-frame-tr"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Ristorante Italiano &nbsp;·&nbsp; Praha</p>
+      <h1 class="hero-title">Bellavita</h1>
+      <p class="hero-sub">L'autenticità italiana nel cuore della città</p>
+      <div class="hero-btns">
+        <a href="#menu" class="btn-hero">Naše menu</a>
+        <a href="#booking" class="btn-hero btn-hero-fill">Rezervovat stůl</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ INFO BAR ═══════════════ -->
+  <div class="info-bar">
+    <div class="info-item">
+      <i class="fa fa-clock-o"></i>
+      <p><strong>Otevírací doba</strong>Út – Ne &nbsp; 12:00 – 23:00</p>
+    </div>
+    <div class="info-item">
+      <i class="fa fa-map-marker"></i>
+      <p><strong>Adresa</strong>Náměstí Republiky 12, Praha 1</p>
+    </div>
+    <div class="info-item">
+      <i class="fa fa-phone"></i>
+      <p><strong>Rezervace</strong>+420 720 021 575</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════ ABOUT ═══════════════ -->
+  <section class="section-about" id="about-us">
+    <div class="row align-items-center g-5 px-md-4">
+      <div class="col-12 col-md-5 reveal-left">
+        <div class="img-frame-outer">
+        <div class="about-img-wrap img-reveal">
+          <img src="https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=900&q=80" alt="Interiér restaurace Bellavita">
+          <div class="about-badge">
+            <span class="num" id="yearCounter">0</span>
+            <span class="lbl">let tradice</span>
+          </div>
+        </div>
+        </div><!-- /img-frame-outer -->
+      </div>
+      <div class="col-12 col-md-7 ps-md-5 reveal-right">
+        <p class="about-label">Náš příběh</p>
+        <h2 class="about-title">La cucina italiana,<br>con amore.</h2>
+        <p class="about-text">
+          Bellavita vznikla z lásky k italské gastronomii a přesvědčení, že jídlo je víc než jen pokrm — je to zážitek, vzpomínka, rozhovor. Naše kuchyně vychází z receptů předávaných po generace: čerstvé těstoviny připravené každý den, ryby přivážené přímo z Jaderského moře, vína pečlivě vybraná z nejlepších italských vinařství.
+        </p>
+        <p class="about-text mt-3">
+          Přijďte se přesvědčit, proč říkáme, že u nás nejen jíte — <em>prožíváte Itálii</em>.
+        </p>
+        <a href="#booking" class="btn-italian mt-4 d-inline-block">Rezervovat stůl</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ STATS BAR ═══════════════ -->
+  <div class="stats-bar">
+    <div class="stat-item reveal">
+      <span class="stat-val"><span class="stat-counter" data-target="37">0</span></span>
+      <span class="stat-label">Let kulinářské tradice</span>
+    </div>
+    <div class="stat-item reveal reveal-d1">
+      <span class="stat-val"><span class="stat-counter" data-target="1200">0</span><sup>+</sup></span>
+      <span class="stat-label">Spokojených hostů měsíčně</span>
+    </div>
+    <div class="stat-item reveal reveal-d2">
+      <span class="stat-val"><span class="stat-counter" data-target="45">0</span></span>
+      <span class="stat-label">Italských vín ve výběru</span>
+    </div>
+  </div>
+
+  <!-- ornament -->
+  <div class="section-ornament">
+    <div class="ornament reveal">
+      <div class="ornament-line ornament-line-short"></div>
+      <div class="ornament-line"></div>
+      <svg width="48" height="20" viewBox="0 0 48 20" fill="none">
+        <rect x="18" y="3" width="12" height="14" rx="0" transform="rotate(45 24 10)" stroke="currentColor" stroke-width="0.8"/>
+        <circle cx="24" cy="10" r="2.5" fill="currentColor"/>
+        <line x1="0" y1="10" x2="12" y2="10" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+        <line x1="36" y1="10" x2="48" y2="10" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+      </svg>
+      <div class="ornament-line"></div>
+      <div class="ornament-line ornament-line-short"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ MENU ═══════════════ -->
+  <section class="section-menu" id="menu">
+    <div class="section-header reveal">
+      <p class="section-label">Naše nabídka</p>
+      <h2 class="section-title">Il Menù</h2>
+      <span class="anim-line"></span>
+      <p class="section-sub mt-3">Každý pokrm připravujeme z čerstvých sezónních surovin podle tradičních italských receptů.</p>
+    </div>
+
+    <ul class="nav menu-tabs reveal">
+      <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#antipasti">Antipasti</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#primi">Primi Piatti</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#secondi">Secondi</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#dolci">Dolci</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- ANTIPASTI -->
+      <div class="tab-pane fade show active" id="antipasti">
+        <div class="row g-4">
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d1">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=600&q=80" alt="Burrata">
+              <div class="dish-body">
+                <h3 class="dish-name">Burrata con Prosciutto</h3>
+                <p class="dish-desc">Čerstvá burrata, prosciutto crudo, rukkola, cherry rajčata, panenský olivový olej</p>
+                <span class="dish-price">295 Kč</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d2">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1506280754576-f6fa8a873550?w=600&q=80" alt="Bruschetta">
+              <div class="dish-body">
+                <h3 class="dish-name">Bruschetta al Pomodoro</h3>
+                <p class="dish-desc">Opečená ciabatta, zralá rajčata San Marzano, bazalka, česnek, olivový olej DOP</p>
+                <span class="dish-price">175 Kč</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d2">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=600&q=80" alt="Carpaccio">
+              <div class="dish-body">
+                <h3 class="dish-name">Carpaccio di Manzo</h3>
+                <p class="dish-desc">Tenké plátky hovězí svíčkové, parmazán Reggiano, rukkola, kapary, citron</p>
+                <span class="dish-price">325 Kč</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d3">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=600&q=80" alt="Fritto Misto">
+              <div class="dish-body">
+                <h3 class="dish-name">Fritto Misto di Mare</h3>
+                <p class="dish-desc">Smažené kalamáry, krevety a ryby, domácí aioli, citron, čerstvé bylinky</p>
+                <span class="dish-price">345 Kč</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRIMI -->
+      <div class="tab-pane fade" id="primi">
+        <div class="row g-4">
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d1">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=80" alt="Tagliatelle">
+              <div class="dish-body">
+                <h3 class="dish-name">Tagliatelle al Tartufo</h3>
+                <p class="dish-desc">Čerstvé tagliatelle, lanýžová omáčka, parmazán, černý lanýž z Umbrie</p>
+                <span class="dish-price">445 Kč</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d2">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=600&q=80" alt="Risotto">
+              <div class="dish-body">
+                <h3 class="dish-name">Risotto ai Frutti di Mare</h3>
+                <p class="dish-desc">Carnaroli rýže, mušle, krevety, langoustiny, šafrán, suché bílé víno</p>
+                <span class="dish-price">495 Kč</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d2">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1612874742237-6526221588e3?w=600&q=80" alt="Carbonara">
+              <div class="dish-body">
+                <h3 class="dish-name">Spaghetti alla Carbonara</h3>
+                <p class="dish-desc">Spaghetti, guanciale, vejce, Pecorino Romano, čerstvý černý pepř</p>
+                <span class="dish-price">365 Kč</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d3">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&q=80" alt="Pizza">
+              <div class="dish-body">
+                <h3 class="dish-name">Pizza Margherita DOP</h3>
+                <p class="dish-desc">Těsto fermentované 48 h, San Marzano rajčata, fior di latte, bazalka</p>
+                <span class="dish-price">325 Kč</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECONDI -->
+      <div class="tab-pane fade" id="secondi">
+        <div class="row g-4">
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d1">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=80" alt="Branzino">
+              <div class="dish-body">
+                <h3 class="dish-name">Branzino al Forno</h3>
+                <p class="dish-desc">Pečený mořský vlk, kapary, olivy, cherry rajčata, citron, rozmarýn</p>
+                <span class="dish-price">595 Kč</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d2">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80" alt="Filetto">
+              <div class="dish-body">
+                <h3 class="dish-name">Filetto di Manzo</h3>
+                <p class="dish-desc">Hovězí svíčková 200 g, salsa al vino rosso, pečená zelenina</p>
+                <span class="dish-price">685 Kč</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d2">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=600&q=80" alt="Pollo">
+              <div class="dish-body">
+                <h3 class="dish-name">Pollo alla Cacciatora</h3>
+                <p class="dish-desc">Kuřecí stehno, rajčata, olivy, kapary, bylinky, creamy polenta</p>
+                <span class="dish-price">445 Kč</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d3">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80" alt="Agnello">
+              <div class="dish-body">
+                <h3 class="dish-name">Agnello alla Griglia</h3>
+                <p class="dish-desc">Jehněčí kotlety, gremolata, grilovaná zelenina, olivový olej DOP</p>
+                <span class="dish-price">625 Kč</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DOLCI -->
+      <div class="tab-pane fade" id="dolci">
+        <div class="row g-4">
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d1">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80" alt="Tiramisu">
+              <div class="dish-body">
+                <h3 class="dish-name">Tiramisù della Casa</h3>
+                <p class="dish-desc">Savoiardi, mascarpone, espresso, vaječný likér, kakaový prášek</p>
+                <span class="dish-price">195 Kč</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d2">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80" alt="Panna Cotta">
+              <div class="dish-body">
+                <h3 class="dish-name">Panna Cotta al Limone</h3>
+                <p class="dish-desc">Jemná panna cotta, citronový coulis, čerstvé lesní ovoce</p>
+                <span class="dish-price">175 Kč</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d2">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1548365328-8c6db3220e4c?w=600&q=80" alt="Cannolo">
+              <div class="dish-body">
+                <h3 class="dish-name">Cannolo Siciliano</h3>
+                <p class="dish-desc">Křupavé těsto, ricotta, kandovaná pomerančová kůra, pistácie</p>
+                <span class="dish-price">185 Kč</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-lg-3 reveal reveal-d3">
+            <div class="dish-card">
+              <img class="dish-img" src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&q=80" alt="Gelato">
+              <div class="dish-body">
+                <h3 class="dish-name">Gelato Artigianale</h3>
+                <p class="dish-desc">Domácí gelato — pistácie, vanilka nebo tmavá čokoláda, wafer</p>
+                <span class="dish-price">155 Kč</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="menu-cta reveal">
+      <p class="section-sub mb-3">Kompletní menu včetně vinného lístku k dispozici na místě nebo na vyžádání.</p>
+      <a href="#booking" class="btn-italian filled">Rezervovat stůl</a>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <div class="cta-band reveal">
+    <p class="cta-band-sub">Přijďte ochutnat Itálii</p>
+    <h2 class="cta-band-title">Ogni pasto è una storia.</h2>
+    <p class="cta-band-sub" style="margin-bottom:2rem; font-style:italic;">Každé jídlo je příběh.</p>
+    <a href="#booking" class="btn-italian filled">Rezervovat stůl</a>
+    &nbsp;
+    <a href="#menu" class="btn-italian">Naše menu</a>
+  </div>
+
+  <!-- ornament -->
+  <div class="section-ornament">
+    <div class="ornament reveal">
+      <div class="ornament-line"></div>
+      <svg width="48" height="20" viewBox="0 0 48 20" fill="none">
+        <rect x="18" y="3" width="12" height="14" transform="rotate(45 24 10)" stroke="currentColor" stroke-width="0.8"/>
+        <circle cx="24" cy="10" r="2.5" fill="currentColor"/>
+        <line x1="0" y1="10" x2="12" y2="10" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+        <line x1="36" y1="10" x2="48" y2="10" stroke="currentColor" stroke-width="0.6" opacity="0.5"/>
+      </svg>
+      <div class="ornament-line"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ BOOKING ═══════════════ -->
+  <section class="section-booking" id="booking">
+    <div class="row g-0 align-items-stretch px-md-4">
+      <div class="col-12 col-md-6 pe-md-5 reveal">
+        <p class="section-label">Stůl pro vás</p>
+        <h2 class="section-title" style="font-style:italic; margin-bottom:0.5rem;">Rezervace</h2>
+        <p class="booking-note">* Online rezervace prosím proveďte alespoň 24 hodin předem.</p>
+
+        <form id="bookingForm">
+          <div class="row g-3">
+            <div class="col-12 col-sm-6">
+              <div class="form-group-it">
+                <label class="form-label-it">Jméno a příjmení</label>
+                <input type="text" name="name" class="form-input-it" placeholder="Jan Novák" required>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="form-group-it">
+                <label class="form-label-it">Telefon</label>
+                <input type="tel" name="telephone" class="form-input-it" placeholder="+420 720 021 575">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group-it">
+                <label class="form-label-it">E-mail</label>
+                <input type="email" name="email" class="form-input-it" placeholder="jan@email.cz" required>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="form-group-it">
+                <label class="form-label-it">Počet osob</label>
+                <input type="number" name="persons" class="form-input-it" min="1" max="20" value="2">
+              </div>
+            </div>
+            <div class="col-12 col-sm-6">
+              <div class="form-group-it">
+                <label class="form-label-it">Datum a čas</label>
+                <input type="datetime-local" name="date" class="form-input-it" required>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group-it">
+                <label class="form-label-it">Poznámka (alergie, speciální přání…)</label>
+                <input type="text" name="note" class="form-input-it" placeholder="Vaše přání...">
+              </div>
+            </div>
+            <div class="col-12 text-end">
+              <button type="submit" class="btn-italian filled">Odeslat rezervaci</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="phone-section">
+          <span>Rezervace telefonicky</span>
+          <a href="tel:+420720021575">+420 720 021 575</a>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 mt-5 mt-md-0 reveal-right img-reveal">
+        <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=900&q=80" alt="Stůl v restauraci Bellavita" class="booking-img">
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ GALLERY ═══════════════ -->
+  <section class="section-gallery" id="gallery">
+    <div class="section-header reveal">
+      <p class="section-label">Atmosféra</p>
+      <h2 class="section-title">Galerie</h2>
+      <span class="anim-line"></span>
+    </div>
+    <div class="gallery-slider reveal" id="gallerySlider">
+
+      <div class="gallery-slide active">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=80" alt="Interiér Bellavita">
+        <div class="gallery-caption">
+          <p class="gallery-caption-label">01 / Atmosféra</p>
+          <p class="gallery-caption-title">Interiér Bellavita</p>
+        </div>
+      </div>
+
+      <div class="gallery-slide">
+        <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=1600&q=80" alt="Čerstvá pasta">
+        <div class="gallery-caption">
+          <p class="gallery-caption-label">02 / Cucina</p>
+          <p class="gallery-caption-title">Pasta fresca ogni giorno</p>
+        </div>
+      </div>
+
+      <div class="gallery-slide">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600&q=80" alt="Bar Bellavita">
+        <div class="gallery-caption">
+          <p class="gallery-caption-label">03 / Aperitivo</p>
+          <p class="gallery-caption-title">Bar & Aperitivo</p>
+        </div>
+      </div>
+
+      <div class="gallery-slide">
+        <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=1600&q=80" alt="Naše pizza">
+        <div class="gallery-caption">
+          <p class="gallery-caption-label">04 / Pizza</p>
+          <p class="gallery-caption-title">Pizza Napoletana</p>
+        </div>
+      </div>
+
+      <div class="gallery-slide">
+        <img src="https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=1600&q=80" alt="Tiramisù">
+        <div class="gallery-caption">
+          <p class="gallery-caption-label">05 / Dolci</p>
+          <p class="gallery-caption-title">Tiramisù della Casa</p>
+        </div>
+      </div>
+
+      <div class="gallery-slide">
+        <img src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=1600&q=80" alt="Italská vína">
+        <div class="gallery-caption">
+          <p class="gallery-caption-label">06 / Vini</p>
+          <p class="gallery-caption-title">Selezione di Vini Italiani</p>
+        </div>
+      </div>
+
+      <button class="gallery-btn gallery-prev" onclick="galleryMove(-1)" aria-label="Předchozí">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="gallery-btn gallery-next" onclick="galleryMove(1)" aria-label="Další">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 6 15 12 9 18"/></svg>
+      </button>
+
+      <div class="gallery-counter">
+        <div class="gallery-dots-wrap" id="galleryDots"></div>
+        <span class="gallery-counter-num"><span id="galleryCurrentNum">1</span> / 6</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-inner">
+      <!-- repeat twice for seamless loop -->
+      <span class="marquee-item">Bellavita<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Ristorante Italiano<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Cucina Autentica<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Dal 1987<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Praga<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Pasta Fresca<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Vini Italiani<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Sapori Veri<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Bellavita<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Ristorante Italiano<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Cucina Autentica<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Dal 1987<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Praga<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Pasta Fresca<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Vini Italiani<span class="marquee-dot"></span></span>
+      <span class="marquee-item">Sapori Veri<span class="marquee-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- ═══════════════ FEEDBACK ═══════════════ -->
+  <section class="section-feedback" id="feedback">
+    <div class="row g-5 px-md-4">
+
+      <!-- Reviews display -->
+      <div class="col-12 col-md-6 reveal">
+        <p class="section-label">Hosté o nás</p>
+        <h2 class="section-title">Recenze</h2>
+        <span class="anim-line" style="margin:0.8rem 0 1.5rem;"></span>
+        <div class="review-wrap">
+          <span class="deco-quote">❝</span>
+        <div class="stars-icon mt-3">
+          <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+          <i class="fa fa-star"></i><i class="fa fa-star"></i>
+        </div>
+        <div id="reviewDisplay">
+          <p class="review-quote">"Nejlepší italská restaurace v Praze. Tagliatelle al tartufo jsou absolutní dokonalostí. Vrátíme se brzy!"</p>
+          <p class="review-author">— Markéta K.</p>
+        </div>
+        <div class="review-nav">
+          <button onclick="changeReview(-1)">&#8592;</button>
+          <button onclick="changeReview(1)">&#8594;</button>
+        </div>
+        </div><!-- /review-wrap -->
+      </div>
+
+      <!-- Feedback form -->
+      <div class="col-12 col-md-6 reveal reveal-d2">
+        <h2 class="section-title">Váš názor</h2>
+        <form id="feedbackForm" class="mt-3">
+          <div class="form-group-it">
+            <label class="form-label-it">Hodnocení</label>
+            <div class="star-rating">
+              <input type="radio" name="rating" id="s5" value="5"><label for="s5">★</label>
+              <input type="radio" name="rating" id="s4" value="4"><label for="s4">★</label>
+              <input type="radio" name="rating" id="s3" value="3"><label for="s3">★</label>
+              <input type="radio" name="rating" id="s2" value="2"><label for="s2">★</label>
+              <input type="radio" name="rating" id="s1" value="1"><label for="s1">★</label>
+            </div>
+          </div>
+          <div class="form-group-it">
+            <label class="form-label-it">Vaše jméno</label>
+            <input type="text" class="form-input-it" id="feedbackName" placeholder="Jméno">
+          </div>
+          <div class="form-group-it">
+            <label class="form-label-it">Recenze</label>
+            <textarea class="form-input-it" id="feedbackText" rows="5" placeholder="Sdílejte svůj zážitek z Bellavita…" style="resize:vertical;"></textarea>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn-italian green">Odeslat recenzi</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER / CONTACT ═══════════════ -->
+  <footer class="section-contact" id="contact">
+    <div class="row g-5 align-items-center px-md-4">
+
+      <div class="col-12 col-md-6 reveal-left img-reveal">
+        <img src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=900&q=80" alt="Bellavita — Ristorante Italiano" class="contact-img">
+      </div>
+
+      <div class="col-12 col-md-6 reveal reveal-d2">
+        <h2 class="contact-title">Bellavita</h2>
+        <div class="contact-info">
+          <h6>Adresa</h6>
+          <p>Náměstí Republiky 12<br>110 00 Praha 1</p>
+
+          <h6>Kontakt</h6>
+          <p>
+            +420 720 021 575<br>
+            <a href="mailto:info@bellavita.cz">info@bellavita.cz</a>
+          </p>
+
+          <h6>Otevírací doba</h6>
+          <p>Úterý – Neděle &nbsp; 12:00 – 23:00<br>Pondělí: zavřeno</p>
+        </div>
+
+        <a href="https://maps.google.com" target="_blank" class="contact-map-link mt-3">
+          <i class="fa fa-map-marker"></i>&nbsp; Najít na Google Maps
+        </a>
+
+        <div class="contact-divider"></div>
+
+        <div class="contact-social">
+          <a href="#" target="_blank" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+          <a href="#" target="_blank" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
+          <a href="#" target="_blank" aria-label="TripAdvisor"><i class="fa fa-tripadvisor"></i></a>
+        </div>
+
+        <div class="voucher-box mt-4" id="voucher">
+          <h5>Dárkový poukaz</h5>
+          <p>Darujte zážitek z pravé italské kuchyně. Kontaktujte nás a rádi vám poukaz připravíme na míru — jako dárek pro vaše blízké.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2024 Bellavita — Ristorante Italiano &nbsp;·&nbsp; Všechna práva vyhrazena.</p>
+      <p>Fatto con <i class="fa fa-heart" style="color:rgba(255,255,255,0.35)"></i> in Praha</p>
+    </div>
+  </footer>
+
+  <!-- ═══════════════ NOTIFICATION ═══════════════ -->
+  <div class="noti-overlay hidden" id="notiOverlay">
+    <div class="noti-box">
+      <h3 id="notiTitle">Grazie!</h3>
+      <p id="notiMsg"></p>
+      <button class="btn-italian filled" onclick="closeNoti()">Zavřít</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ── SCROLL PROGRESS BAR ──
+    const progressBar = document.getElementById('scrollProgress');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total    = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (scrolled / total * 100) + '%';
+
+      // navbar
+      document.getElementById('mainNav').classList.toggle('scrolled', scrolled > 80);
+    }, { passive: true });
+
+    // ── HERO PARALLAX ──
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      heroSlides.forEach(s => {
+        s.style.backgroundPositionY = `calc(30% + ${y * 0.35}px)`;
+      });
+    }, { passive: true });
+
+    // ── SCROLL REVEAL (all variants) ──
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .img-reveal, .section-header').forEach(el => obs.observe(el));
+
+    // ── COUNTERS — requestAnimationFrame, všechny stejná délka ──
+    function animateCounter(el, target) {
+      const duration = 1500;
+      const startTime = performance.now();
+      function tick(now) {
+        const p = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+        el.textContent = Math.round(eased * target);
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        counterObs.unobserve(e.target);
+        animateCounter(e.target, parseInt(e.target.dataset.target));
+      });
+    }, { threshold: 0.5 });
+
+    const yearEl = document.getElementById('yearCounter');
+    yearEl.dataset.target = '37';
+    counterObs.observe(yearEl);
+    document.querySelectorAll('.stat-counter').forEach(el => counterObs.observe(el));
+
+    // img-frame-outer observer
+    document.querySelectorAll('.img-frame-outer').forEach(el => obs.observe(el));
+
+    // ── GALLERY SLIDER ──
+    const gSlides = document.querySelectorAll('.gallery-slide');
+    const gDots   = document.getElementById('galleryDots');
+    const gNumEl  = document.getElementById('galleryCurrentNum');
+    let curSlide  = 0;
+    let gTimer;
+
+    gSlides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+      d.setAttribute('aria-label', 'Snímek ' + (i + 1));
+      d.addEventListener('click', () => goToSlide(i));
+      gDots.appendChild(d);
+    });
+
+    function goToSlide(i) {
+      gSlides[curSlide].classList.remove('active');
+      gDots.children[curSlide].classList.remove('active');
+      curSlide = (i + gSlides.length) % gSlides.length;
+      gSlides[curSlide].classList.add('active');
+      gDots.children[curSlide].classList.add('active');
+      gNumEl.textContent = curSlide + 1;
+      resetTimer();
+    }
+
+    function galleryMove(dir) { goToSlide(curSlide + dir); }
+
+    function resetTimer() {
+      clearInterval(gTimer);
+      gTimer = setInterval(() => galleryMove(1), 5000);
+    }
+
+    resetTimer();
+
+    // swipe support
+    let touchStartX = 0;
+    const slider = document.getElementById('gallerySlider');
+    slider.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    slider.addEventListener('touchend',   e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) galleryMove(diff > 0 ? 1 : -1);
+    });
+
+    // ── REVIEWS ──
+    const reviews = [
+      { q: '"Nejlepší italská restaurace v Praze. Tagliatelle al tartufo jsou absolutní dokonalostí. Vrátíme se brzy!"', a: '— Markéta K.' },
+      { q: '"Autentická italská kuchyně, úžasný personál a nádherný interiér. Burrata byla naprosto nebeská!"', a: '— Tomáš V.' },
+      { q: '"Risotto ai frutti di mare — lahůdka, na kterou se nedá zapomenout. Přijdeme znovu."', a: '— Jana H.' },
+      { q: '"Tiramisù della casa je to nejlepší, co jsem kdy ochutnala. Grazie mille, Bellavita!"', a: '— Eva S.' },
+    ];
+
+    let curReview = 0;
+    const reviewDisplay = document.getElementById('reviewDisplay');
+    reviewDisplay.style.transition = 'opacity 0.3s';
+
+    function changeReview(dir) {
+      curReview = (curReview + dir + reviews.length) % reviews.length;
+      reviewDisplay.style.opacity = '0';
+      setTimeout(() => {
+        reviewDisplay.innerHTML = `<p class="review-quote">${reviews[curReview].q}</p><p class="review-author">${reviews[curReview].a}</p>`;
+        reviewDisplay.style.opacity = '1';
+      }, 300);
+    }
+
+    setInterval(() => changeReview(1), 5500);
+
+    // ── BOOKING FORM ──
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      showNoti('Grazie!', 'Vaše rezervace byla úspěšně přijata. Brzy se vám ozveme s potvrzením na zadaný e-mail.');
+      this.reset();
+    });
+
+    // ── FEEDBACK FORM ──
+    document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      showNoti('Děkujeme!', 'Vaše recenze byla úspěšně odeslána. Vaše zpětná vazba nám velmi pomáhá.');
+      this.reset();
+    });
+
+    // ── NOTIFICATION ──
+    function showNoti(title, msg) {
+      document.getElementById('notiTitle').textContent = title;
+      document.getElementById('notiMsg').textContent = msg;
+      document.getElementById('notiOverlay').classList.remove('hidden');
+    }
+
+    function closeNoti() {
+      document.getElementById('notiOverlay').classList.add('hidden');
+    }
+
+    document.getElementById('notiOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeNoti();
+    });
+  </script>
+</body>
+</html>
