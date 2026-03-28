@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milan Jun – Freelance Webdesigner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #2d6a4f;
+      --green-dark: #1b4332;
+      --green-light: #52b788;
+      --gradient: linear-gradient(90deg, #52b788, #1b4332);
+      --text: #212529;
+      --max-w: 1400px;
+      --content-w: 1020px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      font-size: 62.5%; -webkit-font-smoothing: antialiased;
+      scroll-snap-type: y proximity;
+      scroll-behavior: smooth;
+    }
+    .hero, #o-mne, .project-block, #reference, #kontakt {
+      scroll-snap-align: start;
+    }
+    body {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.4rem;
+      line-height: 2.5rem;
+      color: var(--text);
+      background: #fff;
+    }
+    h1,h2,h3,h4,h5,h6 {
+      font-family: 'Exo 2', sans-serif;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    h2 { font-size: 4rem; line-height: 5.1rem; }
+    h3 { font-size: 2rem; line-height: 3.1rem; }
+    p,li,span { font-family: 'Roboto Mono', monospace; font-size: 1.4rem; line-height: 2.8rem; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── CONTAINER ── */
+    .container {
+      display: flex;
+      width: 100%;
+      max-width: var(--max-w);
+      margin: auto;
+      padding: 0 60px;
+    }
+    @media (max-width: 900px) { .container { padding: 0 40px; } }
+    @media (max-width: 600px) { .container { padding: 0 20px; } }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0; left: 0;
+      z-index: 1000;
+    }
+    .navbar.scrolled {
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .navbar .container {
+      height: 80px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15rem;
+      color: white;
+    }
+    .navbar.scrolled .nav-logo { color: var(--text); }
+    .nav-logo span {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Desktop nav */
+    .nav-d { display: none; }
+    @media (min-width: 900px) { .nav-d { display: flex; } }
+    .nav-d a {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      margin-left: 2rem;
+      position: relative;
+      transition: color 0.3s;
+      padding: 0.2rem 0.4rem;
+      z-index: 10;
+      letter-spacing: 0.05em;
+    }
+    .navbar.scrolled .nav-d a { color: var(--text); }
+    .nav-d a:hover { color: var(--green-light) !important; }
+    .nav-d a::before { display: none; }
+    .nav-d a.nav-cta {
+      border: 1px solid rgba(255,255,255,0.7);
+      padding: 0.4rem 1.4rem;
+    }
+    .navbar.scrolled .nav-d a.nav-cta { border-color: var(--text); }
+    .nav-d a.nav-cta::before { display: none; }
+    .nav-d a.nav-cta:hover { background: var(--green-dark); border-color: var(--green-dark); }
+
+    /* Mobile hamburger */
+    .nav-m { display: block; }
+    @media (min-width: 900px) { .nav-m { display: none; } }
+    .nav-m button {
+      height: 2.5rem; width: 3.5rem;
+      background: transparent; border: none; cursor: pointer;
+      position: relative;
+    }
+    .nav-m button div {
+      transition: all 0.2s; height: 3px; width: 100%;
+      background: white; position: absolute;
+    }
+    .navbar.scrolled .nav-m button div { background: var(--text); }
+    .nav-m button div.first { top: 0; }
+    .nav-m button div.second { top: calc(50% - 1.5px); }
+    .nav-m button div.third { bottom: 0; }
+    .nav-m.open button div { background: var(--gradient); }
+    .nav-m.open button div.first { transform: rotate(45deg); top: 1.1rem; }
+    .nav-m.open button div.second { opacity: 0; }
+    .nav-m.open button div.third { transform: rotate(-45deg); bottom: 1.1rem; }
+
+    /* Mobile menu */
+    .nav-mm {
+      text-transform: uppercase;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex; flex-direction: column;
+      position: fixed; top: 80px; left: 0;
+      width: 100%; background: white;
+      height: calc(100vh - 80px);
+      padding: 2rem; z-index: 999;
+    }
+    .nav-mm.open { transform: translateX(0); }
+    @media (min-width: 600px) { .nav-mm { padding: 4rem; } }
+    @media (min-width: 900px) { .nav-mm { display: none !important; } }
+    .nav-mm a {
+      color: var(--text); margin-bottom: 3rem;
+      font-size: 1.6rem;
+    }
+    .nav-mm a.has-divider {
+      margin-bottom: 6rem; position: relative;
+    }
+    .nav-mm a.has-divider::after {
+      content: ''; position: absolute;
+      bottom: -3rem; left: 0;
+      width: 100%; height: 0.2rem;
+      background: var(--gradient);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--green-dark);
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    @media (max-width: 900px) { .hero { min-height: 100svh; padding-top: 80px; } }
+    .hero .container {
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      z-index: 2;
+    }
+    @media (max-width: 900px) {
+      .hero .container { flex-wrap: wrap; min-height: unset; padding-bottom: 4rem; padding-top: 2rem; }
+    }
+    .hero-bg {
+      position: absolute; top: 0; right: 0;
+      height: 100%; width: 52%;
+      object-fit: cover; object-position: center top;
+      opacity: 0.68; z-index: 1;
+    }
+    /* Gradient překryv — zleva zelená, zprava průhledná */
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(
+        to right,
+        #1b4332 40%,
+        rgba(27,67,50,0.75) 60%,
+        rgba(27,67,50,0.5) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+    @media (max-width: 900px) { .hero-bg { display: none; } }
+
+    .hero-content { position: relative; z-index: 2; width: 60%; padding-right: 2rem; }
+    @media (max-width: 900px) { .hero-content { width: 100%; padding-right: 0; } }
+
+    .hero-tag {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.6rem;
+      line-height: 2.2rem;
+      font-weight: 400;
+      color: var(--green-light);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .hero-name {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 900;
+      font-size: 7rem;
+      line-height: 7rem;
+      color: white;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 600px) { .hero-name { font-size: 4.5rem; line-height: 5rem; } }
+    .hero-sub {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.6rem;
+      line-height: 2.4rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 3rem;
+    }
+    .hero-btn {
+      display: inline-block;
+      border: 0.15rem solid white;
+      color: white;
+      padding: 0 2.5rem;
+      height: 5.5rem;
+      line-height: 5.5rem;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all 0.3s;
+    }
+    .hero-btn:hover { background: white; color: var(--green-dark); }
+    .hero-img-mobile {
+      display: none; width: 100%; margin-top: 3rem;
+      border-radius: 4px; opacity: 0.85;
+    }
+    @media (max-width: 900px) { .hero-img-mobile { display: block; } }
+
+    /* ── ABOUT ── */
+    #o-mne {
+      background: white;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 0;
+    }
+    #o-mne .container { flex-direction: column; width: var(--content-w); max-width: 100%; }
+    #o-mne h2 { color: var(--green); margin-bottom: 2rem; }
+    #o-mne .body p { margin-bottom: 2rem; }
+    #o-mne .body a {
+      position: relative; z-index: 5;
+      color: white; padding: 0 0.5rem;
+    }
+    #o-mne .body a::before {
+      z-index: -5; content: '';
+      position: absolute; height: 100%; width: 100%;
+      bottom: -1px; left: 0;
+      transition: all 0.3s; background: var(--gradient);
+    }
+    #o-mne .body a:hover::before { height: 2px; }
+    #o-mne .body a:hover { color: var(--text); }
+
+    .skills { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 3rem; }
+    .skill-pill {
+      border: 1px solid var(--green);
+      color: var(--green);
+      padding: 0.4rem 1.2rem;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.2rem;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .skill-pill:hover { background: var(--green); color: white; }
+
+    /* ── PROJECTS ── */
+    .proj-section-title {
+      text-align: center;
+      color: white;
+      font-size: 6.5rem;
+      line-height: 1;
+      letter-spacing: 0.4rem;
+      padding: 7rem 0 3rem;
+      opacity: 0.92;
+    }
+    @media (max-width: 600px) { .proj-section-title { font-size: 4rem; padding: 5rem 0 2rem; } }
+
+    .project-block { position: relative; min-height: 100vh; }
+    @media (max-width: 900px) { .project-block { min-height: unset; } }
+    @media (max-width: 900px) {
+      .project-block { padding: 4rem 0; }
+      .project-block .container { flex-wrap: wrap; }
+      .proj-left, .proj-right { width: 100% !important; }
+    }
+    .project-block .container { height: 100%; align-items: center; min-height: inherit; }
+    .proj-left { width: 38%; color: white; }
+    .proj-right { width: 62%; }
+
+    .proj-title h3 {
+      color: white; font-weight: 800;
+      font-size: 4.5rem; line-height: 5.5rem;
+      letter-spacing: 0.3rem; margin-bottom: 1.5rem;
+    }
+    @media (max-width: 600px) { .proj-title h3 { font-size: 3rem; line-height: 4rem; } }
+    .proj-desc p { margin-bottom: 1.5rem; color: rgba(255,255,255,0.82); }
+    .proj-tags p { font-weight: bold; text-transform: uppercase; margin-bottom: 1rem; color: white; }
+    .proj-tags ul { list-style: none; padding-left: 1.5rem; }
+    .proj-tags ul li {
+      margin-bottom: 0.8rem;
+      position: relative;
+      color: rgba(255,255,255,0.78);
+    }
+    .proj-tags ul li::before {
+      content: ''; position: absolute;
+      height: 8px; width: 2px;
+      background: var(--green-light);
+      top: 0.9rem; left: -1.5rem; z-index: 5;
+    }
+    .proj-tags ul li::after {
+      content: ''; position: absolute;
+      height: 8px; width: 2px;
+      background: var(--green-light);
+      top: 0.9rem; left: -1.5rem; z-index: 5;
+      transform: rotate(90deg);
+    }
+    .proj-cta { margin-top: 2.5rem; }
+    .proj-cta a {
+      display: inline-block;
+      border: 0.1rem solid white;
+      height: 5.5rem; line-height: 5.5rem;
+      padding: 0 2rem; color: white;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.3rem; text-transform: uppercase;
+      letter-spacing: 0.05em; transition: background 0.3s;
+    }
+    .proj-cta a:hover { background: rgba(255,255,255,0.12); }
+    .proj-img {
+      width: 100%; display: block;
+      border-radius: 2px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    @media (min-width: 900px) { .proj-right { margin-bottom: -7rem; } }
+    @media (max-width: 900px) { .proj-right { margin-top: 3rem; } }
+
+    .pb-1 { background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 50%, #1a3a2a 100%); }
+    .pb-2 { background: linear-gradient(135deg, #1a1d20 0%, #2d3436 55%, #1f3329 100%); }
+    .pb-3 { background: linear-gradient(135deg, #1e2d3d 0%, #2c3e50 50%, #1b3a2e 100%); }
+
+    /* ── TESTIMONIALS ── */
+    #reference {
+      background: white;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 0;
+    }
+    #reference .container { flex-direction: column; width: var(--content-w); max-width: 100%; }
+    #reference h2 { color: var(--green); margin-bottom: 2rem; }
+    .test-module { background: var(--gradient); padding: 0.2rem; }
+    .test-inner {
+      background: white;
+      min-height: 360px;
+      display: flex; padding: 2rem;
+      position: relative;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .test-nav {
+      position: absolute; top: 2rem; left: 0;
+      width: 100%; display: flex;
+      justify-content: center; gap: 2rem; z-index: 10;
+    }
+    .test-dot {
+      height: 1rem; width: 1rem;
+      border: none; border-radius: 50%; padding: 0;
+      background: var(--gradient); cursor: pointer;
+      display: flex; justify-content: center; align-items: center;
+    }
+    .test-dot div { transition: all 0.1s; height: 0; width: 0; background: white; border-radius: 50%; }
+    .test-dot.active div { height: 0.6rem; width: 0.6rem; }
+    .test-slide { display: none; padding: 0 3rem; }
+    @media (max-width: 600px) { .test-slide { padding: 0 1rem; } }
+    .test-slide.active { display: flex; flex-direction: column; animation: fadeUp 0.3s ease; }
+    .test-quote { padding: 4rem 0; }
+    .test-quote p { font-family: 'Exo 2', sans-serif; font-size: 2rem; font-weight: bold; line-height: 3.2rem; }
+    .test-author { text-align: right; }
+    .test-author p:first-child { font-weight: bold; margin: 0; }
+
+    /* ── FOOTER / CONTACT ── */
+    #kontakt {
+      background: linear-gradient(135deg, #1b4332 0%, #1a1d20 60%, #0d1f17 100%);
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 6rem 0;
+      position: relative;
+      text-align: center;
+    }
+    #kontakt::after {
+      content: ''; height: 4px; width: 100%;
+      position: absolute; bottom: 0; left: 0;
+      background: linear-gradient(to right, transparent 0%, #c9a84c 25%, #f0d878 50%, #c9a84c 75%, transparent 100%);
+    }
+    #kontakt .container {
+      max-width: 760px;
+      flex-direction: column;
+      align-items: center;
+    }
+    .footer-left { width: 100%; text-align: center; }
+    .footer-left h4 {
+      font-size: 5rem; line-height: 6rem;
+      margin-bottom: 1.5rem; color: white;
+    }
+    @media (max-width: 724px) { .footer-left h4 { font-size: 3rem; line-height: 4rem; } }
+    .footer-tagline {
+      color: rgba(255,255,255,0.55);
+      font-size: 1.4rem; margin-bottom: 3.5rem;
+    }
+    .footer-btn {
+      display: inline-block; position: relative; overflow: hidden;
+      background: linear-gradient(90deg, #b8922a, #e8c97a, #b8922a);
+      background-size: 200% auto;
+      border: none;
+      color: #1b1a14;
+      padding: 0 5rem; height: 7rem; line-height: 7rem;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.5rem; text-transform: uppercase;
+      letter-spacing: 0.14em; font-weight: 600;
+      transition: background-position 0.4s ease;
+      border-radius: 2px;
+    }
+    .footer-btn::after {
+      content: '';
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.45) 0%, transparent 65%);
+      transition: opacity 0.3s;
+    }
+    .footer-btn:hover { background-position: right center; }
+    .footer-right { padding-top: 4rem; width: 100%; }
+    .footer-right ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .footer-right li { margin: 0; position: relative; }
+    .footer-right li::before, .footer-right li::after { display: none; }
+    .footer-right a {
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em; font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+    .footer-right a:hover { color: #e8c97a; }
+    .footer-copy { width: 100%; text-align: center; margin: 4rem 0 0; }
+    .footer-copy a {
+      color: rgba(255,255,255,0.3); font-weight: 400;
+      transition: color 0.3s;
+    }
+    .footer-copy a:hover { color: #e8c97a; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SCROLL PROGRESS BAR ── */
+    #progressBar {
+      position: fixed; top: 0; left: 0;
+      height: 3px; width: 0%;
+      background: var(--gradient);
+      z-index: 99999;
+      transition: width 0.08s linear;
+    }
+
+    /* ── HERO ENTRANCE ── */
+    .hero-tag  { opacity: 0; transform: translateY(22px); animation: heroIn 0.65s ease 0.25s forwards; }
+    .hero-name { opacity: 0; transform: translateY(22px); animation: heroIn 0.65s ease 0.45s forwards; }
+    .hero-sub  { opacity: 0; transform: translateY(22px); animation: heroIn 0.65s ease 0.65s forwards; }
+    .hero-btn  { opacity: 0; transform: translateY(22px); animation: heroIn 0.65s ease 0.85s forwards; }
+    @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* ── REVEAL VARIANTS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px) scale(0.97);
+      filter: blur(5px);
+      transition: opacity 0.75s ease, transform 0.75s ease, filter 0.75s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+
+    .reveal-left {
+      opacity: 0; transform: translateX(-50px) scale(0.97);
+      filter: blur(5px);
+      transition: opacity 0.75s ease, transform 0.75s ease, filter 0.75s ease;
+    }
+    .reveal-right {
+      opacity: 0; transform: translateX(50px) scale(0.97);
+      filter: blur(5px);
+      transition: opacity 0.75s ease, transform 0.75s ease, filter 0.75s ease;
+    }
+    .reveal-left.visible, .reveal-right.visible {
+      opacity: 1; transform: translateX(0) scale(1); filter: blur(0);
+    }
+
+    /* ── PROJECT IMAGE HOVER ── */
+    .proj-right { padding-left: 5rem; }
+    @media (max-width: 900px) { .proj-right { padding-left: 0; } }
+
+    .proj-img-wrap {
+      position: relative; border-radius: 12px;
+      overflow: visible; margin: 1.5rem 1.5rem 2.5rem 0;
+    }
+    /* Dekorativní offset rámeček za obrázkem */
+    .proj-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 14px -14px -14px 14px;
+      border: 2px solid rgba(82,183,136,0.4);
+      border-radius: 14px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .proj-img-wrap img {
+      transition: transform 0.5s ease; display: block; width: 100%;
+      border-radius: 12px; overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+      position: relative; z-index: 1;
+    }
+    .proj-img-wrap:hover img { transform: scale(1.04); }
+    .proj-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(27,67,50,0) 0%, rgba(15,35,25,0.82) 100%);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.45s ease;
+      border-radius: 12px; z-index: 2;
+    }
+    .proj-img-wrap:hover .proj-img-overlay { opacity: 1; }
+    .proj-img-overlay a {
+      display: flex; align-items: center; justify-content: center;
+      width: 14rem; height: 14rem;
+      border: 2px solid rgba(255,255,255,0.85);
+      color: white;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.15rem; text-transform: uppercase;
+      letter-spacing: 0.1em; text-align: center;
+      line-height: 1.6;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(4px);
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      transform: scale(0.88);
+      padding: 1rem;
+    }
+    .proj-img-wrap:hover .proj-img-overlay a { transform: scale(1); }
+    .proj-img-overlay a:hover {
+      background: rgba(255,255,255,0.18);
+      border-color: white;
+    }
+
+    /* ── SKILL PILLS STAGGER ── */
+    .skill-pill {
+      opacity: 0; transform: translateY(12px);
+      transition: opacity 0.4s ease, transform 0.4s ease, background 0.2s, color 0.2s;
+    }
+    .skill-pill.vis { opacity: 1; transform: translateY(0); }
+
+    /* ── GOLDEN DIVIDER ── */
+    .divider-gold {
+      height: 2px;
+      background: linear-gradient(to right, transparent 0%, #b8922a 30%, #e8c97a 70%, #c9a84c 100%);
+      width: 100%;
+    }
+    .divider-gold-center {
+      height: 2px;
+      background: linear-gradient(to right, transparent 0%, #c9a84c 25%, #f0d878 50%, #c9a84c 75%, transparent 100%);
+      width: 100%;
+    }
+
+    /* ── NAV ACTIVE ── */
+    .nav-d a.nav-active { color: var(--green-light) !important; }
+  </style>
+</head>
+<body>
+
+<div id="progressBar"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="#" class="nav-logo">Milan <span>Jun</span></a>
+    <div class="nav-d">
+      <a href="#o-mne">O mně</a>
+      <a href="#projekty">Projekty</a>
+      <a href="#reference">Reference</a>
+      <a href="#kontakt" class="nav-cta">Kontakt</a>
+    </div>
+    <div class="nav-m" id="navM">
+      <button id="menuBtn" aria-label="Otevřít menu">
+        <div class="first"></div>
+        <div class="second"></div>
+        <div class="third"></div>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mm" id="navMM">
+    <a href="#o-mne" class="has-divider" onclick="closeMobileMenu()">O mně</a>
+    <a href="#projekty" onclick="closeMobileMenu()">Projekty</a>
+    <a href="#reference" onclick="closeMobileMenu()">Reference</a>
+    <a href="#kontakt" onclick="closeMobileMenu()">Kontakt</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <img class="hero-bg" src="Milan/landing_photo_official2.png" alt="">
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-tag">Ahoj, jmenuji se</span>
+      <h2 class="hero-name">Milan Jun</h2>
+      <p class="hero-sub">Freelance webdesigner — tvořím weby pro firmy a živnostníky,<br>kteří chtějí být vidět online.</p>
+      <a class="hero-btn" href="#kontakt">Napište mi</a>
+      <img class="hero-img-mobile" src="Milan/landing_photo_official2.png" alt="Milan Jun">
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="o-mne">
+  <div class="container reveal">
+    <h2>O mně</h2>
+    <div class="body" style="margin-top: 2rem;">
+      <p>Jmenuji se Milan Jun a tvořím webové stránky pro malé firmy a živnostníky. Zaměřuji se na moderní, rychlé a přehledné weby, které skutečně přináší nové zákazníky – ne jen hezký vzhled.</p>
+      <p>Vycházím z přesvědčení, že dobrý web nemusí být drahý ani složitý. Musí být funkční, estetický a šitý na míru konkrétní firmě. Každý projekt beru jako partnerství – záleží mi na výsledku stejně jako vám.</p>
+      <p>Pokud hledáte freelancera, který s vámi bude komunikovat přímo a odvede poctivou práci – ozve se mi. Rád si popovídáme o vašem projektu nezávazně.</p>
+    </div>
+    <div class="skills" style="margin-top: 3rem;">
+      <span class="skill-pill">HTML / CSS / JS</span>
+      <span class="skill-pill">Responzivní design</span>
+      <span class="skill-pill">UI / UX</span>
+      <span class="skill-pill">Bootstrap 5</span>
+      <span class="skill-pill">WordPress</span>
+      <span class="skill-pill">SEO základy</span>
+      <span class="skill-pill">Animace</span>
+      <span class="skill-pill">Formuláře & API</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider-gold"></div>
+
+<!-- PROJECT 1: Bellavita -->
+<div id="projekty" class="project-block pb-1">
+  <h2 class="proj-section-title">Projekty</h2>
+  <div class="container">
+    <div class="proj-left reveal-left">
+      <div class="proj-title"><h3>Bellavita</h3></div>
+      <div class="proj-desc">
+        <p>Prezentační web pro italskou restauraci. Elegantní design s rezervačním systémem, full-width galerií a tabbovaným menu. Luxusní animace a paralaxní efekty.</p>
+      </div>
+      <div class="proj-tags">
+        <p>Technologie</p>
+        <ul>
+          <li>HTML / CSS / JS</li>
+          <li>Bootstrap 5</li>
+          <li>Scroll animace</li>
+          <li>Rezervační formulář</li>
+          <li>Galerie slider</li>
+        </ul>
+      </div>
+      <div class="proj-cta">
+        <a href="bellavita.html" target="_blank">Zobrazit projekt</a>
+      </div>
+    </div>
+    <div class="proj-right reveal-right">
+      <div class="proj-img-wrap">
+        <img class="proj-img"
+          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80"
+          alt="Bellavita – italská restaurace">
+        <div class="proj-img-overlay"><a href="bellavita.html" target="_blank">Zobrazit projekt</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT 2: Trener -->
+<div class="project-block pb-2">
+  <div class="container">
+    <div class="proj-left reveal-left">
+      <div class="proj-title"><h3>Osobní trenér</h3></div>
+      <div class="proj-desc">
+        <p>Profesionální web pro osobního trenéra s funkčním rezervačním systémem (Formspree), ceníkem služeb a scroll animacemi. Lokální fotografie klienta.</p>
+      </div>
+      <div class="proj-tags">
+        <p>Technologie</p>
+        <ul>
+          <li>HTML / CSS / JS</li>
+          <li>Formspree API</li>
+          <li>IntersectionObserver</li>
+          <li>Pricing sekce</li>
+          <li>Responzivní layout</li>
+        </ul>
+      </div>
+      <div class="proj-cta">
+        <a href="trener.html" target="_blank">Zobrazit projekt</a>
+      </div>
+    </div>
+    <div class="proj-right reveal-right">
+      <div class="proj-img-wrap">
+        <img class="proj-img"
+          src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=80"
+          alt="Osobní trenér web">
+        <div class="proj-img-overlay"><a href="trener.html" target="_blank">Zobrazit projekt</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT 3: LeadCRM -->
+<div class="project-block pb-3">
+  <div class="container">
+    <div class="proj-left reveal-left">
+      <div class="proj-title"><h3>Lead CRM</h3></div>
+      <div class="proj-desc">
+        <p>Nástroj pro freelancery – kombinuje Python scraper (Google Maps API) s lokálním CRM v prohlížeči. Kanban board, email composer s AI šablonami a WhatsApp integrace.</p>
+      </div>
+      <div class="proj-tags">
+        <p>Technologie</p>
+        <ul>
+          <li>Python + Google Maps API</li>
+          <li>Vanilla JS / localStorage</li>
+          <li>Drag & Drop kanban</li>
+          <li>AI email šablony</li>
+          <li>Gmail / Outlook / WhatsApp</li>
+        </ul>
+      </div>
+      <div class="proj-cta">
+        <a href="leads-crm/crm.html" target="_blank">Zobrazit projekt</a>
+      </div>
+    </div>
+    <div class="proj-right reveal-right">
+      <div class="proj-img-wrap">
+        <img class="proj-img"
+          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
+          alt="Lead CRM nástroj">
+        <div class="proj-img-overlay"><a href="leads-crm/crm.html" target="_blank">Zobrazit projekt</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider-gold"></div>
+
+<!-- TESTIMONIALS -->
+<div id="reference">
+  <div class="container reveal">
+    <h2>Co říkají klienti</h2>
+    <div class="test-module" style="margin-top: 0;">
+      <div class="test-inner">
+        <div class="test-nav" id="testNav"></div>
+        <div id="testSlides">
+          <div class="test-slide active">
+            <div class="test-quote">
+              <p>"Milan vytvořil web pro naši restauraci přesně podle našich představ. Komunikace byla rychlá a výsledek předčil očekávání. Doporučujeme každému, kdo hledá spolehlivého webdesignera."</p>
+            </div>
+            <div class="test-author">
+              <p>Tomáš K.</p>
+              <p>Restaurace Bellavita</p>
+            </div>
+          </div>
+          <div class="test-slide">
+            <div class="test-quote">
+              <p>"Hledal jsem někoho, kdo mi udělá web rychle a bez zbytečného složitého vysvětlování. Milan přesně věděl, co potřebuji, a web byl hotov dříve, než jsem čekal."</p>
+            </div>
+            <div class="test-author">
+              <p>Jakub M.</p>
+              <p>Osobní trenér</p>
+            </div>
+          </div>
+          <div class="test-slide">
+            <div class="test-quote">
+              <p>"Profesionální přístup, krásný design a web, který skutečně funguje. Milan nám pomohl i s texty. Rozhodně budeme spolupracovat i na dalším projektu."</p>
+            </div>
+            <div class="test-author">
+              <p>Petra N.</p>
+              <p>Kosmetické studio</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider-gold-center"></div>
+
+<!-- FOOTER / CONTACT -->
+<div id="kontakt">
+  <div class="container">
+    <div class="footer-left reveal">
+      <h4>Potřebujete web?<br>Pojďme na to.</h4>
+      <p class="footer-tagline">Ozvu se do 24 hodin. První konzultace zdarma.</p>
+      <a class="footer-btn" href="mailto:jun.milan@outlook.com">Napište mi</a>
+    </div>
+    <div class="footer-right reveal">
+      <ul>
+        <li><a href="https://linkedin.com/in/milanjun" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/milanjun" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="mailto:jun.milan@outlook.com">Email</a></li>
+      </ul>
+    </div>
+    <div class="footer-copy">
+      <span>© 2025 − <a href="#">Milan Jun</a> − Freelance Webdesigner</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── NAVBAR SCROLL
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ── MOBILE MENU
+const menuBtn = document.getElementById('menuBtn');
+const navM    = document.getElementById('navM');
+const navMM   = document.getElementById('navMM');
+let menuOpen  = false;
+
+menuBtn.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  navM.classList.toggle('open', menuOpen);
+  navMM.classList.toggle('open', menuOpen);
+  document.body.style.overflow = menuOpen ? 'hidden' : '';
+});
+
+function closeMobileMenu() {
+  menuOpen = false;
+  navM.classList.remove('open');
+  navMM.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+    closeMobileMenu();
+  });
+});
+
+// ── TESTIMONIALS
+const slides = document.querySelectorAll('.test-slide');
+const navEl  = document.getElementById('testNav');
+let current  = 0;
+
+slides.forEach((_, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'test-dot' + (i === 0 ? ' active' : '');
+  btn.innerHTML = '<div></div>';
+  btn.addEventListener('click', () => goTo(i));
+  navEl.appendChild(btn);
+});
+
+function goTo(i) {
+  slides[current].classList.remove('active');
+  navEl.children[current].classList.remove('active');
+  current = i;
+  slides[current].classList.add('active');
+  navEl.children[current].classList.add('active');
+}
+
+setInterval(() => goTo((current + 1) % slides.length), 5000);
+
+// ── SCROLL PROGRESS BAR
+const progressBar = document.getElementById('progressBar');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+
+// ── HERO PARALLAX + SHRINK
+const heroBg      = document.querySelector('.hero-bg');
+const heroContent = document.querySelector('.hero-content');
+function updateParallax() {
+  const s = window.scrollY;
+  const scale = Math.max(0.82, 1 - s * 0.00026);
+  if (heroBg)      heroBg.style.transform = 'translateY(' + (s * 0.18) + 'px) scale(' + scale + ')';
+  if (heroContent) {
+    heroContent.style.opacity   = Math.max(0, 1 - s * 0.0022);
+    heroContent.style.transform = 'scale(' + Math.max(0.88, 1 - s * 0.00018) + ')';
+  }
+}
+window.addEventListener('scroll', updateParallax, { passive: true });
+
+// ── SCROLL SPY (nav links)
+const spySections = ['o-mne','projekty','reference','kontakt'].map(id => document.getElementById(id)).filter(Boolean);
+const navLinks    = document.querySelectorAll('.nav-d a[href^="#"]');
+
+function updateScrollSpy() {
+  let activeId = '';
+  spySections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 160) activeId = sec.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('nav-active', a.getAttribute('href') === '#' + activeId);
+  });
+}
+window.addEventListener('scroll', updateScrollSpy, { passive: true });
+
+// ── SCROLL REVEAL (opakuje se při každém průchodu)
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    } else {
+      e.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
+
+// ── SKILL PILLS STAGGER
+const pillObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.skill-pill').forEach((p, i) => {
+        setTimeout(() => p.classList.add('vis'), i * 80);
+      });
+      pillObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+const skillsContainer = document.querySelector('.skills');
+if (skillsContainer) pillObserver.observe(skillsContainer);
+
+// ── BUTTON SHINE (sleduje kurzor kdekoliv na stránce)
+const shineBtn = document.querySelector('.footer-btn');
+if (shineBtn) {
+  document.addEventListener('mousemove', e => {
+    const rect = shineBtn.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%';
+    const y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%';
+    shineBtn.style.setProperty('--mx', x);
+    shineBtn.style.setProperty('--my', y);
+  });
+}
+</script>
+</body>
+</html>
