@@ -428,19 +428,32 @@
        MENU
     ═══════════════════════════════ */
     .section-menu {
-      background: linear-gradient(180deg, var(--cream) 0%, var(--cream-mid) 100%);
+      background: linear-gradient(160deg, #2a0a0a 0%, #4a1225 40%, #3d0f1e 70%, #1f0810 100%);
       padding: 7rem 5%;
     }
 
+    .section-menu .section-label {
+      color: #c9a55a;
+    }
+
+    .section-menu .section-label::before,
+    .section-menu .section-label::after {
+      background: #c9a55a;
+    }
+
+    .section-menu .section-title {
+      color: #f0ebe2;
+    }
+
     .menu-tabs {
-      border-bottom: 1px solid var(--cream-dark);
+      border-bottom: 1px solid rgba(255,255,255,0.15);
       margin-bottom: 3rem;
       justify-content: center;
       gap: 0.2rem;
     }
 
     .menu-tabs .nav-link {
-      color: var(--text-mid) !important;
+      color: rgba(255,255,255,0.55) !important;
       font-size: 0.68rem;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -453,11 +466,11 @@
     }
 
     .menu-tabs .nav-link.active {
-      color: var(--blue) !important;
-      border-bottom-color: var(--blue);
+      color: #c9a55a !important;
+      border-bottom-color: #c9a55a;
     }
 
-    .menu-tabs .nav-link:hover { color: var(--blue) !important; }
+    .menu-tabs .nav-link:hover { color: rgba(255,255,255,0.9) !important; }
 
     .dish-card {
       background: var(--white);
@@ -503,7 +516,7 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.15rem;
       font-weight: 600;
-      color: var(--blue);
+      color: #8a3a4a;
     }
 
     .menu-cta {
