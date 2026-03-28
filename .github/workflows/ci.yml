@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check HTML syntax
+        uses: nicferrier/html5check-action@v1
+        with:
+          file: index.html
+
+      - name: Check for broken links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress index.html
+          fail: true
+
+      - name: Check file sizes
+        run: |
+          MAX_SIZE=500000  # 500KB
+          for file in *.html *.css *.js 2>/dev/null; do
+            if [ -f "$file" ]; then
+              size=$(stat -c%s "$file")
+              if [ "$size" -gt "$MAX_SIZE" ]; then
+                echo "::warning::$file is ${size} bytes (limit: ${MAX_SIZE})"
+              else
+                echo "✓ $file — ${size} bytes"
+              fi
+            fi
+          done
