@@ -19,11 +19,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html {
       font-size: 62.5%; -webkit-font-smoothing: antialiased;
-      scroll-snap-type: y proximity;
       scroll-behavior: smooth;
-    }
-    .hero, #o-mne, .project-block, #reference, #kontakt {
-      scroll-snap-align: start;
     }
     body {
       font-family: 'Roboto Mono', monospace;
@@ -255,7 +251,7 @@
       background: white;
       min-height: 100vh;
       display: flex; align-items: center;
-      padding: 10rem 0 8rem;
+      padding: 8rem 0;
     }
     #o-mne .container { flex-direction: column; width: var(--content-w); max-width: 100%; }
     #o-mne h2 { color: var(--green); margin-bottom: 2rem; }
@@ -292,7 +288,7 @@
       font-size: 6.5rem;
       line-height: 1;
       letter-spacing: 0.4rem;
-      padding: 10rem 0 3rem;
+      padding: 7rem 0 3rem;
       opacity: 0.92;
     }
     @media (max-width: 600px) { .proj-section-title { font-size: 4rem; padding: 5rem 0 2rem; } }
@@ -363,7 +359,7 @@
       background: white;
       min-height: 100vh;
       display: flex; align-items: center;
-      padding: 10rem 0 8rem;
+      padding: 8rem 0;
     }
     #reference .container { flex-direction: column; width: var(--content-w); max-width: 100%; }
     #reference h2 { color: var(--green); margin-bottom: 2rem; }
