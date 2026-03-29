@@ -442,6 +442,56 @@
       transition: opacity 0.3s;
     }
     .footer-btn:hover { background-position: right center; }
+    .contact-form {
+      width: 100%; max-width: 540px; margin: 0 auto 2rem;
+      text-align: left;
+    }
+    .contact-form-intro {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.3rem; line-height: 2rem;
+      text-align: center; margin-bottom: 3rem;
+    }
+    .contact-form-intro strong {
+      color: #e8c97a;
+    }
+    .contact-form label {
+      display: block; color: rgba(255,255,255,0.5);
+      font-size: 1.1rem; letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 0.6rem;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%; padding: 1.2rem 1.4rem;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 3px; color: white;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.3rem; margin-bottom: 2rem;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: #e8c97a;
+      background: rgba(255,255,255,0.1);
+    }
+    .contact-form textarea { min-height: 15rem; resize: vertical; }
+    .contact-form-btn {
+      display: inline-block; width: 100%;
+      background: linear-gradient(90deg, #b8922a, #e8c97a, #b8922a);
+      background-size: 200% auto;
+      border: none; color: #1b1a14;
+      padding: 1.4rem; font-family: 'Roboto Mono', monospace;
+      font-size: 1.3rem; text-transform: uppercase;
+      letter-spacing: 0.14em; font-weight: 600;
+      cursor: pointer; border-radius: 2px;
+      transition: background-position 0.4s ease;
+    }
+    .contact-form-btn:hover { background-position: right center; }
     .footer-right { padding-top: 4rem; width: 100%; }
     .footer-right ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
     .footer-right li { margin: 0; position: relative; }
@@ -766,7 +816,15 @@
     <div class="footer-left reveal">
       <h4>Potřebujete web?<br>Pojďme na to.</h4>
       <p class="footer-tagline">Ozvu se do 24 hodin. První konzultace zdarma.</p>
-      <a class="footer-btn" href="mailto:jun.milan@outlook.com">Napište mi</a>
+      <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <p class="contact-form-intro">Napište mi svoji představu o webu.<br><strong>Prvotní návrh a konzultaci máte zdarma.</strong></p>
+        <label for="email">Váš email</label>
+        <input type="email" id="email" name="email" placeholder="jan@example.com" required>
+        <label for="message">Popište svou představu</label>
+        <textarea id="message" name="message" placeholder="Např. potřebuji web pro kavárnu, chci moderní design, fotogalerii a kontaktní formulář..." required></textarea>
+        <button type="submit" class="contact-form-btn">Odeslat nezávazně</button>
+      </form>
+      <a class="footer-btn" href="mailto:jun.milan@outlook.com">Nebo napište přímo na email</a>
     </div>
     <div class="footer-right reveal">
       <ul>
