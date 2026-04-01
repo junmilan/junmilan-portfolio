@@ -797,12 +797,19 @@
       line-height: 1;
       color: rgba(45,106,79,0.07);
       position: absolute;
+      -webkit-text-stroke: 2px transparent;
+      transition: color 0.6s ease, -webkit-text-stroke-color 0.6s ease, text-shadow 0.6s ease;
       top: 2rem;
       letter-spacing: -0.04em;
       pointer-events: none;
     }
     .how-step:nth-child(odd) .how-step-num { right: 52%; }
     .how-step:nth-child(even) .how-step-num { left: 52%; }
+    .how-step.is-active .how-step-num {
+      color: rgba(45,106,79,0.05);
+      -webkit-text-stroke-color: var(--green-light);
+      text-shadow: 0 0 30px rgba(82,183,136,0.2);
+    }
 
     /* Obsah */
     .how-step-content {
@@ -1061,7 +1068,7 @@
   <div class="container" style="flex-direction: column;">
     <div class="how-header">
       <h2>Jak probíhá spolupráce</h2>
-      <p>Od prvního kontaktu po spuštění webu — transparentní proces bez zbytečných komplikací.</p>
+      <p>Od prvního kontaktu po spuštění webu.</p>
     </div>
     <div class="how-steps">
 
@@ -1307,7 +1314,7 @@ const revealObserver = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
 
-// ── HOW STEPS SCROLL REVEAL
+// ── HOW STEPS SCROLL REVEAL + ACTIVE STATE
 const howObserver = new IntersectionObserver(entries => {
   entries.forEach((e, i) => {
     if (e.isIntersecting) {
@@ -1315,7 +1322,19 @@ const howObserver = new IntersectionObserver(entries => {
     }
   });
 }, { threshold: 0.15 });
-document.querySelectorAll('.how-step').forEach(el => howObserver.observe(el));
+const howActiveObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('is-active');
+    } else {
+      e.target.classList.remove('is-active');
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.how-step').forEach(el => {
+  howObserver.observe(el);
+  howActiveObserver.observe(el);
+});
 
 // ── CLICK HINT (reappear on scroll, hide on hover)
 const hintObserver = new IntersectionObserver(entries => {
