@@ -807,6 +807,7 @@
           <option value="Kreativní">Kreativní / design / fotografie</option>
           <option value="Jiné">Jiné</option>
         </select>
+        <input type="text" id="industryOther" name="industry_other" placeholder="Upřesněte obor..." style="display:none; margin-top:0.8rem;">
       </div>
 
       <div class="field">
@@ -1197,6 +1198,14 @@
      FONT IMPORTS (lazy loaded in step 3)
 ══════════════════════════════════ -->
 <script>
+// ── "JINÉ" TOGGLE FOR INDUSTRY ──
+const industrySelect = document.getElementById('industry');
+const industryOther = document.getElementById('industryOther');
+industrySelect.addEventListener('change', () => {
+  industryOther.style.display = industrySelect.value === 'Jiné' ? 'block' : 'none';
+  if (industrySelect.value !== 'Jiné') industryOther.value = '';
+});
+
 // ── WIZARD NAVIGATION ──
 let currentStep = 0;
 const steps = document.querySelectorAll('.step');
