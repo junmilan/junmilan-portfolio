@@ -256,7 +256,7 @@
     /* ── Multi-select cards ── */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.2rem;
     }
     .card-option {
@@ -273,6 +273,7 @@
       align-items: center;
       gap: 1.2rem;
       padding: 1.4rem 1.6rem;
+      min-height: 6rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 8px;
@@ -306,7 +307,7 @@
     /* ── Style cards (visual direction) ── */
     .style-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.4rem;
     }
     .style-card {
@@ -320,6 +321,11 @@
     }
     .style-card-inner {
       padding: 2rem;
+      min-height: 12rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 10px;
