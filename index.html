@@ -602,10 +602,10 @@
       cursor: pointer;
     }
     .proj-img-secondary {
-      bottom: -5.5rem; right: -3rem;
+      bottom: -5.5rem; right: -5rem;
     }
     .proj-img-tertiary {
-      bottom: -11rem; right: -6rem;
+      bottom: -11rem; right: -10rem;
       z-index: 0;
     }
     .proj-img-secondary:hover, .proj-img-tertiary:hover {
@@ -615,10 +615,26 @@
     .proj-img-wrap:hover .proj-img { transform: scale(1.02); }
     .proj-img-wrap:hover .proj-img-secondary { transform: scale(1.03) translate(-4px, -4px); }
     .proj-img-wrap:hover .proj-img-tertiary { transform: scale(1.03) translate(-8px, -8px); }
+    /* Click hint icon */
+    .proj-click-hint {
+      position: absolute;
+      bottom: 1rem; left: 1rem;
+      width: 2.5rem; height: 2.5rem;
+      z-index: 5;
+      opacity: 0.75;
+      pointer-events: none;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+      animation: clickPulse 2s ease-in-out infinite;
+    }
+    @keyframes clickPulse {
+      0%, 100% { transform: scale(1); opacity: 0.75; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
     @media (max-width: 900px) {
-      .proj-img-secondary { bottom: -4rem; right: -1.5rem; }
-      .proj-img-tertiary { bottom: -8rem; right: -3rem; }
+      .proj-img-secondary { bottom: -4rem; right: -2.5rem; }
+      .proj-img-tertiary { bottom: -8rem; right: -5rem; }
       .proj-img-wrap { margin-bottom: 10rem; }
+      .proj-click-hint { width: 2rem; height: 2rem; }
     }
     .proj-img-overlay {
       position: absolute; inset: 0;
@@ -774,6 +790,7 @@
         <img class="proj-img-tertiary"
           src="obrazky/bellavita3.png"
           alt="Bellavita – další sekce">
+        <img class="proj-click-hint" src="obrazky/click.png" alt="Klikněte pro další obrázky">
         <div class="proj-img-overlay"><a href="bellavita.html" target="_blank">Zobrazit projekt</a></div>
       </div>
     </div>
@@ -810,6 +827,7 @@
         <img class="proj-img-secondary"
           src="obrazky/trener2.png"
           alt="Osobní trenér – detail">
+        <img class="proj-click-hint" src="obrazky/click.png" alt="Klikněte pro další obrázky">
         <img class="proj-img-tertiary"
           src="obrazky/trener3.png"
           alt="Osobní trenér – další sekce">
