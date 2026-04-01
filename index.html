@@ -435,7 +435,7 @@
     }
     @media (max-width: 724px) { .footer-left h4 { font-size: 3rem; line-height: 4rem; } }
     .footer-tagline {
-      color: rgba(255,255,255,0.55);
+      color: #555;
       font-size: 1.4rem; margin-bottom: 3.5rem;
     }
     .footer-btn {
@@ -575,7 +575,17 @@
 
     .proj-img-wrap {
       position: relative; border-radius: 12px;
-      overflow: visible; margin: 1.5rem 1.5rem 2.5rem 0;
+      overflow: visible; margin: 1.5rem 1.5rem 12rem 0;
+    }
+    /* Podsvícení za obrázky */
+    .proj-img-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3rem;
+      background: radial-gradient(ellipse at 50% 50%, rgba(82,183,136,0.25) 0%, rgba(82,183,136,0.08) 40%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(30px);
     }
     /* Dekorativní offset rámeček za obrázkem */
     .proj-img-wrap::after {
@@ -587,19 +597,72 @@
       z-index: 0;
       pointer-events: none;
     }
-    .proj-img-wrap img {
+    .proj-img-wrap .proj-img {
       transition: transform 0.5s ease; display: block; width: 100%;
       border-radius: 12px; overflow: hidden;
       box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-      position: relative; z-index: 1;
+      position: relative; z-index: 2;
     }
-    .proj-img-wrap:hover img { transform: scale(1.04); }
+    .proj-img-secondary, .proj-img-tertiary {
+      position: absolute;
+      width: 100%; z-index: 1;
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      transition: transform 0.5s ease, z-index 0s;
+      cursor: pointer;
+    }
+    .proj-img-secondary {
+      bottom: -5.5rem; right: -5rem;
+    }
+    .proj-img-tertiary {
+      bottom: -11rem; right: -10rem;
+      z-index: 0;
+    }
+    .proj-img-secondary:hover, .proj-img-tertiary:hover {
+      z-index: 4;
+      transform: scale(1.05) !important;
+    }
+    .proj-img-wrap:hover .proj-img { transform: scale(1.02); }
+    .proj-img-wrap:hover .proj-img-secondary { transform: scale(1.03) translate(-4px, -4px); }
+    .proj-img-wrap:hover .proj-img-tertiary { transform: scale(1.03) translate(-8px, -8px); }
+    /* Click hint icon */
+    .proj-click-hint {
+      position: absolute;
+      bottom: -14.6rem; left: 9.5rem;
+      width: 7.5rem; height: 7.5rem;
+      z-index: 5;
+      opacity: 0.85;
+      pointer-events: none;
+      filter: drop-shadow(0 3px 10px rgba(0,0,0,0.6));
+      opacity: 0;
+      visibility: hidden;
+    }
+    .proj-click-hint.active {
+      visibility: visible;
+      animation: clickPulse 1.5s ease-in-out infinite;
+    }
+    .proj-click-hint.hidden {
+      animation: clickFadeOut 0.4s ease-out forwards;
+    }
+    @keyframes clickPulse {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(1.18); opacity: 1; }
+    }
+    @keyframes clickFadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+    @media (max-width: 900px) {
+      .proj-img-secondary { bottom: -4rem; right: -2.5rem; }
+      .proj-img-tertiary { bottom: -8rem; right: -5rem; }
+      .proj-img-wrap { margin-bottom: 10rem; }
+      .proj-click-hint { width: 5rem; height: 5rem; }
+    }
     .proj-img-overlay {
       position: absolute; inset: 0;
       background: linear-gradient(135deg, rgba(27,67,50,0) 0%, rgba(15,35,25,0.82) 100%);
       display: flex; align-items: center; justify-content: center;
       opacity: 0; transition: opacity 0.45s ease;
-      border-radius: 12px; z-index: 2;
+      border-radius: 12px; z-index: 3;
     }
     .proj-img-wrap:hover .proj-img-overlay { opacity: 1; }
     .proj-img-overlay a {
@@ -640,6 +703,206 @@
       height: 2px;
       background: linear-gradient(to right, transparent 0%, #c9a84c 25%, #f0d878 50%, #c9a84c 75%, transparent 100%);
       width: 100%;
+    }
+
+    /* ── JAK PROBÍHÁ SPOLUPRÁCE ── */
+    .how-section {
+      padding: 10rem 0 12rem;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .how-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(180deg, transparent 0%, rgba(45,106,79,0.15) 10%, rgba(45,106,79,0.15) 90%, transparent 100%);
+      z-index: 0;
+    }
+    .how-header {
+      text-align: center;
+      margin-bottom: 8rem;
+      position: relative;
+      z-index: 1;
+    }
+    .how-header h2 {
+      color: var(--text);
+      font-size: 4rem;
+      margin-bottom: 2rem;
+    }
+    .how-header p {
+      color: #777;
+      font-size: 1.5rem;
+      line-height: 2.4rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .how-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Jednotlivý krok */
+    .how-step {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      padding: 5rem 0;
+      position: relative;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .how-step.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Sudé kroky — obrázek vlevo, text vpravo */
+    .how-step:nth-child(even) .how-step-content { order: 2; }
+    .how-step:nth-child(even) .how-step-img-wrap { order: 1; }
+
+    /* Timeline dot */
+    .how-step::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      background: var(--green-light);
+      border-radius: 50%;
+      border: 3px solid #fff;
+      z-index: 2;
+      transition: box-shadow 0.4s ease;
+    }
+    .how-step.is-visible::before {
+      box-shadow: 0 0 20px rgba(82,183,136,0.5), 0 0 40px rgba(82,183,136,0.2);
+    }
+
+    /* Číslo kroku */
+    .how-step-num {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 8rem;
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(45,106,79,0.07);
+      position: absolute;
+      transition: color 0.6s ease;
+      top: 2rem;
+      letter-spacing: -0.04em;
+      pointer-events: none;
+    }
+    .how-step:nth-child(odd) .how-step-num { right: 52%; }
+    .how-step:nth-child(even) .how-step-num { left: 52%; }
+    .how-step.is-active .how-step-num {
+      color: rgba(82,183,136,0.3);
+    }
+
+    /* Obsah */
+    .how-step-content {
+      position: relative;
+    }
+    .how-step-label {
+      display: inline-block;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--green-light);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.2rem;
+    }
+    .how-step-title {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+    .how-step p {
+      font-size: 1.4rem;
+      line-height: 2.6rem;
+      color: #555;
+    }
+
+    /* Obrázek */
+    .how-step-img-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .how-step-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      border: 1px solid rgba(82,183,136,0.15);
+      pointer-events: none;
+    }
+    .how-step-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      object-position: left center;
+      display: block;
+      border-radius: 16px;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .how-step-img-wrap:hover .how-step-img {
+      transform: scale(1.03);
+    }
+    .how-step-img-glow {
+      position: absolute;
+      inset: -1px;
+      border-radius: 16px;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.12), 0 0 60px rgba(82,183,136,0.06);
+      pointer-events: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .how-section { padding: 6rem 0 8rem; }
+      .how-section::before { left: 2rem; }
+      .how-header { margin-bottom: 5rem; }
+      .how-header h2 { font-size: 3rem; }
+      .how-step {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 3rem 0 3rem 4rem;
+      }
+      .how-step::before {
+        left: 2rem;
+        top: 4rem;
+        transform: translate(-50%, 0);
+      }
+      .how-step:nth-child(even) .how-step-content { order: 1; }
+      .how-step:nth-child(even) .how-step-img-wrap { order: 2; }
+      .how-step-num {
+        font-size: 5rem;
+        position: relative;
+        top: auto; right: auto; left: auto;
+        margin-bottom: 0.5rem;
+      }
+      .how-step:nth-child(odd) .how-step-num,
+      .how-step:nth-child(even) .how-step-num { right: auto; left: auto; }
+      .how-step-title { font-size: 2rem; }
+    }
+    @media (max-width: 560px) {
+      .how-step { padding-left: 3rem; }
+      .how-section::before { left: 1.5rem; }
+      .how-step::before { left: 1.5rem; }
     }
 
     /* ── NAV ACTIVE ── */
@@ -742,6 +1005,13 @@
         <img class="proj-img"
           src="obrazky/bellavita.png"
           alt="Bellavita – italská restaurace">
+        <img class="proj-img-secondary"
+          src="obrazky/bellavita2.png"
+          alt="Bellavita – menu sekce">
+        <img class="proj-img-tertiary"
+          src="obrazky/bellavita3.png"
+          alt="Bellavita – další sekce">
+        <img class="proj-click-hint" src="obrazky/click.png" alt="Klikněte pro další obrázky">
         <div class="proj-img-overlay"><a href="bellavita.html" target="_blank">Zobrazit projekt</a></div>
       </div>
     </div>
@@ -775,8 +1045,82 @@
         <img class="proj-img"
           src="obrazky/trener.png"
           alt="Osobní trenér web">
+        <img class="proj-img-secondary"
+          src="obrazky/trener2.png"
+          alt="Osobní trenér – detail">
+        <img class="proj-click-hint" src="obrazky/click.png" alt="Klikněte pro další obrázky">
+        <img class="proj-img-tertiary"
+          src="obrazky/trener3.png"
+          alt="Osobní trenér – další sekce">
         <div class="proj-img-overlay"><a href="trener.html" target="_blank">Zobrazit projekt</a></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider-gold"></div>
+
+<!-- JAK PROBÍHÁ SPOLUPRÁCE -->
+<div class="how-section">
+  <div class="container" style="flex-direction: column;">
+    <div class="how-header">
+      <h2>Jak probíhá spolupráce</h2>
+      <p>Od prvního kontaktu po spuštění webu.</p>
+    </div>
+    <div class="how-steps">
+
+      <div class="how-step">
+        <div class="how-step-num">01</div>
+        <div class="how-step-content">
+          <span class="how-step-label">Krok 1</span>
+          <h3 class="how-step-title">Poptávka</h3>
+          <p>Napíšete mi základní představu — jaký web potřebujete, pro koho je určený, jaký styl a obsah si představujete. Stačí pár vět.</p>
+        </div>
+        <div class="how-step-img-wrap">
+          <img class="how-step-img" src="obrazky/poptavka.png" alt="Odeslání poptávky přes formulář">
+          <div class="how-step-img-glow"></div>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step-num">02</div>
+        <div class="how-step-content">
+          <span class="how-step-label">Krok 2</span>
+          <h3 class="how-step-title">Návrh zdarma</h3>
+          <p>Připravím nezávazný návrh struktury a vizuálního směru, abyste viděli, jak bude web vypadat — a to úplně zdarma.</p>
+        </div>
+        <div class="how-step-img-wrap">
+          <img class="how-step-img" src="obrazky/trener_jak.png" alt="Ukázka návrhu webových stránek">
+          <div class="how-step-img-glow"></div>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step-num">03</div>
+        <div class="how-step-content">
+          <span class="how-step-label">Krok 3</span>
+          <h3 class="how-step-title">Úpravy a doladění</h3>
+          <p>Společně doladíme detaily, obsah, design i funkčnost tak, aby výsledek přesně odpovídal vašim očekáváním.</p>
+        </div>
+        <div class="how-step-img-wrap">
+          <img class="how-step-img" src="obrazky/upravy.jpg" alt="Konzultace a úpravy návrhu">
+          <div class="how-step-img-glow"></div>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step-num">04</div>
+        <div class="how-step-content">
+          <span class="how-step-label">Krok 4</span>
+          <h3 class="how-step-title">Spuštění webu</h3>
+          <p>Po finálním schválení web nasadím, otestuji na všech zařízeních a připravím k ostrému spuštění.</p>
+        </div>
+        <div class="how-step-img-wrap">
+          <img class="how-step-img" src="obrazky/spusten.jpg" alt="Finální spuštění webových stránek">
+          <div class="how-step-img-glow"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -966,6 +1310,59 @@ const revealObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
+
+// ── HOW STEPS SCROLL REVEAL + ACTIVE STATE
+const howObserver = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('is-visible'), i * 100);
+    }
+  });
+}, { threshold: 0.15 });
+const allHowSteps = document.querySelectorAll('.how-step');
+document.querySelectorAll('.how-step').forEach(el => howObserver.observe(el));
+
+// Highlight step number closest to cursor
+document.addEventListener('mousemove', e => {
+  let closest = null;
+  let minDist = Infinity;
+  allHowSteps.forEach(step => {
+    const rect = step.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+    if (dist < minDist) { minDist = dist; closest = step; }
+  });
+  allHowSteps.forEach(s => s.classList.remove('is-active'));
+  if (closest && minDist < 600) closest.classList.add('is-active');
+});
+
+// ── CLICK HINT (reappear on scroll, hide on hover)
+const hintObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    const hint = e.target.querySelector('.proj-click-hint');
+    if (!hint) return;
+    if (e.isIntersecting) {
+      hint.classList.remove('active', 'hidden');
+      void hint.offsetWidth;
+      hint.classList.add('active');
+    } else {
+      hint.classList.remove('active', 'hidden');
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.proj-img-wrap').forEach(wrap => {
+  hintObserver.observe(wrap);
+  wrap.querySelectorAll('.proj-img-secondary, .proj-img-tertiary').forEach(img => {
+    img.addEventListener('mouseenter', () => {
+      const hint = wrap.querySelector('.proj-click-hint');
+      if (hint && hint.classList.contains('active')) {
+        hint.classList.remove('active');
+        hint.classList.add('hidden');
+      }
+    });
+  });
+});
 
 // ── SKILL PILLS STAGGER
 const pillObserver = new IntersectionObserver(entries => {
