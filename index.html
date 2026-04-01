@@ -705,6 +705,77 @@
       width: 100%;
     }
 
+    /* ── JAK TO FUNGUJE ── */
+    .how-it-works {
+      padding: 6rem 0;
+      background: var(--bg-dark);
+    }
+    .how-it-works h2 {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2.5rem;
+      counter-reset: step;
+    }
+    .how-step {
+      text-align: center;
+      position: relative;
+    }
+    .how-step-num {
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--green-light);
+      opacity: 0.25;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .how-step-img {
+      width: 100%;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+      margin-bottom: 1.5rem;
+    }
+    .how-step p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text-mid);
+      padding: 0 0.5rem;
+    }
+    .how-connector {
+      display: none;
+    }
+    @media (min-width: 901px) {
+      .how-connector {
+        display: block;
+        position: absolute;
+        top: 2rem;
+        right: -1.5rem;
+        width: 2.5rem;
+        height: 2px;
+        background: linear-gradient(to right, var(--green-light), transparent);
+        opacity: 0.3;
+      }
+      .how-step:last-child .how-connector { display: none; }
+    }
+    @media (max-width: 900px) {
+      .how-steps {
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem 2rem;
+      }
+    }
+    @media (max-width: 560px) {
+      .how-steps {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+
     /* ── NAV ACTIVE ── */
     .nav-d a.nav-active { color: var(--green-light) !important; }
   </style>
@@ -853,6 +924,40 @@
           src="obrazky/trener3.png"
           alt="Osobní trenér – další sekce">
         <div class="proj-img-overlay"><a href="trener.html" target="_blank">Zobrazit projekt</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider-gold"></div>
+
+<!-- JAK TO FUNGUJE -->
+<div class="how-it-works">
+  <div class="container reveal">
+    <h2>Jak to funguje</h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-step-num">01</div>
+        <img class="how-step-img" src="obrazky/formular.png" alt="Vyplnění formuláře">
+        <p>Napíšete mi, jak si představujete Váš web — barvy, styl, fotky.</p>
+        <div class="how-connector"></div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">02</div>
+        <img class="how-step-img" src="obrazky/trener.png" alt="Návrh webu">
+        <p>Zdarma Vám pošlu návrh podle zadaných požadavků a mých vlastních doporučení.</p>
+        <div class="how-connector"></div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">03</div>
+        <img class="how-step-img" src="obrazky/upravy.jpg" alt="Konzultace úprav">
+        <p>Společně zkonzultujeme možné úpravy.</p>
+        <div class="how-connector"></div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">04</div>
+        <img class="how-step-img" src="obrazky/spusten.jpg" alt="Spuštění webu">
+        <p>Spustíme Váš zbrusu nový web.</p>
       </div>
     </div>
   </div>
