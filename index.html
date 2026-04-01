@@ -805,7 +805,7 @@
     .how-step:nth-child(odd) .how-step-num { right: 52%; }
     .how-step:nth-child(even) .how-step-num { left: 52%; }
     .how-step.is-active .how-step-num {
-      color: rgba(82,183,136,0.15);
+      color: rgba(82,183,136,0.3);
     }
 
     /* Obsah */
@@ -1320,17 +1320,21 @@ const howObserver = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.15 });
 const allHowSteps = document.querySelectorAll('.how-step');
-const howActiveObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      allHowSteps.forEach(s => s.classList.remove('is-active'));
-      e.target.classList.add('is-active');
-    }
+document.querySelectorAll('.how-step').forEach(el => howObserver.observe(el));
+
+// Highlight step number closest to cursor
+document.addEventListener('mousemove', e => {
+  let closest = null;
+  let minDist = Infinity;
+  allHowSteps.forEach(step => {
+    const rect = step.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+    if (dist < minDist) { minDist = dist; closest = step; }
   });
-}, { threshold: 0.5 });
-document.querySelectorAll('.how-step').forEach(el => {
-  howObserver.observe(el);
-  howActiveObserver.observe(el);
+  allHowSteps.forEach(s => s.classList.remove('is-active'));
+  if (closest && minDist < 600) closest.classList.add('is-active');
 });
 
 // ── CLICK HINT (reappear on scroll, hide on hover)
