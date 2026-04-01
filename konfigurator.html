@@ -795,7 +795,7 @@
 
       <div class="field">
         <label for="name">Jméno / název firmy *</label>
-        <input type="text" id="name" name="name" placeholder="např. Jan Novák / Firma s.r.o." required>
+        <input type="text" id="name" name="name" placeholder="např. Jan Novák / Firma s.r.o.">
       </div>
 
       <div class="field">
@@ -1151,7 +1151,7 @@
 
       <div class="field">
         <label for="email">Email *</label>
-        <input type="email" id="email" name="email" placeholder="vas@email.cz" required>
+        <input type="email" id="email" name="email" placeholder="vas@email.cz">
       </div>
 
       <div class="field">
@@ -1178,7 +1178,7 @@
       </div>
 
       <label class="checkbox-wrap">
-        <input type="checkbox" id="consent" required>
+        <input type="checkbox" id="consent" name="consent">
         <span>Souhlasím se zpracováním osobních údajů za účelem zpracování poptávky. Data budou použita pouze pro komunikaci ohledně projektu.</span>
       </label>
 
@@ -1485,6 +1485,15 @@ form.addEventListener('submit', async e => {
   e.preventDefault();
 
   const submitBtn = form.querySelector('.btn-submit');
+
+  // Validate required fields
+  const nameVal = document.getElementById('name').value.trim();
+  const emailVal = document.getElementById('email').value.trim();
+  const consentVal = document.getElementById('consent').checked;
+
+  if (!nameVal) { alert('Vyplňte prosím jméno nebo název firmy.'); goStep(0); return; }
+  if (!emailVal) { alert('Vyplňte prosím email.'); goStep(5); return; }
+  if (!consentVal) { alert('Pro odeslání je potřeba souhlas se zpracováním údajů.'); return; }
 
   // Check if any files are still uploading
   const uploading = uploadedFiles.some(f => f.status === 'uploading');
