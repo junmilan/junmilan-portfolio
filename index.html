@@ -577,6 +577,16 @@
       position: relative; border-radius: 12px;
       overflow: visible; margin: 1.5rem 1.5rem 12rem 0;
     }
+    /* Podsvícení za obrázky */
+    .proj-img-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3rem;
+      background: radial-gradient(ellipse at 50% 50%, rgba(82,183,136,0.25) 0%, rgba(82,183,136,0.08) 40%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(30px);
+    }
     /* Dekorativní offset rámeček za obrázkem */
     .proj-img-wrap::after {
       content: '';
