@@ -707,73 +707,76 @@
 
     /* ── JAK TO FUNGUJE ── */
     .how-it-works {
-      padding: 6rem 0;
+      padding: 6rem 0 8rem;
       background: var(--bg-dark);
     }
     .how-it-works h2 {
       text-align: center;
-      margin-bottom: 4rem;
+      margin-bottom: 5rem;
     }
     .how-steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2.5rem;
-      counter-reset: step;
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
     }
     .how-step {
-      text-align: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
       position: relative;
+    }
+    .how-step:nth-child(1) { margin-left: 0; }
+    .how-step:nth-child(2) { margin-left: 8%; }
+    .how-step:nth-child(3) { margin-left: 16%; }
+    .how-step:nth-child(4) { margin-left: 24%; }
+    .how-step-content {
+      order: 1;
     }
     .how-step-num {
       font-family: var(--font-heading);
-      font-size: 3.5rem;
+      font-size: 5rem;
       font-weight: 700;
       color: var(--green-light);
-      opacity: 0.25;
+      opacity: 0.2;
       line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .how-step-title {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-light);
       margin-bottom: 1rem;
+    }
+    .how-step p {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: var(--text-mid);
+    }
+    .how-step-img-wrap {
+      order: 2;
     }
     .how-step-img {
       width: 100%;
       aspect-ratio: 16/10;
       object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
-      margin-bottom: 1.5rem;
-    }
-    .how-step p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: var(--text-mid);
-      padding: 0 0.5rem;
-    }
-    .how-connector {
-      display: none;
-    }
-    @media (min-width: 901px) {
-      .how-connector {
-        display: block;
-        position: absolute;
-        top: 2rem;
-        right: -1.5rem;
-        width: 2.5rem;
-        height: 2px;
-        background: linear-gradient(to right, var(--green-light), transparent);
-        opacity: 0.3;
-      }
-      .how-step:last-child .how-connector { display: none; }
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
     }
     @media (max-width: 900px) {
-      .how-steps {
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem 2rem;
-      }
-    }
-    @media (max-width: 560px) {
-      .how-steps {
+      .how-step {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 1.5rem;
       }
+      .how-step:nth-child(1),
+      .how-step:nth-child(2),
+      .how-step:nth-child(3),
+      .how-step:nth-child(4) { margin-left: 0; }
+      .how-step-content { order: 1; }
+      .how-step-img-wrap { order: 2; }
+      .how-step-num { font-size: 3.5rem; }
+      .how-step-title { font-size: 1.4rem; }
     }
 
     /* ── NAV ACTIVE ── */
@@ -936,28 +939,45 @@
   <div class="container reveal">
     <h2>Jak to funguje</h2>
     <div class="how-steps">
-      <div class="how-step">
-        <div class="how-step-num">01</div>
-        <img class="how-step-img" src="obrazky/formular.png" alt="Vyplnění formuláře">
-        <p>Napíšete mi, jak si představujete Váš web — barvy, styl, fotky.</p>
-        <div class="how-connector"></div>
+      <div class="how-step reveal-left">
+        <div class="how-step-content">
+          <div class="how-step-num">01</div>
+          <h3 class="how-step-title">Zadání</h3>
+          <p>Napíšete mi, jak si představujete Váš web — barvy, styl, fotky.</p>
+        </div>
+        <div class="how-step-img-wrap">
+          <img class="how-step-img" src="obrazky/formular.png" alt="Vyplnění formuláře">
+        </div>
       </div>
-      <div class="how-step">
-        <div class="how-step-num">02</div>
-        <img class="how-step-img" src="obrazky/trener.png" alt="Návrh webu">
-        <p>Zdarma Vám pošlu návrh podle zadaných požadavků a mých vlastních doporučení.</p>
-        <div class="how-connector"></div>
+      <div class="how-step reveal-right">
+        <div class="how-step-content">
+          <div class="how-step-num">02</div>
+          <h3 class="how-step-title">Návrh zdarma</h3>
+          <p>Zdarma Vám pošlu návrh podle zadaných požadavků a mých vlastních doporučení.</p>
+        </div>
+        <div class="how-step-img-wrap">
+          <img class="how-step-img" src="obrazky/trener.png" alt="Návrh webu">
+        </div>
       </div>
-      <div class="how-step">
-        <div class="how-step-num">03</div>
-        <img class="how-step-img" src="obrazky/upravy.jpg" alt="Konzultace úprav">
-        <p>Společně zkonzultujeme možné úpravy.</p>
-        <div class="how-connector"></div>
+      <div class="how-step reveal-left">
+        <div class="how-step-content">
+          <div class="how-step-num">03</div>
+          <h3 class="how-step-title">Konzultace</h3>
+          <p>Společně zkonzultujeme možné úpravy.</p>
+        </div>
+        <div class="how-step-img-wrap">
+          <img class="how-step-img" src="obrazky/upravy.jpg" alt="Konzultace úprav">
+        </div>
       </div>
-      <div class="how-step">
-        <div class="how-step-num">04</div>
-        <img class="how-step-img" src="obrazky/spusten.jpg" alt="Spuštění webu">
-        <p>Spustíme Váš zbrusu nový web.</p>
+      <div class="how-step reveal-right">
+        <div class="how-step-content">
+          <div class="how-step-num">04</div>
+          <h3 class="how-step-title">Spuštění</h3>
+          <p>Spustíme Váš zbrusu nový web.</p>
+        </div>
+        <div class="how-step-img-wrap">
+          <img class="how-step-img" src="obrazky/spusten.jpg" alt="Spuštění webu">
+        </div>
       </div>
     </div>
   </div>
