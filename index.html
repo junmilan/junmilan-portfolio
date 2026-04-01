@@ -624,6 +624,11 @@
       opacity: 0.85;
       pointer-events: none;
       filter: drop-shadow(0 3px 10px rgba(0,0,0,0.6));
+      opacity: 0;
+      visibility: hidden;
+    }
+    .proj-click-hint.active {
+      visibility: visible;
       animation: clickPulse 1.5s ease-in-out 3, clickFadeOut 0.8s ease-out 5s forwards;
     }
     @keyframes clickPulse {
@@ -1025,6 +1030,22 @@ const revealObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
+
+// ── CLICK HINT (reappear on each scroll into view)
+const hintObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    const hint = e.target.querySelector('.proj-click-hint');
+    if (!hint) return;
+    if (e.isIntersecting) {
+      hint.classList.remove('active');
+      void hint.offsetWidth; // force reflow to restart animation
+      hint.classList.add('active');
+    } else {
+      hint.classList.remove('active');
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.proj-img-wrap').forEach(el => hintObserver.observe(el));
 
 // ── SKILL PILLS STAGGER
 const pillObserver = new IntersectionObserver(entries => {
