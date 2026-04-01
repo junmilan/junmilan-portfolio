@@ -575,7 +575,7 @@
 
     .proj-img-wrap {
       position: relative; border-radius: 12px;
-      overflow: visible; margin: 1.5rem 1.5rem 7rem 0;
+      overflow: visible; margin: 1.5rem 1.5rem 12rem 0;
     }
     /* Dekorativní offset rámeček za obrázkem */
     .proj-img-wrap::after {
@@ -593,25 +593,32 @@
       box-shadow: 0 16px 48px rgba(0,0,0,0.4);
       position: relative; z-index: 2;
     }
-    .proj-img-secondary {
+    .proj-img-secondary, .proj-img-tertiary {
       position: absolute;
-      bottom: -5.5rem; right: -3rem;
-      width: 75%; z-index: 1;
+      width: 100%; z-index: 1;
       border-radius: 12px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.5);
       transition: transform 0.5s ease, z-index 0s;
       cursor: pointer;
     }
-    .proj-img-secondary:hover {
+    .proj-img-secondary {
+      bottom: -5.5rem; right: -3rem;
+    }
+    .proj-img-tertiary {
+      bottom: -11rem; right: -6rem;
+      z-index: 0;
+    }
+    .proj-img-secondary:hover, .proj-img-tertiary:hover {
       z-index: 4;
-      transform: scale(1.05);
+      transform: scale(1.05) !important;
     }
     .proj-img-wrap:hover .proj-img { transform: scale(1.02); }
     .proj-img-wrap:hover .proj-img-secondary { transform: scale(1.03) translate(-4px, -4px); }
-    .proj-img-secondary:hover { transform: scale(1.05) !important; }
+    .proj-img-wrap:hover .proj-img-tertiary { transform: scale(1.03) translate(-8px, -8px); }
     @media (max-width: 900px) {
-      .proj-img-secondary { bottom: -4rem; right: -1.5rem; width: 70%; }
-      .proj-img-wrap { margin-bottom: 5.5rem; }
+      .proj-img-secondary { bottom: -4rem; right: -1.5rem; }
+      .proj-img-tertiary { bottom: -8rem; right: -3rem; }
+      .proj-img-wrap { margin-bottom: 10rem; }
     }
     .proj-img-overlay {
       position: absolute; inset: 0;
@@ -764,6 +771,9 @@
         <img class="proj-img-secondary"
           src="obrazky/bellavita2.png"
           alt="Bellavita – menu sekce">
+        <img class="proj-img-tertiary"
+          src="obrazky/bellavita3.png"
+          alt="Bellavita – další sekce">
         <div class="proj-img-overlay"><a href="bellavita.html" target="_blank">Zobrazit projekt</a></div>
       </div>
     </div>
@@ -800,6 +810,9 @@
         <img class="proj-img-secondary"
           src="obrazky/trener2.png"
           alt="Osobní trenér – detail">
+        <img class="proj-img-tertiary"
+          src="obrazky/trener3.png"
+          alt="Osobní trenér – další sekce">
         <div class="proj-img-overlay"><a href="trener.html" target="_blank">Zobrazit projekt</a></div>
       </div>
     </div>
