@@ -629,7 +629,10 @@
     }
     .proj-click-hint.active {
       visibility: visible;
-      animation: clickPulse 1.5s ease-in-out 3, clickFadeOut 0.8s ease-out 5s forwards;
+      animation: clickPulse 1.5s ease-in-out infinite;
+    }
+    .proj-click-hint.hidden {
+      animation: clickFadeOut 0.4s ease-out forwards;
     }
     @keyframes clickPulse {
       0%, 100% { transform: scale(1); opacity: 0.85; }
@@ -1031,21 +1034,32 @@ const revealObserver = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
 
-// ── CLICK HINT (reappear on each scroll into view)
+// ── CLICK HINT (reappear on scroll, hide on hover)
 const hintObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
     const hint = e.target.querySelector('.proj-click-hint');
     if (!hint) return;
     if (e.isIntersecting) {
-      hint.classList.remove('active');
-      void hint.offsetWidth; // force reflow to restart animation
+      hint.classList.remove('active', 'hidden');
+      void hint.offsetWidth;
       hint.classList.add('active');
     } else {
-      hint.classList.remove('active');
+      hint.classList.remove('active', 'hidden');
     }
   });
 }, { threshold: 0.3 });
-document.querySelectorAll('.proj-img-wrap').forEach(el => hintObserver.observe(el));
+document.querySelectorAll('.proj-img-wrap').forEach(wrap => {
+  hintObserver.observe(wrap);
+  wrap.querySelectorAll('.proj-img-secondary, .proj-img-tertiary').forEach(img => {
+    img.addEventListener('mouseenter', () => {
+      const hint = wrap.querySelector('.proj-click-hint');
+      if (hint && hint.classList.contains('active')) {
+        hint.classList.remove('active');
+        hint.classList.add('hidden');
+      }
+    });
+  });
+});
 
 // ── SKILL PILLS STAGGER
 const pillObserver = new IntersectionObserver(entries => {
