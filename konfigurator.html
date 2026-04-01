@@ -1397,33 +1397,64 @@ const step3observer = new MutationObserver(() => {
 });
 step3observer.observe(document.querySelector('.step[data-step="2"]'), { attributes: true, attributeFilter: ['class'] });
 
+// ── CLOUDINARY CONFIG ──
+// ⚠️ DOPLŇ SVÉ ÚDAJE z Cloudinary dashboardu:
+const CLOUDINARY_CLOUD = 'TVUJ_CLOUD_NAME';       // Settings → Cloud name
+const CLOUDINARY_PRESET = 'TVUJ_UPLOAD_PRESET';   // Settings → Upload → Unsigned preset
+
 // ── FILE UPLOAD ──
 const uploadZone = document.getElementById('uploadZone');
 const fileInput = document.getElementById('fileInput');
 const previews = document.getElementById('uploadPreviews');
-let uploadedFiles = [];
+let uploadedFiles = []; // { file, previewUrl, cloudinaryUrl, status }
 const MAX_FILE = 5 * 1024 * 1024;
 const MAX_TOTAL = 20 * 1024 * 1024;
 
-function totalSize() { return uploadedFiles.reduce((s, f) => s + f.size, 0); }
+function totalSize() { return uploadedFiles.reduce((s, f) => s + f.file.size, 0); }
 
 function renderPreviews() {
-  previews.innerHTML = uploadedFiles.map((f, i) => {
-    const url = URL.createObjectURL(f);
-    return `
-      <div class="upload-thumb">
-        <img src="${url}" alt="${f.name}">
-        <button type="button" class="upload-thumb-remove" data-idx="${i}" aria-label="Odebrat">&times;</button>
-        <div class="upload-thumb-name">${f.name}</div>
-      </div>
-    `;
-  }).join('');
+  previews.innerHTML = uploadedFiles.map((f, i) => `
+    <div class="upload-thumb">
+      <img src="${f.previewUrl}" alt="${f.file.name}">
+      <button type="button" class="upload-thumb-remove" data-idx="${i}" aria-label="Odebrat">&times;</button>
+      <div class="upload-thumb-name">${f.status === 'uploading' ? '⏳ Nahrávám...' : f.status === 'done' ? '✓ ' + f.file.name : f.file.name}</div>
+    </div>
+  `).join('');
   previews.querySelectorAll('.upload-thumb-remove').forEach(btn => {
     btn.addEventListener('click', () => {
-      uploadedFiles.splice(parseInt(btn.dataset.idx), 1);
+      const idx = parseInt(btn.dataset.idx);
+      URL.revokeObjectURL(uploadedFiles[idx].previewUrl);
+      uploadedFiles.splice(idx, 1);
       renderPreviews();
     });
   });
+}
+
+async function uploadToCloudinary(fileObj) {
+  fileObj.status = 'uploading';
+  renderPreviews();
+
+  const fd = new FormData();
+  fd.append('file', fileObj.file);
+  fd.append('upload_preset', CLOUDINARY_PRESET);
+  fd.append('folder', 'konfigurator');
+
+  try {
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {
+      method: 'POST',
+      body: fd
+    });
+    const data = await res.json();
+    if (data.secure_url) {
+      fileObj.cloudinaryUrl = data.secure_url;
+      fileObj.status = 'done';
+    } else {
+      fileObj.status = 'error';
+    }
+  } catch {
+    fileObj.status = 'error';
+  }
+  renderPreviews();
 }
 
 function addFiles(files) {
@@ -1431,7 +1462,9 @@ function addFiles(files) {
     if (f.size > MAX_FILE) { alert(`${f.name} je příliš velký (max 5 MB).`); continue; }
     if (totalSize() + f.size > MAX_TOTAL) { alert('Celková velikost souborů překročila 20 MB.'); break; }
     if (!f.type.match(/^image\/(jpeg|png|svg\+xml|webp)$/)) { alert(`${f.name} — nepodporovaný formát.`); continue; }
-    uploadedFiles.push(f);
+    const obj = { file: f, previewUrl: URL.createObjectURL(f), cloudinaryUrl: null, status: 'pending' };
+    uploadedFiles.push(obj);
+    uploadToCloudinary(obj);
   }
   renderPreviews();
 }
@@ -1452,13 +1485,29 @@ form.addEventListener('submit', async e => {
   e.preventDefault();
 
   const submitBtn = form.querySelector('.btn-submit');
+
+  // Check if any files are still uploading
+  const uploading = uploadedFiles.some(f => f.status === 'uploading');
+  if (uploading) {
+    alert('Počkejte prosím, dokud se nenahrají všechny soubory.');
+    return;
+  }
+
   submitBtn.disabled = true;
   submitBtn.textContent = 'Odesílám...';
 
   const formData = new FormData(form);
 
-  // Add uploaded files
-  uploadedFiles.forEach((f, i) => formData.append(`file_${i}`, f));
+  // Remove raw file input (we send Cloudinary URLs instead)
+  formData.delete('files');
+
+  // Add Cloudinary URLs as text
+  const urls = uploadedFiles
+    .filter(f => f.cloudinaryUrl)
+    .map(f => f.cloudinaryUrl);
+  if (urls.length) {
+    formData.append('uploaded_files', urls.join('\n'));
+  }
 
   try {
     const res = await fetch(form.action, {
