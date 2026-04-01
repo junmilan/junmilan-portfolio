@@ -575,7 +575,7 @@
 
     .proj-img-wrap {
       position: relative; border-radius: 12px;
-      overflow: visible; margin: 1.5rem 1.5rem 6rem 0;
+      overflow: visible; margin: 1.5rem 1.5rem 7rem 0;
     }
     /* Dekorativní offset rámeček za obrázkem */
     .proj-img-wrap::after {
@@ -595,17 +595,23 @@
     }
     .proj-img-secondary {
       position: absolute;
-      bottom: -4rem; right: -3rem;
+      bottom: -5.5rem; right: -3rem;
       width: 75%; z-index: 1;
       border-radius: 12px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-      transition: transform 0.5s ease;
+      transition: transform 0.5s ease, z-index 0s;
+      cursor: pointer;
+    }
+    .proj-img-secondary:hover {
+      z-index: 4;
+      transform: scale(1.05);
     }
     .proj-img-wrap:hover .proj-img { transform: scale(1.02); }
     .proj-img-wrap:hover .proj-img-secondary { transform: scale(1.03) translate(-4px, -4px); }
+    .proj-img-secondary:hover { transform: scale(1.05) !important; }
     @media (max-width: 900px) {
-      .proj-img-secondary { bottom: -3rem; right: -1.5rem; width: 70%; }
-      .proj-img-wrap { margin-bottom: 5rem; }
+      .proj-img-secondary { bottom: -4rem; right: -1.5rem; width: 70%; }
+      .proj-img-wrap { margin-bottom: 5.5rem; }
     }
     .proj-img-overlay {
       position: absolute; inset: 0;
