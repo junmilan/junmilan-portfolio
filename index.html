@@ -575,7 +575,7 @@
 
     .proj-img-wrap {
       position: relative; border-radius: 12px;
-      overflow: visible; margin: 1.5rem 1.5rem 2.5rem 0;
+      overflow: visible; margin: 1.5rem 1.5rem 6rem 0;
     }
     /* Dekorativní offset rámeček za obrázkem */
     .proj-img-wrap::after {
@@ -587,19 +587,32 @@
       z-index: 0;
       pointer-events: none;
     }
-    .proj-img-wrap img {
+    .proj-img-wrap .proj-img {
       transition: transform 0.5s ease; display: block; width: 100%;
       border-radius: 12px; overflow: hidden;
       box-shadow: 0 16px 48px rgba(0,0,0,0.4);
-      position: relative; z-index: 1;
+      position: relative; z-index: 2;
     }
-    .proj-img-wrap:hover img { transform: scale(1.04); }
+    .proj-img-secondary {
+      position: absolute;
+      bottom: -4rem; right: -3rem;
+      width: 75%; z-index: 1;
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      transition: transform 0.5s ease;
+    }
+    .proj-img-wrap:hover .proj-img { transform: scale(1.02); }
+    .proj-img-wrap:hover .proj-img-secondary { transform: scale(1.03) translate(-4px, -4px); }
+    @media (max-width: 900px) {
+      .proj-img-secondary { bottom: -3rem; right: -1.5rem; width: 70%; }
+      .proj-img-wrap { margin-bottom: 5rem; }
+    }
     .proj-img-overlay {
       position: absolute; inset: 0;
       background: linear-gradient(135deg, rgba(27,67,50,0) 0%, rgba(15,35,25,0.82) 100%);
       display: flex; align-items: center; justify-content: center;
       opacity: 0; transition: opacity 0.45s ease;
-      border-radius: 12px; z-index: 2;
+      border-radius: 12px; z-index: 3;
     }
     .proj-img-wrap:hover .proj-img-overlay { opacity: 1; }
     .proj-img-overlay a {
@@ -742,6 +755,9 @@
         <img class="proj-img"
           src="obrazky/bellavita.png"
           alt="Bellavita – italská restaurace">
+        <img class="proj-img-secondary"
+          src="obrazky/bellavita2.png"
+          alt="Bellavita – menu sekce">
         <div class="proj-img-overlay"><a href="bellavita.html" target="_blank">Zobrazit projekt</a></div>
       </div>
     </div>
@@ -775,6 +791,9 @@
         <img class="proj-img"
           src="obrazky/trener.png"
           alt="Osobní trenér web">
+        <img class="proj-img-secondary"
+          src="obrazky/trener2.png"
+          alt="Osobní trenér – detail">
         <div class="proj-img-overlay"><a href="trener.html" target="_blank">Zobrazit projekt</a></div>
       </div>
     </div>
