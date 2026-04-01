@@ -13,16 +13,16 @@
     :root {
       --green: #2d6a4f;
       --green-dark: #1b4332;
-      --green-light: #52b788;
-      --gold: #e8c97a;
-      --gold-dark: #b8922a;
+      --green-light: #2d6a4f;
+      --gold: #b8922a;
+      --gold-dark: #96750e;
       --text: #212529;
       --text-mid: #555;
       --text-light: #888;
-      --bg: #0d1f17;
-      --bg-card: rgba(255,255,255,0.04);
-      --border: rgba(255,255,255,0.12);
-      --border-focus: var(--gold);
+      --bg: #ffffff;
+      --bg-card: rgba(0,0,0,0.02);
+      --border: rgba(0,0,0,0.1);
+      --border-focus: var(--green);
       --max-w: 720px;
     }
 
@@ -33,7 +33,7 @@
       font-family: 'Roboto Mono', monospace;
       font-size: 1.4rem;
       line-height: 2.4rem;
-      color: #fff;
+      color: var(--text);
       background: var(--bg);
       min-height: 100vh;
     }
@@ -78,7 +78,7 @@
       font-size: 3.2rem;
       line-height: 1.3;
       margin-bottom: 1.2rem;
-      color: #fff;
+      color: var(--text);
     }
     .header p {
       color: var(--text-light);
@@ -125,7 +125,7 @@
       width: 3.2rem;
       height: 3.2rem;
       border-radius: 50%;
-      background: var(--bg);
+      background: #fff;
       border: 2px solid var(--border);
       display: flex;
       align-items: center;
@@ -142,12 +142,12 @@
     .progress-dot.active {
       border-color: var(--green-light);
       color: var(--green-light);
-      box-shadow: 0 0 12px rgba(82,183,136,0.3);
+      box-shadow: 0 0 12px rgba(45,106,79,0.2);
     }
     .progress-dot.done {
       border-color: var(--green-light);
       background: var(--green-light);
-      color: var(--bg);
+      color: #fff;
     }
     .progress-label {
       text-align: center;
@@ -180,7 +180,7 @@
     .step-title {
       font-size: 2.2rem;
       margin-bottom: 0.6rem;
-      color: #fff;
+      color: var(--text);
     }
     .step-subtitle {
       color: var(--text-light);
@@ -197,7 +197,7 @@
     }
     .field label {
       display: block;
-      color: rgba(255,255,255,0.5);
+      color: var(--text-mid);
       font-size: 1.1rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -219,22 +219,22 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 6px;
-      color: #fff;
+      color: var(--text);
       font-family: 'Roboto Mono', monospace;
       font-size: 1.3rem;
       transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
     }
     .field input::placeholder,
     .field textarea::placeholder {
-      color: rgba(255,255,255,0.25);
+      color: #aaa;
     }
     .field input:focus,
     .field textarea:focus,
     .field select:focus {
       outline: none;
       border-color: var(--green-light);
-      background: rgba(255,255,255,0.06);
-      box-shadow: 0 0 0 3px rgba(82,183,136,0.1);
+      background: rgba(45,106,79,0.03);
+      box-shadow: 0 0 0 3px rgba(45,106,79,0.08);
     }
     .field textarea {
       min-height: 12rem;
@@ -249,8 +249,8 @@
       cursor: pointer;
     }
     .field select option {
-      background: #1b2e24;
-      color: #fff;
+      background: #fff;
+      color: var(--text);
     }
 
     /* ── Multi-select cards ── */
@@ -280,13 +280,13 @@
       transition: all 0.3s ease;
     }
     .card-option:hover .card-option-inner {
-      border-color: rgba(255,255,255,0.25);
-      background: rgba(255,255,255,0.06);
+      border-color: rgba(0,0,0,0.2);
+      background: rgba(45,106,79,0.03);
     }
     .card-option input:checked + .card-option-inner {
       border-color: var(--green-light);
-      background: rgba(82,183,136,0.08);
-      box-shadow: 0 0 0 3px rgba(82,183,136,0.1);
+      background: rgba(45,106,79,0.06);
+      box-shadow: 0 0 0 3px rgba(45,106,79,0.08);
     }
     .card-icon {
       font-size: 2rem;
@@ -296,12 +296,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.04);
       border-radius: 8px;
     }
     .card-label {
       font-size: 1.3rem;
-      color: rgba(255,255,255,0.8);
+      color: var(--text);
     }
 
     /* ── Style cards (visual direction) ── */
@@ -333,11 +333,11 @@
       transition: all 0.3s ease;
     }
     .style-card:hover .style-card-inner {
-      border-color: rgba(255,255,255,0.25);
+      border-color: rgba(0,0,0,0.2);
     }
     .style-card input:checked + .style-card-inner {
       border-color: var(--green-light);
-      background: rgba(82,183,136,0.08);
+      background: rgba(45,106,79,0.06);
     }
     .style-emoji {
       font-size: 3rem;
@@ -347,7 +347,7 @@
       font-family: 'Exo 2', sans-serif;
       font-size: 1.4rem;
       font-weight: 600;
-      color: #fff;
+      color: var(--text);
       text-transform: uppercase;
       margin-bottom: 0.3rem;
     }
@@ -390,7 +390,7 @@
     .color-hex {
       font-family: 'Roboto Mono', monospace;
       font-size: 1.6rem;
-      color: #fff;
+      color: var(--text);
       letter-spacing: 0.05em;
     }
     .color-presets {
@@ -413,7 +413,7 @@
     /* Generated palettes */
     .palettes-title {
       font-size: 1.1rem;
-      color: rgba(255,255,255,0.5);
+      color: var(--text-mid);
       text-transform: uppercase;
       letter-spacing: 0.1em;
       margin-bottom: 1rem;
@@ -434,8 +434,8 @@
       cursor: pointer;
       transition: all 0.3s;
     }
-    .palette-row:hover { border-color: rgba(255,255,255,0.25); }
-    .palette-row.selected { border-color: var(--green-light); background: rgba(82,183,136,0.06); }
+    .palette-row:hover { border-color: rgba(0,0,0,0.2); }
+    .palette-row.selected { border-color: var(--green-light); background: rgba(45,106,79,0.04); }
     .palette-swatches {
       display: flex;
       gap: 0.4rem;
@@ -480,16 +480,16 @@
       transition: all 0.3s ease;
     }
     .font-card:hover .font-card-inner {
-      border-color: rgba(255,255,255,0.25);
+      border-color: rgba(0,0,0,0.2);
     }
     .font-card input:checked + .font-card-inner {
       border-color: var(--green-light);
-      background: rgba(82,183,136,0.06);
+      background: rgba(45,106,79,0.04);
     }
     .font-heading-preview {
       font-size: 2.4rem;
       font-weight: 700;
-      color: #fff;
+      color: var(--text);
       margin-bottom: 0.8rem;
       line-height: 1.3;
     }
@@ -522,7 +522,7 @@
     .upload-zone:hover,
     .upload-zone.dragover {
       border-color: var(--green-light);
-      background: rgba(82,183,136,0.04);
+      background: rgba(45,106,79,0.03);
     }
     .upload-zone-icon {
       font-size: 3.6rem;
@@ -535,7 +535,7 @@
       margin-bottom: 0.5rem;
     }
     .upload-zone-hint {
-      color: rgba(255,255,255,0.3);
+      color: #aaa;
       font-size: 1.1rem;
     }
     .upload-zone input[type="file"] {
@@ -585,7 +585,7 @@
       bottom: 0;
       left: 0; right: 0;
       padding: 0.4rem 0.6rem;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.6);
       font-size: 1rem;
       color: #fff;
       white-space: nowrap;
@@ -618,15 +618,15 @@
       text-align: center;
       transition: all 0.3s;
       font-size: 1.3rem;
-      color: rgba(255,255,255,0.7);
+      color: var(--text-mid);
     }
     .radio-card:hover .radio-card-inner {
-      border-color: rgba(255,255,255,0.25);
+      border-color: rgba(0,0,0,0.2);
     }
     .radio-card input:checked + .radio-card-inner {
       border-color: var(--green-light);
-      background: rgba(82,183,136,0.08);
-      color: #fff;
+      background: rgba(45,106,79,0.06);
+      color: var(--text);
     }
 
     /* ══════════════════════════════════
@@ -685,13 +685,13 @@
     }
     .btn-next {
       background: var(--green-light);
-      color: var(--bg);
+      color: #fff;
       font-weight: 600;
       margin-left: auto;
     }
     .btn-next:hover {
-      background: #6bc99a;
-      box-shadow: 0 4px 20px rgba(82,183,136,0.3);
+      background: #245a42;
+      box-shadow: 0 4px 20px rgba(45,106,79,0.25);
     }
     .btn-submit {
       background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
@@ -728,7 +728,7 @@
     }
     .success-screen h2 {
       font-size: 2.8rem;
-      color: #fff;
+      color: var(--text);
       margin-bottom: 1.2rem;
     }
     .success-screen p {
