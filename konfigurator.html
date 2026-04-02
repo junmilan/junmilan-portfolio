@@ -874,22 +874,39 @@
       .btn-next { margin-left: 0; }
       .btn { width: 100%; text-align: center; }
     }
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-light);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.1rem; font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.8rem;
+      cursor: pointer; transition: all 0.3s;
+      text-transform: uppercase;
+      border-radius: 3px;
+      position: absolute; top: 4rem; right: 2rem;
+    }
+    .lang-toggle:hover { background: var(--green-light); color: #fff; border-color: var(--green-light); }
   </style>
 </head>
 <body>
 
 <div class="wrap">
 
+  <button class="lang-toggle" onclick="toggleLangK()">EN</button>
+
   <!-- Back link -->
   <a href="index.html" class="back-link">
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
-    Zpět na portfolio
+    <span data-i18n="k.back">Zpět na portfolio</span>
   </a>
 
   <!-- Header -->
   <div class="header">
-    <h1>Konfigurátor webu</h1>
-    <p>Vyplňte pár otázek o vašem projektu a já vám zdarma připravím návrh na míru.</p>
+    <h1 data-i18n="k.title">Konfigurátor webu</h1>
+    <p data-i18n="k.subtitle">Vyplňte pár otázek o vašem projektu a já vám zdarma připravím návrh na míru.</p>
   </div>
 
   <!-- Progress -->
@@ -910,191 +927,191 @@
 
     <!-- ═══ STEP 1: O firmě ═══ -->
     <div class="step active" data-step="0">
-      <h2 class="step-title">O vás</h2>
-      <p class="step-subtitle">Základní informace o vás nebo vaší firmě.</p>
+      <h2 class="step-title" data-i18n="s1.title">O vás</h2>
+      <p class="step-subtitle" data-i18n="s1.sub">Základní informace o vás nebo vaší firmě.</p>
 
       <div class="field">
-        <label for="name">Jméno / název firmy *</label>
-        <input type="text" id="name" name="name" placeholder="např. Jan Novák / Firma s.r.o." maxlength="100" aria-describedby="nameError">
+        <label for="name" data-i18n="s1.nameL">Jméno / název firmy *</label>
+        <input type="text" id="name" name="name" placeholder="např. Jan Novák / Firma s.r.o." data-i18n-ph="s1.namePh" maxlength="100" aria-describedby="nameError">
         <div class="field-error" id="nameError"></div>
       </div>
 
       <div class="field">
-        <label for="industry">Obor podnikání</label>
+        <label for="industry" data-i18n="s1.industryL">Obor podnikání</label>
         <select id="industry" name="industry">
-          <option value="">— Vyberte —</option>
-          <option value="Gastronomie">Gastronomie / restaurace</option>
-          <option value="Fitness">Fitness / sport / trenér</option>
-          <option value="E-shop">E-shop / maloobchod</option>
-          <option value="Služby">Služby / řemesla</option>
-          <option value="IT">IT / technologie</option>
-          <option value="Zdraví">Zdraví / wellness / beauty</option>
-          <option value="Vzdělávání">Vzdělávání / kurzy</option>
-          <option value="Nemovitosti">Nemovitosti / reality</option>
-          <option value="Kreativní">Kreativní / design / fotografie</option>
-          <option value="Jiné">Jiné</option>
+          <option value="" data-i18n="s1.indOpt0">— Vyberte —</option>
+          <option value="Gastronomie" data-i18n="s1.indOpt1">Gastronomie / restaurace</option>
+          <option value="Fitness" data-i18n="s1.indOpt2">Fitness / sport / trenér</option>
+          <option value="E-shop" data-i18n="s1.indOpt3">E-shop / maloobchod</option>
+          <option value="Služby" data-i18n="s1.indOpt4">Služby / řemesla</option>
+          <option value="IT" data-i18n="s1.indOpt5">IT / technologie</option>
+          <option value="Zdraví" data-i18n="s1.indOpt6">Zdraví / wellness / beauty</option>
+          <option value="Vzdělávání" data-i18n="s1.indOpt7">Vzdělávání / kurzy</option>
+          <option value="Nemovitosti" data-i18n="s1.indOpt8">Nemovitosti / reality</option>
+          <option value="Kreativní" data-i18n="s1.indOpt9">Kreativní / design / fotografie</option>
+          <option value="Jiné" data-i18n="s1.indOpt10">Jiné</option>
         </select>
-        <input type="text" id="industryOther" name="industry_other" placeholder="Upřesněte obor..." maxlength="100" style="display:none; margin-top:0.8rem;">
+        <input type="text" id="industryOther" name="industry_other" placeholder="Upřesněte obor..." data-i18n-ph="s1.indOtherPh" maxlength="100" style="display:none; margin-top:0.8rem;">
       </div>
 
       <div class="field">
-        <label for="website">Stávající web (pokud existuje)</label>
+        <label for="website" data-i18n="s1.webL">Stávající web (pokud existuje)</label>
         <input type="text" id="website" name="website" placeholder="https://..." maxlength="200" aria-describedby="websiteError">
         <div class="field-error" id="websiteError"></div>
       </div>
 
       <div class="field">
-        <label for="description">Krátký popis činnosti</label>
-        <textarea id="description" name="description" placeholder="Co děláte, čím se zabýváte, jaké produkty nebo služby nabízíte..." maxlength="1000" aria-describedby="descriptionError"></textarea>
+        <label for="description" data-i18n="s1.descL">Krátký popis činnosti</label>
+        <textarea id="description" name="description" placeholder="Co děláte, čím se zabýváte, jaké produkty nebo služby nabízíte..." data-i18n-ph="s1.descPh" maxlength="1000" aria-describedby="descriptionError"></textarea>
         <div class="field-counter" id="descriptionCounter">0 / 1000</div>
         <div class="field-error" id="descriptionError"></div>
       </div>
 
       <div class="field">
-        <label for="audience">Kdo jsou vaši zákazníci?</label>
-        <textarea id="audience" name="audience" rows="3" placeholder="Např. mladé ženy 25–35, lokální zákazníci, firmy z oboru..." maxlength="500" aria-describedby="audienceError"></textarea>
+        <label for="audience" data-i18n="s1.audL">Kdo jsou vaši zákazníci?</label>
+        <textarea id="audience" name="audience" rows="3" placeholder="Např. mladé ženy 25–35, lokální zákazníci, firmy z oboru..." data-i18n-ph="s1.audPh" maxlength="500" aria-describedby="audienceError"></textarea>
         <div class="field-counter" id="audienceCounter">0 / 500</div>
         <div class="field-error" id="audienceError"></div>
-        <div class="field-hint">Pomůže mi to lépe zacílit design i obsah webu.</div>
+        <div class="field-hint" data-i18n="s1.audHint">Pomůže mi to lépe zacílit design i obsah webu.</div>
       </div>
 
       <div class="btn-row">
-        <button type="button" class="btn btn-next" onclick="goStep(1)">Pokračovat</button>
+        <button type="button" class="btn btn-next" onclick="goStep(1)" data-i18n="btn.next">Pokračovat</button>
       </div>
     </div>
 
     <!-- ═══ STEP 2: Cíle webu ═══ -->
     <div class="step" data-step="1">
-      <h2 class="step-title">Cíle webu</h2>
-      <p class="step-subtitle">Co má web dělat a čeho chcete dosáhnout?</p>
+      <h2 class="step-title" data-i18n="s2.title">Cíle webu</h2>
+      <p class="step-subtitle" data-i18n="s2.sub">Co má web dělat a čeho chcete dosáhnout?</p>
 
       <div class="field">
-        <label>Hlavní účel webu</label>
+        <label data-i18n="s2.purposeL">Hlavní účel webu</label>
         <div class="card-grid">
           <label class="card-option">
             <input type="checkbox" name="purpose" value="Prezentace firmy">
             <span class="card-option-inner">
               <span class="card-icon">🏢</span>
-              <span class="card-label">Prezentace firmy</span>
+              <span class="card-label" data-i18n="s2.p1">Prezentace firmy</span>
             </span>
           </label>
           <label class="card-option">
             <input type="checkbox" name="purpose" value="E-shop">
             <span class="card-option-inner">
               <span class="card-icon">🛒</span>
-              <span class="card-label">Prodej / e-shop</span>
+              <span class="card-label" data-i18n="s2.p2">Prodej / e-shop</span>
             </span>
           </label>
           <label class="card-option">
             <input type="checkbox" name="purpose" value="Generování poptávek">
             <span class="card-option-inner">
               <span class="card-icon">📩</span>
-              <span class="card-label">Generování poptávek</span>
+              <span class="card-label" data-i18n="s2.p3">Generování poptávek</span>
             </span>
           </label>
           <label class="card-option">
             <input type="checkbox" name="purpose" value="Portfolio">
             <span class="card-option-inner">
               <span class="card-icon">🎨</span>
-              <span class="card-label">Portfolio / ukázky</span>
+              <span class="card-label" data-i18n="s2.p4">Portfolio / ukázky</span>
             </span>
           </label>
           <label class="card-option">
             <input type="checkbox" name="purpose" value="Blog">
             <span class="card-option-inner">
               <span class="card-icon">✏️</span>
-              <span class="card-label">Blog / obsah</span>
+              <span class="card-label" data-i18n="s2.p5">Blog / obsah</span>
             </span>
           </label>
           <label class="card-option">
             <input type="checkbox" name="purpose" value="Rezervace">
             <span class="card-option-inner">
               <span class="card-icon">📅</span>
-              <span class="card-label">Rezervační systém</span>
+              <span class="card-label" data-i18n="s2.p6">Rezervační systém</span>
             </span>
           </label>
         </div>
       </div>
 
       <div class="field">
-        <label for="cta">Co má návštěvník na webu udělat?</label>
-        <input type="text" id="cta" name="cta" placeholder="Např. objednat, zavolat, vyplnit formulář, rezervovat..." maxlength="300" aria-describedby="ctaError">
+        <label for="cta" data-i18n="s2.ctaL">Co má návštěvník na webu udělat?</label>
+        <input type="text" id="cta" name="cta" placeholder="Např. objednat, zavolat, vyplnit formulář, rezervovat..." data-i18n-ph="s2.ctaPh" maxlength="300" aria-describedby="ctaError">
         <div class="field-error" id="ctaError"></div>
       </div>
 
       <div class="field">
-        <label for="pages">Přibližný počet stránek</label>
+        <label for="pages" data-i18n="s2.pagesL">Přibližný počet stránek</label>
         <select id="pages" name="pages">
-          <option value="">— Vyberte —</option>
-          <option value="1">Jednostránkový (landing page)</option>
-          <option value="2-5">2–5 stránek</option>
-          <option value="6-10">6–10 stránek</option>
-          <option value="10+">Více než 10</option>
-          <option value="Nevím">Nevím, potřebuji poradit</option>
+          <option value="" data-i18n="s2.pgOpt0">— Vyberte —</option>
+          <option value="1" data-i18n="s2.pgOpt1">Jednostránkový (landing page)</option>
+          <option value="2-5" data-i18n="s2.pgOpt2">2–5 stránek</option>
+          <option value="6-10" data-i18n="s2.pgOpt3">6–10 stránek</option>
+          <option value="10+" data-i18n="s2.pgOpt4">Více než 10</option>
+          <option value="Nevím" data-i18n="s2.pgOpt5">Nevím, potřebuji poradit</option>
         </select>
       </div>
 
       <div class="btn-row">
-        <button type="button" class="btn btn-back" onclick="goStep(0)">Zpět</button>
-        <button type="button" class="btn btn-next" onclick="goStep(2)">Pokračovat</button>
+        <button type="button" class="btn btn-back" onclick="goStep(0)" data-i18n="btn.back">Zpět</button>
+        <button type="button" class="btn btn-next" onclick="goStep(2)" data-i18n="btn.next">Pokračovat</button>
       </div>
     </div>
 
     <!-- ═══ STEP 3: Vizuální směr ═══ -->
     <div class="step" data-step="2">
-      <h2 class="step-title">Vizuální směr</h2>
-      <p class="step-subtitle">Jaký styl a barvy se vám líbí?</p>
+      <h2 class="step-title" data-i18n="s3.title">Vizuální směr</h2>
+      <p class="step-subtitle" data-i18n="s3.sub">Jaký styl a barvy se vám líbí?</p>
 
       <!-- Style -->
       <div class="field">
-        <label>Styl webu</label>
+        <label data-i18n="s3.styleL">Styl webu</label>
         <div class="style-grid">
           <label class="style-card">
             <input type="radio" name="style" value="Minimalistický">
             <span class="style-card-inner">
               <span class="style-emoji"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></span>
-              <span class="style-name">Minimalistický</span>
-              <span class="style-desc">Čistý, hodně bílého prostoru</span>
+              <span class="style-name" data-i18n="s3.st1">Minimalistický</span>
+              <span class="style-desc" data-i18n="s3.st1d">Čistý, hodně bílého prostoru</span>
             </span>
           </label>
           <label class="style-card">
             <input type="radio" name="style" value="Odvážný">
             <span class="style-card-inner">
               <span class="style-emoji"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
-              <span class="style-name">Odvážný</span>
-              <span class="style-desc">Výrazné barvy, velká typografie</span>
+              <span class="style-name" data-i18n="s3.st2">Odvážný</span>
+              <span class="style-desc" data-i18n="s3.st2d">Výrazné barvy, velká typografie</span>
             </span>
           </label>
           <label class="style-card">
             <input type="radio" name="style" value="Elegantní">
             <span class="style-card-inner">
               <span class="style-emoji"><svg viewBox="0 0 24 24"><path d="M12 2L9 9H2l5.5 4.5L5 22l7-5 7 5-2.5-8.5L22 9h-7z"/></svg></span>
-              <span class="style-name">Elegantní</span>
-              <span class="style-desc">Luxusní, sofistikovaný</span>
+              <span class="style-name" data-i18n="s3.st3">Elegantní</span>
+              <span class="style-desc" data-i18n="s3.st3d">Luxusní, sofistikovaný</span>
             </span>
           </label>
           <label class="style-card">
             <input type="radio" name="style" value="Hravý">
             <span class="style-card-inner">
               <span class="style-emoji"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>
-              <span class="style-name">Hravý</span>
-              <span class="style-desc">Barevný, přátelský, kreativní</span>
+              <span class="style-name" data-i18n="s3.st4">Hravý</span>
+              <span class="style-desc" data-i18n="s3.st4d">Barevný, přátelský, kreativní</span>
             </span>
           </label>
           <label class="style-card">
             <input type="radio" name="style" value="Korporátní">
             <span class="style-card-inner">
               <span class="style-emoji"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span>
-              <span class="style-name">Korporátní</span>
-              <span class="style-desc">Seriózní, důvěryhodný</span>
+              <span class="style-name" data-i18n="s3.st5">Korporátní</span>
+              <span class="style-desc" data-i18n="s3.st5d">Seriózní, důvěryhodný</span>
             </span>
           </label>
           <label class="style-card">
             <input type="radio" name="style" value="Jiný">
             <span class="style-card-inner">
               <span class="style-emoji"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
-              <span class="style-name">Jiný</span>
-              <span class="style-desc">Popíšu níže</span>
+              <span class="style-name" data-i18n="s3.st6">Jiný</span>
+              <span class="style-desc" data-i18n="s3.st6d">Popíšu níže</span>
             </span>
           </label>
         </div>
@@ -1102,7 +1119,7 @@
 
       <!-- Color picker -->
       <div class="field color-section">
-        <label>Hlavní barva</label>
+        <label data-i18n="s3.colorL">Hlavní barva</label>
         <div class="color-picker-wrap">
           <div class="color-input-wrap">
             <input type="color" id="mainColor" name="main_color" value="#2d6a4f">
@@ -1119,181 +1136,181 @@
           <div class="color-preset" style="background:#2196f3" data-color="#2196f3"></div>
           <div class="color-preset" style="background:#222222" data-color="#222222"></div>
         </div>
-        <div class="palettes-title">Navržené palety</div>
+        <div class="palettes-title" data-i18n="s3.palettes">Navržené palety</div>
         <div class="palette-options" id="paletteOptions"></div>
         <input type="hidden" name="color_palette" id="paletteInput">
       </div>
 
       <!-- Font picker -->
       <div class="field">
-        <label>Styl písma</label>
+        <label data-i18n="s3.fontL">Styl písma</label>
         <div class="font-grid" id="fontGrid"></div>
         <input type="hidden" name="font_pair" id="fontInput">
       </div>
 
       <!-- Inspiration -->
       <div class="field">
-        <label for="inspiration">Weby, které se vám líbí (volitelné)</label>
+        <label for="inspiration" data-i18n="s3.inspL">Weby, které se vám líbí (volitelné)</label>
         <input type="text" id="inspiration" name="inspiration_1" placeholder="https://..." maxlength="200" style="margin-bottom:0.8rem" aria-describedby="inspiration1Error">
         <div class="field-error" id="inspiration1Error"></div>
         <input type="text" id="inspiration2" name="inspiration_2" placeholder="https://..." maxlength="200" aria-describedby="inspiration2Error">
         <div class="field-error" id="inspiration2Error"></div>
-        <div class="field-hint">Pomohou mi pochopit, jakým směrem chcete jít.</div>
+        <div class="field-hint" data-i18n="s3.inspHint">Pomohou mi pochopit, jakým směrem chcete jít.</div>
       </div>
 
       <div class="btn-row">
-        <button type="button" class="btn btn-back" onclick="goStep(1)">Zpět</button>
-        <button type="button" class="btn btn-next" onclick="goStep(3)">Pokračovat</button>
+        <button type="button" class="btn btn-back" onclick="goStep(1)" data-i18n="btn.back">Zpět</button>
+        <button type="button" class="btn btn-next" onclick="goStep(3)" data-i18n="btn.next">Pokračovat</button>
       </div>
     </div>
 
     <!-- ═══ STEP 4: Obsah a materiály ═══ -->
     <div class="step" data-step="3">
-      <h2 class="step-title">Obsah a materiály</h2>
-      <p class="step-subtitle">Co už máte připraveno?</p>
+      <h2 class="step-title" data-i18n="s4.title">Obsah a materiály</h2>
+      <p class="step-subtitle" data-i18n="s4.sub">Co už máte připraveno?</p>
 
       <div class="field">
-        <label>Máte připravené texty?</label>
+        <label data-i18n="s4.textsL">Máte připravené texty?</label>
         <div class="radio-grid">
           <label class="radio-card">
             <input type="radio" name="texts" value="Ano">
-            <span class="radio-card-inner">Ano, mám připravené</span>
+            <span class="radio-card-inner" data-i18n="s4.t1">Ano, mám připravené</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="texts" value="Částečně">
-            <span class="radio-card-inner">Částečně</span>
+            <span class="radio-card-inner" data-i18n="s4.t2">Částečně</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="texts" value="Ne">
-            <span class="radio-card-inner">Ne, potřebuji pomoct</span>
+            <span class="radio-card-inner" data-i18n="s4.t3">Ne, potřebuji pomoct</span>
           </label>
         </div>
       </div>
 
       <div class="field">
-        <label>Máte logo?</label>
+        <label data-i18n="s4.logoL">Máte logo?</label>
         <div class="radio-grid">
           <label class="radio-card">
             <input type="radio" name="logo" value="Ano">
-            <span class="radio-card-inner">Ano</span>
+            <span class="radio-card-inner" data-i18n="s4.l1">Ano</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="logo" value="Ne">
-            <span class="radio-card-inner">Ne</span>
+            <span class="radio-card-inner" data-i18n="s4.l2">Ne</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="logo" value="Potřebuji vytvořit">
-            <span class="radio-card-inner">Potřebuji vytvořit</span>
+            <span class="radio-card-inner" data-i18n="s4.l3">Potřebuji vytvořit</span>
           </label>
         </div>
       </div>
 
       <div class="field">
-        <label>Nahrajte materiály</label>
+        <label data-i18n="s4.uploadL">Nahrajte materiály</label>
         <div class="upload-zone" id="uploadZone">
           <div class="upload-zone-icon">📁</div>
-          <div class="upload-zone-text">Přetáhněte soubory sem nebo klikněte</div>
-          <div class="upload-zone-hint">Logo, fotky, materiály — JPG, PNG, SVG, WebP (max 5 MB/soubor)</div>
+          <div class="upload-zone-text" data-i18n="s4.uploadText">Přetáhněte soubory sem nebo klikněte</div>
+          <div class="upload-zone-hint" data-i18n="s4.uploadHint">Logo, fotky, materiály — JPG, PNG, SVG, WebP (max 5 MB/soubor)</div>
           <input type="file" id="fileInput" name="files" multiple accept="image/jpeg,image/png,image/svg+xml,image/webp">
         </div>
         <div class="upload-previews" id="uploadPreviews"></div>
       </div>
 
       <div class="btn-row">
-        <button type="button" class="btn btn-back" onclick="goStep(2)">Zpět</button>
-        <button type="button" class="btn btn-next" onclick="goStep(4)">Pokračovat</button>
+        <button type="button" class="btn btn-back" onclick="goStep(2)" data-i18n="btn.back">Zpět</button>
+        <button type="button" class="btn btn-next" onclick="goStep(4)" data-i18n="btn.next">Pokračovat</button>
       </div>
     </div>
 
     <!-- ═══ STEP 5: Rozpočet a termín ═══ -->
     <div class="step" data-step="4">
-      <h2 class="step-title">Rozpočet a termín</h2>
-      <p class="step-subtitle">Pomozte mi odhadnout rozsah projektu.</p>
+      <h2 class="step-title" data-i18n="s5.title">Rozpočet a termín</h2>
+      <p class="step-subtitle" data-i18n="s5.sub">Pomozte mi odhadnout rozsah projektu.</p>
 
       <div class="field">
-        <label>Rozpočet</label>
+        <label data-i18n="s5.budgetL">Rozpočet</label>
         <div class="radio-grid">
           <label class="radio-card">
             <input type="radio" name="budget" value="Do 5 000 Kč">
-            <span class="radio-card-inner">Do 5 000 Kč</span>
+            <span class="radio-card-inner" data-i18n="s5.b1">Do 5 000 Kč</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="budget" value="5 000 – 15 000 Kč">
-            <span class="radio-card-inner">5 000 – 15 000 Kč</span>
+            <span class="radio-card-inner" data-i18n="s5.b2">5 000 – 15 000 Kč</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="budget" value="15 000 – 30 000 Kč">
-            <span class="radio-card-inner">15 000 – 30 000 Kč</span>
+            <span class="radio-card-inner" data-i18n="s5.b3">15 000 – 30 000 Kč</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="budget" value="30 000+ Kč">
-            <span class="radio-card-inner">30 000+ Kč</span>
+            <span class="radio-card-inner" data-i18n="s5.b4">30 000+ Kč</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="budget" value="Chci konzultovat">
-            <span class="radio-card-inner">Nevím / chci konzultovat</span>
+            <span class="radio-card-inner" data-i18n="s5.b5">Nevím / chci konzultovat</span>
           </label>
         </div>
       </div>
 
       <div class="field">
-        <label>Kdy potřebujete web hotový?</label>
+        <label data-i18n="s5.deadlineL">Kdy potřebujete web hotový?</label>
         <div class="radio-grid">
           <label class="radio-card">
             <input type="radio" name="deadline" value="Co nejdříve">
-            <span class="radio-card-inner">Co nejdříve</span>
+            <span class="radio-card-inner" data-i18n="s5.d1">Co nejdříve</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="deadline" value="Do 2 týdnů">
-            <span class="radio-card-inner">Do 2 týdnů</span>
+            <span class="radio-card-inner" data-i18n="s5.d2">Do 2 týdnů</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="deadline" value="Do měsíce">
-            <span class="radio-card-inner">Do měsíce</span>
+            <span class="radio-card-inner" data-i18n="s5.d3">Do měsíce</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="deadline" value="Do 3 měsíců">
-            <span class="radio-card-inner">Do 3 měsíců</span>
+            <span class="radio-card-inner" data-i18n="s5.d4">Do 3 měsíců</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="deadline" value="Není spěch">
-            <span class="radio-card-inner">Není spěch</span>
+            <span class="radio-card-inner" data-i18n="s5.d5">Není spěch</span>
           </label>
         </div>
       </div>
 
       <div class="field">
-        <label for="notes">Něco dalšího?</label>
-        <textarea id="notes" name="notes" rows="4" placeholder="Cokoli dalšího, co bych měl vědět..." maxlength="1000" aria-describedby="notesError"></textarea>
+        <label for="notes" data-i18n="s5.notesL">Něco dalšího?</label>
+        <textarea id="notes" name="notes" rows="4" placeholder="Cokoli dalšího, co bych měl vědět..." data-i18n-ph="s5.notesPh" maxlength="1000" aria-describedby="notesError"></textarea>
         <div class="field-counter" id="notesCounter">0 / 1000</div>
         <div class="field-error" id="notesError"></div>
       </div>
 
       <div class="btn-row">
-        <button type="button" class="btn btn-back" onclick="goStep(3)">Zpět</button>
-        <button type="button" class="btn btn-next" onclick="goStep(5)">Pokračovat</button>
+        <button type="button" class="btn btn-back" onclick="goStep(3)" data-i18n="btn.back">Zpět</button>
+        <button type="button" class="btn btn-next" onclick="goStep(5)" data-i18n="btn.next">Pokračovat</button>
       </div>
     </div>
 
     <!-- ═══ STEP 6: Kontakt ═══ -->
     <div class="step" data-step="5">
-      <h2 class="step-title">Kontakt</h2>
-      <p class="step-subtitle">Jak vás mohu kontaktovat?</p>
+      <h2 class="step-title" data-i18n="s6.title">Kontakt</h2>
+      <p class="step-subtitle" data-i18n="s6.sub">Jak vás mohu kontaktovat?</p>
 
       <div class="field">
-        <label for="email">Email *</label>
-        <input type="email" id="email" name="email" placeholder="vas@email.cz" maxlength="200" aria-describedby="emailError">
+        <label for="email" data-i18n="s6.emailL">Email *</label>
+        <input type="email" id="email" name="email" placeholder="vas@email.cz" data-i18n-ph="s6.emailPh" maxlength="200" aria-describedby="emailError">
         <div class="field-error" id="emailError"></div>
       </div>
 
       <div class="field">
-        <label for="phone">Telefon</label>
+        <label for="phone" data-i18n="s6.phoneL">Telefon</label>
         <input type="tel" id="phone" name="phone" placeholder="+420 ..." maxlength="20" aria-describedby="phoneError">
         <div class="field-error" id="phoneError"></div>
       </div>
 
       <div class="field">
-        <label>Preferovaná komunikace</label>
+        <label data-i18n="s6.commL">Preferovaná komunikace</label>
         <div class="radio-grid">
           <label class="radio-card">
             <input type="radio" name="communication" value="Email">
@@ -1301,7 +1318,7 @@
           </label>
           <label class="radio-card">
             <input type="radio" name="communication" value="Telefon">
-            <span class="radio-card-inner">Telefon</span>
+            <span class="radio-card-inner" data-i18n="s6.commPhone">Telefon</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="communication" value="WhatsApp">
@@ -1312,13 +1329,13 @@
 
       <label class="checkbox-wrap">
         <input type="checkbox" id="consent" name="consent" aria-describedby="consentError">
-        <span>Souhlasím se zpracováním osobních údajů za účelem zpracování poptávky. Data budou použita pouze pro komunikaci ohledně projektu.</span>
+        <span data-i18n="s6.consent">Souhlasím se zpracováním osobních údajů za účelem zpracování poptávky. Data budou použita pouze pro komunikaci ohledně projektu.</span>
       </label>
       <div class="field-error" id="consentError" style="margin-top:-1rem; margin-bottom:1rem;"></div>
 
       <div class="btn-row" style="flex-direction:column; gap:1rem;">
-        <button type="submit" class="btn btn-submit">Odeslat poptávku</button>
-        <button type="button" class="btn btn-back" onclick="goStep(4)" style="width:100%; text-align:center;">Zpět</button>
+        <button type="submit" class="btn btn-submit" data-i18n="s6.submit">Odeslat poptávku</button>
+        <button type="button" class="btn btn-back" onclick="goStep(4)" style="width:100%; text-align:center;" data-i18n="btn.back">Zpět</button>
       </div>
     </div>
 
@@ -1331,10 +1348,10 @@
         <svg viewBox="0 0 24 24"><polyline points="6 12 10 16 18 8"/></svg>
       </div>
     </div>
-    <h2>Poptávka odeslána</h2>
-    <div class="success-subtitle">Děkuji za váš zájem</div>
-    <p>Vaši poptávku jsem přijal a obratem se vám ozvu s prvními návrhy a doporučeními. Těším se na spolupráci.</p>
-    <a href="index.html" class="btn btn-next" style="display:inline-block; text-decoration:none;">Zpět na portfolio</a>
+    <h2 data-i18n="ok.title">Poptávka odeslána</h2>
+    <div class="success-subtitle" data-i18n="ok.sub">Děkuji za váš zájem</div>
+    <p data-i18n="ok.msg">Vaši poptávku jsem přijal a obratem se vám ozvu s prvními návrhy a doporučeními. Těším se na spolupráci.</p>
+    <a href="index.html" class="btn btn-next" style="display:inline-block; text-decoration:none;" data-i18n="ok.back">Zpět na portfolio</a>
   </div>
 
 </div>
@@ -1343,6 +1360,50 @@
      FONT IMPORTS (lazy loaded in step 3)
 ══════════════════════════════════ -->
 <script>
+// ══════════════════════════════════
+// i18n — ERROR MESSAGES
+// ══════════════════════════════════
+const errMsgs = {
+  cs: {
+    nameReq: 'Vyplňte prosím jméno nebo název firmy.',
+    nameMin: 'Jméno musí mít alespoň 2 znaky.',
+    nameChars: 'Jméno obsahuje nepovolené znaky.',
+    urlBad: 'URL musí začínat http:// nebo https://',
+    urlInvalid: 'Zadejte platnou URL (např. https://example.com)',
+    textLong: max => `Text je příliš dlouhý (max ${max} znaků).`,
+    emailReq: 'Vyplňte prosím emailovou adresu.',
+    emailBad: 'Zadejte platný email (např. jan@email.cz).',
+    phoneChars: 'Telefon může obsahovat pouze čísla, mezery, +, - (max 20 znaků).',
+    consentReq: 'Pro odeslání je potřeba souhlas se zpracováním údajů.',
+    uploading: 'Počkejte prosím, dokud se nenahrají všechny soubory.',
+    submitFail: 'Nepodařilo se odeslat formulář. Zkuste to prosím znovu.',
+    submitting: 'Odesílám...'
+  },
+  en: {
+    nameReq: 'Please enter your name or company name.',
+    nameMin: 'Name must be at least 2 characters.',
+    nameChars: 'Name contains invalid characters.',
+    urlBad: 'URL must start with http:// or https://',
+    urlInvalid: 'Enter a valid URL (e.g. https://example.com)',
+    textLong: max => `Text is too long (max ${max} characters).`,
+    emailReq: 'Please enter your email address.',
+    emailBad: 'Enter a valid email (e.g. john@email.com).',
+    phoneChars: 'Phone can only contain digits, spaces, +, - (max 20 chars).',
+    consentReq: 'Consent to data processing is required to submit.',
+    uploading: 'Please wait until all files are uploaded.',
+    submitFail: 'Failed to send the form. Please try again.',
+    submitting: 'Sending...'
+  }
+};
+
+function getLang() {
+  return localStorage.getItem('lang') || 'cs';
+}
+
+function t(key) {
+  return errMsgs[getLang()][key];
+}
+
 // ══════════════════════════════════
 // VALIDATION HELPERS
 // ══════════════════════════════════
@@ -1370,48 +1431,48 @@ function clearError(id) {
 
 function validateName() {
   const v = sanitize(document.getElementById('name').value);
-  if (!v) { showError('nameError', 'Vyplňte prosím jméno nebo název firmy.'); return false; }
-  if (v.length < 2) { showError('nameError', 'Jméno musí mít alespoň 2 znaky.'); return false; }
-  if (/[<>{}\[\]]/.test(v)) { showError('nameError', 'Jméno obsahuje nepovolené znaky.'); return false; }
+  if (!v) { showError('nameError', t('nameReq')); return false; }
+  if (v.length < 2) { showError('nameError', t('nameMin')); return false; }
+  if (/[<>{}\[\]]/.test(v)) { showError('nameError', t('nameChars')); return false; }
   clearError('nameError'); return true;
 }
 
 function validateWebsite() {
   const v = document.getElementById('website').value.trim();
   if (!v) { clearError('websiteError'); return true; }
-  if (!/^https?:\/\/.+\..+/.test(v)) { showError('websiteError', 'URL musí začínat http:// nebo https://'); return false; }
+  if (!/^https?:\/\/.+\..+/.test(v)) { showError('websiteError', t('urlBad')); return false; }
   clearError('websiteError'); return true;
 }
 
 function validateTextarea(id, errorId, max) {
   const v = document.getElementById(id).value;
-  if (v.length > max) { showError(errorId, `Text je příliš dlouhý (max ${max} znaků).`); return false; }
+  if (v.length > max) { showError(errorId, t('textLong')(max)); return false; }
   clearError(errorId); return true;
 }
 
 function validateUrl(inputId, errorId) {
   const v = document.getElementById(inputId).value.trim();
   if (!v) { clearError(errorId); return true; }
-  if (!/^https?:\/\/.+\..+/.test(v)) { showError(errorId, 'Zadejte platnou URL (např. https://example.com)'); return false; }
+  if (!/^https?:\/\/.+\..+/.test(v)) { showError(errorId, t('urlInvalid')); return false; }
   clearError(errorId); return true;
 }
 
 function validateEmail() {
   const v = document.getElementById('email').value.trim();
-  if (!v) { showError('emailError', 'Vyplňte prosím emailovou adresu.'); return false; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { showError('emailError', 'Zadejte platný email (např. jan@email.cz).'); return false; }
+  if (!v) { showError('emailError', t('emailReq')); return false; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { showError('emailError', t('emailBad')); return false; }
   clearError('emailError'); return true;
 }
 
 function validatePhone() {
   const v = document.getElementById('phone').value.trim();
   if (!v) { clearError('phoneError'); return true; }
-  if (!/^[\d\s\+\-()]{5,20}$/.test(v)) { showError('phoneError', 'Telefon může obsahovat pouze čísla, mezery, +, - (max 20 znaků).'); return false; }
+  if (!/^[\d\s\+\-()]{5,20}$/.test(v)) { showError('phoneError', t('phoneChars')); return false; }
   clearError('phoneError'); return true;
 }
 
 function validateConsent() {
-  if (!document.getElementById('consent').checked) { showError('consentError', 'Pro odeslání je potřeba souhlas se zpracováním údajů.'); return false; }
+  if (!document.getElementById('consent').checked) { showError('consentError', t('consentReq')); return false; }
   clearError('consentError'); return true;
 }
 
@@ -1793,12 +1854,12 @@ form.addEventListener('submit', async e => {
   // Check if any files are still uploading
   const uploading = uploadedFiles.some(f => f.status === 'uploading');
   if (uploading) {
-    alert('Počkejte prosím, dokud se nenahrají všechny soubory.');
+    alert(t('uploading'));
     return;
   }
 
   submitBtn.disabled = true;
-  submitBtn.textContent = 'Odesílám...';
+  submitBtn.textContent = t('submitting');
 
   const formData = new FormData(form);
 
@@ -1828,11 +1889,200 @@ form.addEventListener('submit', async e => {
       throw new Error('Chyba při odesílání');
     }
   } catch (err) {
-    alert('Nepodařilo se odeslat formulář. Zkuste to prosím znovu.');
+    alert(t('submitFail'));
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Odeslat poptávku';
+    submitBtn.textContent = getLang() === 'en' ? 'Submit inquiry' : 'Odeslat poptávku';
   }
 });
+
+// ══════════════════════════════════
+// i18n — LANGUAGE SWITCHING
+// ══════════════════════════════════
+const i18nKfg = {
+  en: {
+    // Nav
+    'back': '← Back to portfolio',
+    'header.title': 'Website Configurator',
+    'header.sub': 'Tell me about your project and I\'ll prepare a custom website proposal for you — for free.',
+    // Step 1
+    's1.title': 'About you / your company',
+    's1.sub': 'Basic information about you and your business.',
+    's1.nameL': 'Name / company name *',
+    's1.namePh': 'e.g. Jan Novák or Company Ltd.',
+    's1.industryL': 'Industry',
+    's1.indDef': '— Select —',
+    's1.indGastro': 'Gastronomy & Food',
+    's1.indHealth': 'Health & Beauty',
+    's1.indTech': 'Technology & IT',
+    's1.indBuild': 'Construction & Real Estate',
+    's1.indRetail': 'Retail & E-commerce',
+    's1.indService': 'Services',
+    's1.indEdu': 'Education',
+    's1.indOther': 'Other',
+    's1.indOtherPh': 'Specify your industry...',
+    's1.webL': 'Website (if you already have one)',
+    's1.webPh': 'https://...',
+    's1.descL': 'Briefly describe your company / activity',
+    's1.descPh': 'What do you do, what do you offer...',
+    's1.audL': 'Who are your customers?',
+    's1.audPh': 'Age, interests, what they\'re looking for...',
+    // Step 2
+    's2.title': 'Website goals',
+    's2.sub': 'What should the website accomplish?',
+    's2.purposeL': 'Main purpose of the website',
+    's2.pPresent': 'Company presentation',
+    's2.pEshop': 'Product sales / e-shop',
+    's2.pLeads': 'Generating inquiries / leads',
+    's2.pPortfolio': 'Portfolio / work samples',
+    's2.pBlog': 'Blog / content',
+    's2.pBooking': 'Booking system',
+    's2.pOther': 'Other',
+    's2.ctaL': 'What should the visitor do on the website?',
+    's2.ctaPh': 'e.g. call, order, fill out a form...',
+    's2.pagesL': 'How many pages do you approximately need?',
+    's2.pgDef': '— Select —',
+    's2.pg1': 'One page (landing page)',
+    's2.pg2': '2–5 pages',
+    's2.pg3': '6–10 pages',
+    's2.pg4': '10+ pages',
+    's2.pgDk': 'I don\'t know yet',
+    // Step 3
+    's3.title': 'Visual direction',
+    's3.sub': 'What style do you prefer?',
+    's3.styleL': 'Visual style',
+    's3.stMin': 'Minimalist',
+    's3.stMinD': 'Clean lines, lots of space',
+    's3.stBold': 'Bold',
+    's3.stBoldD': 'Strong colors, impactful',
+    's3.stEleg': 'Elegant',
+    's3.stElegD': 'Luxury feel, refined details',
+    's3.stPlay': 'Playful',
+    's3.stPlayD': 'Colorful, creative',
+    's3.stCorp': 'Corporate',
+    's3.stCorpD': 'Professional, serious',
+    's3.stOther': 'Other',
+    's3.stOtherD': 'I\'ll describe it myself',
+    's3.colorL': 'Main color',
+    's3.palTitle': 'Suggested palettes',
+    's3.fontL': 'Font style',
+    's3.inspL': 'Websites you like (optional)',
+    's3.inspHint': 'Enter up to 2 URLs of websites that inspire you.',
+    // Step 4
+    's4.title': 'Content & materials',
+    's4.sub': 'What do you already have prepared?',
+    's4.textsL': 'Do you have texts ready?',
+    's4.tYes': 'Yes',
+    's4.tPart': 'Partially',
+    's4.tNo': 'No, I need help',
+    's4.logoL': 'Do you have a logo?',
+    's4.lYes': 'Yes',
+    's4.lNo': 'No',
+    's4.lNeed': 'I need one created',
+    's4.uploadText': 'Drag & drop files here or click to browse',
+    's4.uploadHint': 'JPG, PNG, SVG, WebP — max 5 MB per file, 20 MB total',
+    // Step 5
+    's5.title': 'Budget & timeline',
+    's5.sub': 'Help me estimate the project scope.',
+    's5.budgetL': 'Budget',
+    's5.b1': 'Up to 5,000 CZK',
+    's5.b2': '5,000 – 15,000 CZK',
+    's5.b3': '15,000 – 30,000 CZK',
+    's5.b4': '30,000+ CZK',
+    's5.b5': 'I don\'t know / need consultation',
+    's5.deadlineL': 'When do you need the website ready?',
+    's5.d1': 'As soon as possible',
+    's5.d2': 'Within 2 weeks',
+    's5.d3': 'Within a month',
+    's5.d4': 'Within 3 months',
+    's5.d5': 'No rush',
+    's5.notesL': 'Anything else?',
+    's5.notesPh': 'Anything else I should know...',
+    // Step 6
+    's6.title': 'Contact',
+    's6.sub': 'How can I reach you?',
+    's6.emailL': 'Email *',
+    's6.emailPh': 'your@email.com',
+    's6.phoneL': 'Phone',
+    's6.commL': 'Preferred communication',
+    's6.commPhone': 'Phone',
+    's6.consent': 'I agree to the processing of personal data for the purpose of handling this inquiry. Data will be used only for communication regarding the project.',
+    's6.submit': 'Submit inquiry',
+    // Buttons
+    'btn.next': 'Continue',
+    'btn.back': 'Back',
+    // Success
+    'ok.title': 'Inquiry sent',
+    'ok.sub': 'Thank you for your interest',
+    'ok.msg': 'I\'ve received your inquiry and will get back to you shortly with initial proposals and recommendations. Looking forward to working together.',
+    'ok.back': 'Back to portfolio',
+    // Progress dots
+    'prog.1': 'About you',
+    'prog.2': 'Goals',
+    'prog.3': 'Visual',
+    'prog.4': 'Content',
+    'prog.5': 'Budget',
+    'prog.6': 'Contact'
+  }
+};
+
+// Store Czech originals
+const czStoreK = {}, czHtmlStoreK = {}, czPhStoreK = {};
+document.querySelectorAll('[data-i18n]').forEach(el => {
+  czStoreK[el.getAttribute('data-i18n')] = el.textContent;
+});
+document.querySelectorAll('[data-i18n-html]').forEach(el => {
+  czHtmlStoreK[el.getAttribute('data-i18n-html')] = el.innerHTML;
+});
+document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+  czPhStoreK[el.getAttribute('data-i18n-ph')] = el.placeholder;
+});
+
+function applyLangK(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    el.textContent = lang === 'en' ? (i18nKfg.en[k] || czStoreK[k]) : czStoreK[k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const k = el.getAttribute('data-i18n-html');
+    el.innerHTML = lang === 'en' ? (i18nKfg.en[k] || czHtmlStoreK[k]) : czHtmlStoreK[k];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const k = el.getAttribute('data-i18n-ph');
+    el.placeholder = lang === 'en' ? (i18nKfg.en[k] || czPhStoreK[k]) : czPhStoreK[k];
+  });
+  document.documentElement.lang = lang === 'en' ? 'en' : 'cs';
+  document.querySelectorAll('.lang-toggle').forEach(b => b.textContent = lang === 'en' ? 'CZ' : 'EN');
+
+  // Update palette names
+  if (lang === 'en') {
+    document.querySelectorAll('.palette-name').forEach(el => {
+      if (el.textContent === 'Komplementární') el.textContent = 'Complementary';
+      if (el.textContent === 'Analogická') el.textContent = 'Analogous';
+      if (el.textContent === 'Split-komplementární') el.textContent = 'Split-complementary';
+    });
+  }
+
+  // Update font preview text
+  document.querySelectorAll('.font-heading-preview').forEach(el => {
+    el.textContent = lang === 'en' ? 'Website Heading' : 'Nadpis webu';
+  });
+  document.querySelectorAll('.font-body-preview').forEach(el => {
+    el.textContent = lang === 'en' ? 'Sample paragraph text to preview the font combination on your website.' : 'Ukázkový text odstavce pro náhled kombinace písem na vašem webu.';
+  });
+
+  // Update page title
+  document.title = lang === 'en' ? 'Website Configurator — Milan Jun' : 'Konfigurátor webu — Milan Jun';
+}
+
+function toggleLangK() {
+  const cur = localStorage.getItem('lang') || 'cs';
+  const next = cur === 'cs' ? 'en' : 'cs';
+  localStorage.setItem('lang', next);
+  applyLangK(next);
+}
+
+// Apply saved language on load
+if (localStorage.getItem('lang') === 'en') applyLangK('en');
 </script>
 
 </body>
