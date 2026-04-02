@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konfigurátor webu — Milan Jun</title>
+  <meta name="description" content="Popište mi svůj projekt a já vám zdarma připravím návrh webových stránek na míru.">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ══════════════════════════════════
+       ROOT & RESET
+    ══════════════════════════════════ */
+    :root {
+      --green: #2d6a4f;
+      --green-dark: #1b4332;
+      --green-light: #2d6a4f;
+      --gold: #b8922a;
+      --gold-dark: #96750e;
+      --text: #212529;
+      --text-mid: #555;
+      --text-light: #888;
+      --bg: #ffffff;
+      --bg-card: rgba(0,0,0,0.02);
+      --border: rgba(0,0,0,0.1);
+      --border-focus: var(--green);
+      --max-w: 720px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 62.5%; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.4rem;
+      line-height: 2.4rem;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Exo 2', sans-serif;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    a { color: var(--green-light); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ══════════════════════════════════
+       LAYOUT
+    ══════════════════════════════════ */
+    .wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 3rem;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: var(--green-light); text-decoration: none; }
+    .back-link svg { width: 1.4rem; height: 1.4rem; }
+
+    .header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .header h1 {
+      font-size: 3.2rem;
+      line-height: 1.3;
+      margin-bottom: 1.2rem;
+      color: var(--text);
+    }
+    .header p {
+      color: var(--text-light);
+      font-size: 1.3rem;
+      line-height: 2.2rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ══════════════════════════════════
+       PROGRESS BAR
+    ══════════════════════════════════ */
+    .progress-wrap {
+      margin-bottom: 4rem;
+    }
+    .progress-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin-bottom: 1rem;
+    }
+    .progress-steps::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0; right: 0;
+      height: 2px;
+      background: var(--border);
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+    .progress-fill {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 2px;
+      background: var(--green-light);
+      transform: translateY(-50%);
+      z-index: 1;
+      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      width: 0%;
+    }
+    .progress-dot {
+      width: 3.2rem;
+      height: 3.2rem;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-light);
+      position: relative;
+      z-index: 2;
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+    .progress-dot.active {
+      border-color: var(--green-light);
+      color: var(--green-light);
+      box-shadow: 0 0 12px rgba(45,106,79,0.2);
+    }
+    .progress-dot.done {
+      border-color: var(--green-light);
+      background: var(--green-light);
+      color: #fff;
+    }
+    .progress-label {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-top: 0.5rem;
+      display: none;
+    }
+    @media (min-width: 600px) {
+      .progress-label { display: block; }
+    }
+
+    /* ══════════════════════════════════
+       FORM STEPS
+    ══════════════════════════════════ */
+    .steps-container {
+      position: relative;
+      overflow: hidden;
+    }
+    .step {
+      display: none;
+      animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .step.active { display: block; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-title {
+      font-size: 2.2rem;
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+    .step-subtitle {
+      color: var(--text-light);
+      font-size: 1.2rem;
+      line-height: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    /* ══════════════════════════════════
+       FORM ELEMENTS
+    ══════════════════════════════════ */
+    .field {
+      margin-bottom: 2.4rem;
+    }
+    .field label {
+      display: block;
+      color: var(--text-mid);
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .field-hint {
+      color: var(--text-light);
+      font-size: 1.1rem;
+      margin-top: 0.4rem;
+    }
+    .field input[type="text"],
+    .field input[type="email"],
+    .field input[type="tel"],
+    .field input[type="url"],
+    .field textarea,
+    .field select {
+      width: 100%;
+      padding: 1.2rem 1.4rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.3rem;
+      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+    }
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: #aaa;
+    }
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--green-light);
+      background: rgba(45,106,79,0.03);
+      box-shadow: 0 0 0 3px rgba(45,106,79,0.08);
+    }
+    .field textarea {
+      min-height: 12rem;
+      resize: vertical;
+    }
+    .field select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1.4rem center;
+      padding-right: 4rem;
+      cursor: pointer;
+    }
+    .field select option {
+      background: #fff;
+      color: var(--text);
+    }
+
+    /* ── Validation ── */
+    .field-error {
+      color: #d32f2f;
+      font-size: 1.1rem;
+      margin-top: 0.4rem;
+      display: none;
+    }
+    .field-error.visible { display: block; }
+    .field.has-error input,
+    .field.has-error textarea,
+    .field.has-error select {
+      border-color: #d32f2f;
+    }
+    .field.has-error input:focus,
+    .field.has-error textarea:focus,
+    .field.has-error select:focus {
+      box-shadow: 0 0 0 3px rgba(211,47,47,0.1);
+    }
+    .field-counter {
+      text-align: right;
+      font-size: 1rem;
+      color: #aaa;
+      margin-top: 0.3rem;
+    }
+    .field-counter.warn { color: #e67e22; }
+    .field-counter.over { color: #d32f2f; }
+
+    /* ── Multi-select cards ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
+    }
+    .card-option {
+      position: relative;
+      cursor: pointer;
+    }
+    .card-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .card-option-inner {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.4rem 1.6rem;
+      min-height: 6rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .card-option:hover .card-option-inner {
+      border-color: rgba(0,0,0,0.2);
+      background: rgba(45,106,79,0.03);
+    }
+    .card-option input:checked + .card-option-inner {
+      border-color: var(--green-light);
+      background: rgba(45,106,79,0.06);
+      box-shadow: 0 0 0 3px rgba(45,106,79,0.08);
+    }
+    .card-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+      width: 3.6rem;
+      height: 3.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.04);
+      border-radius: 8px;
+    }
+    .card-label {
+      font-size: 1.3rem;
+      color: var(--text);
+    }
+
+    /* ── Style cards (visual direction) ── */
+    .style-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.4rem;
+    }
+    .style-card {
+      position: relative;
+      cursor: pointer;
+    }
+    .style-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .style-card-inner {
+      padding: 2rem;
+      min-height: 12rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .style-card:hover .style-card-inner {
+      border-color: rgba(0,0,0,0.2);
+    }
+    .style-card input:checked + .style-card-inner {
+      border-color: var(--green-light);
+      background: rgba(45,106,79,0.06);
+    }
+    .style-emoji {
+      font-size: 3rem;
+      margin-bottom: 0.8rem;
+    }
+    .style-name {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .style-desc {
+      font-size: 1.1rem;
+      color: var(--text-light);
+    }
+
+    /* ══════════════════════════════════
+       COLOR PICKER
+    ══════════════════════════════════ */
+    .color-section { margin-bottom: 3rem; }
+    .color-picker-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      margin-bottom: 2rem;
+    }
+    .color-input-wrap {
+      position: relative;
+      width: 5.6rem;
+      height: 5.6rem;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.3s;
+      flex-shrink: 0;
+    }
+    .color-input-wrap:hover { border-color: var(--green-light); }
+    .color-input-wrap input[type="color"] {
+      position: absolute;
+      inset: -8px;
+      width: calc(100% + 16px);
+      height: calc(100% + 16px);
+      border: none;
+      cursor: pointer;
+      background: none;
+    }
+    .color-hex {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.6rem;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+    .color-presets {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .color-preset {
+      width: 3.6rem;
+      height: 3.6rem;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.3s;
+    }
+    .color-preset:hover { transform: scale(1.15); }
+    .color-preset.selected { border-color: #fff; transform: scale(1.15); }
+
+    /* Generated palettes */
+    .palettes-title {
+      font-size: 1.1rem;
+      color: var(--text-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+    .palette-options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .palette-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1rem 1.4rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .palette-row:hover { border-color: rgba(0,0,0,0.2); }
+    .palette-row.selected { border-color: var(--green-light); background: rgba(45,106,79,0.04); }
+    .palette-swatches {
+      display: flex;
+      gap: 0.4rem;
+      flex: 1;
+    }
+    .palette-swatch {
+      height: 3.6rem;
+      flex: 1;
+      border-radius: 4px;
+    }
+    .palette-swatches .palette-swatch:first-child { border-radius: 4px 0 0 4px; }
+    .palette-swatches .palette-swatch:last-child { border-radius: 0 4px 4px 0; }
+    .palette-name {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      white-space: nowrap;
+      min-width: 10rem;
+    }
+
+    /* ══════════════════════════════════
+       FONT PICKER
+    ══════════════════════════════════ */
+    .font-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+      gap: 1.4rem;
+    }
+    .font-card {
+      position: relative;
+      cursor: pointer;
+    }
+    .font-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .font-card-inner {
+      padding: 2.4rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    .font-card:hover .font-card-inner {
+      border-color: rgba(0,0,0,0.2);
+    }
+    .font-card input:checked + .font-card-inner {
+      border-color: var(--green-light);
+      background: rgba(45,106,79,0.04);
+    }
+    .font-heading-preview {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+      line-height: 1.3;
+    }
+    .font-body-preview {
+      font-size: 1.3rem;
+      color: var(--text-light);
+      line-height: 2rem;
+      margin-bottom: 1rem;
+    }
+    .font-pair-name {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1rem;
+      color: var(--green-light);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ══════════════════════════════════
+       FILE UPLOAD
+    ══════════════════════════════════ */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 10px;
+      padding: 4rem 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .upload-zone:hover,
+    .upload-zone.dragover {
+      border-color: var(--green-light);
+      background: rgba(45,106,79,0.03);
+    }
+    .upload-zone-icon {
+      font-size: 3.6rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+    .upload-zone-text {
+      color: var(--text-light);
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    .upload-zone-hint {
+      color: #aaa;
+      font-size: 1.1rem;
+    }
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .upload-previews {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+      gap: 1rem;
+      margin-top: 1.6rem;
+    }
+    .upload-thumb {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .upload-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .upload-thumb-remove {
+      position: absolute;
+      top: 0.4rem;
+      right: 0.4rem;
+      width: 2.4rem;
+      height: 2.4rem;
+      background: rgba(0,0,0,0.7);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .upload-thumb-remove:hover { background: rgba(220,50,50,0.8); }
+    .upload-thumb-name {
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      padding: 0.4rem 0.6rem;
+      background: rgba(0,0,0,0.6);
+      font-size: 1rem;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ══════════════════════════════════
+       RADIO CARDS (budget, timeline)
+    ══════════════════════════════════ */
+    .radio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+      gap: 1rem;
+    }
+    .radio-card {
+      position: relative;
+      cursor: pointer;
+    }
+    .radio-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .radio-card-inner {
+      padding: 1.6rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.3s;
+      font-size: 1.3rem;
+      color: var(--text-mid);
+    }
+    .radio-card:hover .radio-card-inner {
+      border-color: rgba(0,0,0,0.2);
+    }
+    .radio-card input:checked + .radio-card-inner {
+      border-color: var(--green-light);
+      background: rgba(45,106,79,0.06);
+      color: var(--text);
+    }
+
+    /* ══════════════════════════════════
+       CHECKBOX
+    ══════════════════════════════════ */
+    .checkbox-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      cursor: pointer;
+      margin-bottom: 2rem;
+    }
+    .checkbox-wrap input {
+      width: 2rem;
+      height: 2rem;
+      margin-top: 0.2rem;
+      accent-color: var(--green-light);
+      flex-shrink: 0;
+    }
+    .checkbox-wrap span {
+      font-size: 1.2rem;
+      color: var(--text-light);
+      line-height: 1.8rem;
+    }
+    .checkbox-wrap a { color: var(--green-light); }
+
+    /* ══════════════════════════════════
+       BUTTONS
+    ══════════════════════════════════ */
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.2rem;
+      margin-top: 4rem;
+    }
+    .btn {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.3rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 1.4rem 3rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-back {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-light);
+    }
+    .btn-back:hover {
+      border-color: rgba(255,255,255,0.3);
+      color: #fff;
+    }
+    .btn-next {
+      background: var(--green-light);
+      color: #fff;
+      font-weight: 600;
+      margin-left: auto;
+    }
+    .btn-next:hover {
+      background: #245a42;
+      box-shadow: 0 4px 20px rgba(45,106,79,0.25);
+    }
+    .btn-submit {
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+      background-size: 200% auto;
+      color: #1b1a14;
+      font-weight: 700;
+      padding: 1.6rem 4rem;
+      width: 100%;
+      font-size: 1.4rem;
+      transition: background-position 0.4s, box-shadow 0.3s;
+    }
+    .btn-submit:hover {
+      background-position: right center;
+      box-shadow: 0 4px 20px rgba(232,201,122,0.3);
+    }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* ══════════════════════════════════
+       SUCCESS
+    ══════════════════════════════════ */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 8rem 2rem;
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .success-screen.active { display: block; }
+    .success-check {
+      width: 8rem;
+      height: 8rem;
+      margin: 0 auto 3rem;
+      position: relative;
+    }
+    .success-check-circle {
+      width: 8rem;
+      height: 8rem;
+      border-radius: 50%;
+      background: var(--green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      box-shadow: 0 8px 30px rgba(45,106,79,0.2);
+    }
+    .success-check-circle svg {
+      width: 3.6rem;
+      height: 3.6rem;
+      stroke: #fff;
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+      animation: drawCheck 0.4s ease 0.4s forwards;
+    }
+    @keyframes scaleIn {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @keyframes drawCheck {
+      to { stroke-dashoffset: 0; }
+    }
+    .success-screen h2 {
+      font-size: 2.8rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .success-screen .success-subtitle {
+      color: var(--green);
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2rem;
+    }
+    .success-screen p {
+      color: var(--text-light);
+      font-size: 1.3rem;
+      line-height: 2.4rem;
+      max-width: 460px;
+      margin: 0 auto 4rem;
+    }
+
+    /* ══════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════ */
+    @media (max-width: 600px) {
+      .wrap { padding: 2rem 1.6rem 4rem; }
+      .header h1 { font-size: 2.4rem; }
+      .step-title { font-size: 1.8rem; }
+      .card-grid { grid-template-columns: 1fr; }
+      .style-grid { grid-template-columns: 1fr; }
+      .font-grid { grid-template-columns: 1fr; }
+      .radio-grid { grid-template-columns: 1fr; }
+      .btn-row { flex-direction: column; }
+      .btn-next { margin-left: 0; }
+      .btn { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- Back link -->
+  <a href="index.html" class="back-link">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    Zpět na portfolio
+  </a>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Konfigurátor webu</h1>
+    <p>Vyplňte pár otázek o vašem projektu a já vám zdarma připravím návrh na míru.</p>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-steps">
+      <div class="progress-fill" id="progressFill"></div>
+      <div class="progress-dot active" data-step="0">1</div>
+      <div class="progress-dot" data-step="1">2</div>
+      <div class="progress-dot" data-step="2">3</div>
+      <div class="progress-dot" data-step="3">4</div>
+      <div class="progress-dot" data-step="4">5</div>
+      <div class="progress-dot" data-step="5">6</div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <form id="configForm" action="https://formspree.io/f/mqegpylb" method="POST" enctype="multipart/form-data">
+
+    <!-- ═══ STEP 1: O firmě ═══ -->
+    <div class="step active" data-step="0">
+      <h2 class="step-title">O vás</h2>
+      <p class="step-subtitle">Základní informace o vás nebo vaší firmě.</p>
+
+      <div class="field">
+        <label for="name">Jméno / název firmy *</label>
+        <input type="text" id="name" name="name" placeholder="např. Jan Novák / Firma s.r.o." maxlength="100" aria-describedby="nameError">
+        <div class="field-error" id="nameError"></div>
+      </div>
+
+      <div class="field">
+        <label for="industry">Obor podnikání</label>
+        <select id="industry" name="industry">
+          <option value="">— Vyberte —</option>
+          <option value="Gastronomie">Gastronomie / restaurace</option>
+          <option value="Fitness">Fitness / sport / trenér</option>
+          <option value="E-shop">E-shop / maloobchod</option>
+          <option value="Služby">Služby / řemesla</option>
+          <option value="IT">IT / technologie</option>
+          <option value="Zdraví">Zdraví / wellness / beauty</option>
+          <option value="Vzdělávání">Vzdělávání / kurzy</option>
+          <option value="Nemovitosti">Nemovitosti / reality</option>
+          <option value="Kreativní">Kreativní / design / fotografie</option>
+          <option value="Jiné">Jiné</option>
+        </select>
+        <input type="text" id="industryOther" name="industry_other" placeholder="Upřesněte obor..." maxlength="100" style="display:none; margin-top:0.8rem;">
+      </div>
+
+      <div class="field">
+        <label for="website">Stávající web (pokud existuje)</label>
+        <input type="text" id="website" name="website" placeholder="https://..." maxlength="200" aria-describedby="websiteError">
+        <div class="field-error" id="websiteError"></div>
+      </div>
+
+      <div class="field">
+        <label for="description">Krátký popis činnosti</label>
+        <textarea id="description" name="description" placeholder="Co děláte, čím se zabýváte, jaké produkty nebo služby nabízíte..." maxlength="1000" aria-describedby="descriptionError"></textarea>
+        <div class="field-counter" id="descriptionCounter">0 / 1000</div>
+        <div class="field-error" id="descriptionError"></div>
+      </div>
+
+      <div class="field">
+        <label for="audience">Kdo jsou vaši zákazníci?</label>
+        <textarea id="audience" name="audience" rows="3" placeholder="Např. mladé ženy 25–35, lokální zákazníci, firmy z oboru..." maxlength="500" aria-describedby="audienceError"></textarea>
+        <div class="field-counter" id="audienceCounter">0 / 500</div>
+        <div class="field-error" id="audienceError"></div>
+        <div class="field-hint">Pomůže mi to lépe zacílit design i obsah webu.</div>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-next" onclick="goStep(1)">Pokračovat</button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 2: Cíle webu ═══ -->
+    <div class="step" data-step="1">
+      <h2 class="step-title">Cíle webu</h2>
+      <p class="step-subtitle">Co má web dělat a čeho chcete dosáhnout?</p>
+
+      <div class="field">
+        <label>Hlavní účel webu</label>
+        <div class="card-grid">
+          <label class="card-option">
+            <input type="checkbox" name="purpose" value="Prezentace firmy">
+            <div class="card-option-inner">
+              <div class="card-icon">🏢</div>
+              <div class="card-label">Prezentace firmy</div>
+            </div>
+          </label>
+          <label class="card-option">
+            <input type="checkbox" name="purpose" value="E-shop">
+            <div class="card-option-inner">
+              <div class="card-icon">🛒</div>
+              <div class="card-label">Prodej / e-shop</div>
+            </div>
+          </label>
+          <label class="card-option">
+            <input type="checkbox" name="purpose" value="Generování poptávek">
+            <div class="card-option-inner">
+              <div class="card-icon">📩</div>
+              <div class="card-label">Generování poptávek</div>
+            </div>
+          </label>
+          <label class="card-option">
+            <input type="checkbox" name="purpose" value="Portfolio">
+            <div class="card-option-inner">
+              <div class="card-icon">🎨</div>
+              <div class="card-label">Portfolio / ukázky</div>
+            </div>
+          </label>
+          <label class="card-option">
+            <input type="checkbox" name="purpose" value="Blog">
+            <div class="card-option-inner">
+              <div class="card-icon">✏️</div>
+              <div class="card-label">Blog / obsah</div>
+            </div>
+          </label>
+          <label class="card-option">
+            <input type="checkbox" name="purpose" value="Rezervace">
+            <div class="card-option-inner">
+              <div class="card-icon">📅</div>
+              <div class="card-label">Rezervační systém</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="cta">Co má návštěvník na webu udělat?</label>
+        <input type="text" id="cta" name="cta" placeholder="Např. objednat, zavolat, vyplnit formulář, rezervovat..." maxlength="300" aria-describedby="ctaError">
+        <div class="field-error" id="ctaError"></div>
+      </div>
+
+      <div class="field">
+        <label for="pages">Přibližný počet stránek</label>
+        <select id="pages" name="pages">
+          <option value="">— Vyberte —</option>
+          <option value="1">Jednostránkový (landing page)</option>
+          <option value="2-5">2–5 stránek</option>
+          <option value="6-10">6–10 stránek</option>
+          <option value="10+">Více než 10</option>
+          <option value="Nevím">Nevím, potřebuji poradit</option>
+        </select>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-back" onclick="goStep(0)">Zpět</button>
+        <button type="button" class="btn btn-next" onclick="goStep(2)">Pokračovat</button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 3: Vizuální směr ═══ -->
+    <div class="step" data-step="2">
+      <h2 class="step-title">Vizuální směr</h2>
+      <p class="step-subtitle">Jaký styl a barvy se vám líbí?</p>
+
+      <!-- Style -->
+      <div class="field">
+        <label>Styl webu</label>
+        <div class="style-grid">
+          <label class="style-card">
+            <input type="radio" name="style" value="Minimalistický">
+            <div class="style-card-inner">
+              <div class="style-emoji">◻️</div>
+              <div class="style-name">Minimalistický</div>
+              <div class="style-desc">Čistý, hodně bílého prostoru</div>
+            </div>
+          </label>
+          <label class="style-card">
+            <input type="radio" name="style" value="Odvážný">
+            <div class="style-card-inner">
+              <div class="style-emoji">⚡</div>
+              <div class="style-name">Odvážný</div>
+              <div class="style-desc">Výrazné barvy, velká typografie</div>
+            </div>
+          </label>
+          <label class="style-card">
+            <input type="radio" name="style" value="Elegantní">
+            <div class="style-card-inner">
+              <div class="style-emoji">✨</div>
+              <div class="style-name">Elegantní</div>
+              <div class="style-desc">Luxusní, sofistikovaný</div>
+            </div>
+          </label>
+          <label class="style-card">
+            <input type="radio" name="style" value="Hravý">
+            <div class="style-card-inner">
+              <div class="style-emoji">🎈</div>
+              <div class="style-name">Hravý</div>
+              <div class="style-desc">Barevný, přátelský, kreativní</div>
+            </div>
+          </label>
+          <label class="style-card">
+            <input type="radio" name="style" value="Korporátní">
+            <div class="style-card-inner">
+              <div class="style-emoji">💼</div>
+              <div class="style-name">Korporátní</div>
+              <div class="style-desc">Seriózní, důvěryhodný</div>
+            </div>
+          </label>
+          <label class="style-card">
+            <input type="radio" name="style" value="Jiný">
+            <div class="style-card-inner">
+              <div class="style-emoji">🎯</div>
+              <div class="style-name">Jiný</div>
+              <div class="style-desc">Popíšu níže</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Color picker -->
+      <div class="field color-section">
+        <label>Hlavní barva</label>
+        <div class="color-picker-wrap">
+          <div class="color-input-wrap">
+            <input type="color" id="mainColor" name="main_color" value="#2d6a4f">
+          </div>
+          <span class="color-hex" id="colorHex">#2d6a4f</span>
+        </div>
+        <div class="color-presets" id="colorPresets">
+          <div class="color-preset selected" style="background:#2d6a4f" data-color="#2d6a4f"></div>
+          <div class="color-preset" style="background:#1e3a5f" data-color="#1e3a5f"></div>
+          <div class="color-preset" style="background:#8b1a1a" data-color="#8b1a1a"></div>
+          <div class="color-preset" style="background:#d4a017" data-color="#d4a017"></div>
+          <div class="color-preset" style="background:#6b2fa0" data-color="#6b2fa0"></div>
+          <div class="color-preset" style="background:#e85d75" data-color="#e85d75"></div>
+          <div class="color-preset" style="background:#2196f3" data-color="#2196f3"></div>
+          <div class="color-preset" style="background:#222222" data-color="#222222"></div>
+        </div>
+        <div class="palettes-title">Navržené palety</div>
+        <div class="palette-options" id="paletteOptions"></div>
+        <input type="hidden" name="color_palette" id="paletteInput">
+      </div>
+
+      <!-- Font picker -->
+      <div class="field">
+        <label>Styl písma</label>
+        <div class="font-grid" id="fontGrid"></div>
+        <input type="hidden" name="font_pair" id="fontInput">
+      </div>
+
+      <!-- Inspiration -->
+      <div class="field">
+        <label for="inspiration">Weby, které se vám líbí (volitelné)</label>
+        <input type="text" id="inspiration" name="inspiration_1" placeholder="https://..." maxlength="200" style="margin-bottom:0.8rem" aria-describedby="inspiration1Error">
+        <div class="field-error" id="inspiration1Error"></div>
+        <input type="text" id="inspiration2" name="inspiration_2" placeholder="https://..." maxlength="200" aria-describedby="inspiration2Error">
+        <div class="field-error" id="inspiration2Error"></div>
+        <div class="field-hint">Pomohou mi pochopit, jakým směrem chcete jít.</div>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-back" onclick="goStep(1)">Zpět</button>
+        <button type="button" class="btn btn-next" onclick="goStep(3)">Pokračovat</button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 4: Obsah a materiály ═══ -->
+    <div class="step" data-step="3">
+      <h2 class="step-title">Obsah a materiály</h2>
+      <p class="step-subtitle">Co už máte připraveno?</p>
+
+      <div class="field">
+        <label>Máte připravené texty?</label>
+        <div class="radio-grid">
+          <label class="radio-card">
+            <input type="radio" name="texts" value="Ano">
+            <div class="radio-card-inner">Ano, mám připravené</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="texts" value="Částečně">
+            <div class="radio-card-inner">Částečně</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="texts" value="Ne">
+            <div class="radio-card-inner">Ne, potřebuji pomoct</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Máte logo?</label>
+        <div class="radio-grid">
+          <label class="radio-card">
+            <input type="radio" name="logo" value="Ano">
+            <div class="radio-card-inner">Ano</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="logo" value="Ne">
+            <div class="radio-card-inner">Ne</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="logo" value="Potřebuji vytvořit">
+            <div class="radio-card-inner">Potřebuji vytvořit</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Nahrajte materiály</label>
+        <div class="upload-zone" id="uploadZone">
+          <div class="upload-zone-icon">📁</div>
+          <div class="upload-zone-text">Přetáhněte soubory sem nebo klikněte</div>
+          <div class="upload-zone-hint">Logo, fotky, materiály — JPG, PNG, SVG, WebP (max 5 MB/soubor)</div>
+          <input type="file" id="fileInput" name="files" multiple accept="image/jpeg,image/png,image/svg+xml,image/webp">
+        </div>
+        <div class="upload-previews" id="uploadPreviews"></div>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-back" onclick="goStep(2)">Zpět</button>
+        <button type="button" class="btn btn-next" onclick="goStep(4)">Pokračovat</button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 5: Rozpočet a termín ═══ -->
+    <div class="step" data-step="4">
+      <h2 class="step-title">Rozpočet a termín</h2>
+      <p class="step-subtitle">Pomozte mi odhadnout rozsah projektu.</p>
+
+      <div class="field">
+        <label>Rozpočet</label>
+        <div class="radio-grid">
+          <label class="radio-card">
+            <input type="radio" name="budget" value="Do 5 000 Kč">
+            <div class="radio-card-inner">Do 5 000 Kč</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="budget" value="5 000 – 15 000 Kč">
+            <div class="radio-card-inner">5 000 – 15 000 Kč</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="budget" value="15 000 – 30 000 Kč">
+            <div class="radio-card-inner">15 000 – 30 000 Kč</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="budget" value="30 000+ Kč">
+            <div class="radio-card-inner">30 000+ Kč</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="budget" value="Chci konzultovat">
+            <div class="radio-card-inner">Nevím / chci konzultovat</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Kdy potřebujete web hotový?</label>
+        <div class="radio-grid">
+          <label class="radio-card">
+            <input type="radio" name="deadline" value="Co nejdříve">
+            <div class="radio-card-inner">Co nejdříve</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="deadline" value="Do 2 týdnů">
+            <div class="radio-card-inner">Do 2 týdnů</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="deadline" value="Do měsíce">
+            <div class="radio-card-inner">Do měsíce</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="deadline" value="Do 3 měsíců">
+            <div class="radio-card-inner">Do 3 měsíců</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="deadline" value="Není spěch">
+            <div class="radio-card-inner">Není spěch</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="notes">Něco dalšího?</label>
+        <textarea id="notes" name="notes" rows="4" placeholder="Cokoli dalšího, co bych měl vědět..." maxlength="1000" aria-describedby="notesError"></textarea>
+        <div class="field-counter" id="notesCounter">0 / 1000</div>
+        <div class="field-error" id="notesError"></div>
+      </div>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-back" onclick="goStep(3)">Zpět</button>
+        <button type="button" class="btn btn-next" onclick="goStep(5)">Pokračovat</button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 6: Kontakt ═══ -->
+    <div class="step" data-step="5">
+      <h2 class="step-title">Kontakt</h2>
+      <p class="step-subtitle">Jak vás mohu kontaktovat?</p>
+
+      <div class="field">
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" placeholder="vas@email.cz" maxlength="200" aria-describedby="emailError">
+        <div class="field-error" id="emailError"></div>
+      </div>
+
+      <div class="field">
+        <label for="phone">Telefon</label>
+        <input type="tel" id="phone" name="phone" placeholder="+420 ..." maxlength="20" aria-describedby="phoneError">
+        <div class="field-error" id="phoneError"></div>
+      </div>
+
+      <div class="field">
+        <label>Preferovaná komunikace</label>
+        <div class="radio-grid">
+          <label class="radio-card">
+            <input type="radio" name="communication" value="Email">
+            <div class="radio-card-inner">Email</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="communication" value="Telefon">
+            <div class="radio-card-inner">Telefon</div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="communication" value="WhatsApp">
+            <div class="radio-card-inner">WhatsApp</div>
+          </label>
+        </div>
+      </div>
+
+      <label class="checkbox-wrap">
+        <input type="checkbox" id="consent" name="consent" aria-describedby="consentError">
+        <span>Souhlasím se zpracováním osobních údajů za účelem zpracování poptávky. Data budou použita pouze pro komunikaci ohledně projektu.</span>
+      </label>
+      <div class="field-error" id="consentError" style="margin-top:-1rem; margin-bottom:1rem;"></div>
+
+      <div class="btn-row" style="flex-direction:column; gap:1rem;">
+        <button type="submit" class="btn btn-submit">Odeslat poptávku</button>
+        <button type="button" class="btn btn-back" onclick="goStep(4)" style="width:100%; text-align:center;">Zpět</button>
+      </div>
+    </div>
+
+  </form>
+
+  <!-- Success screen -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-check">
+      <div class="success-check-circle">
+        <svg viewBox="0 0 24 24"><polyline points="6 12 10 16 18 8"/></svg>
+      </div>
+    </div>
+    <h2>Poptávka odeslána</h2>
+    <div class="success-subtitle">Děkuji za váš zájem</div>
+    <p>Vaši poptávku jsem přijal a obratem se vám ozvu s prvními návrhy a doporučeními. Těším se na spolupráci.</p>
+    <a href="index.html" class="btn btn-next" style="display:inline-block; text-decoration:none;">Zpět na portfolio</a>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     FONT IMPORTS (lazy loaded in step 3)
+══════════════════════════════════ -->
+<script>
+// ══════════════════════════════════
+// VALIDATION HELPERS
+// ══════════════════════════════════
+function sanitize(str) {
+  return str.replace(/<[^>]*>/g, '').trim();
+}
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('visible');
+  const field = el.closest('.field');
+  if (field) field.classList.add('has-error');
+}
+
+function clearError(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = '';
+  el.classList.remove('visible');
+  const field = el.closest('.field');
+  if (field) field.classList.remove('has-error');
+}
+
+function validateName() {
+  const v = sanitize(document.getElementById('name').value);
+  if (!v) { showError('nameError', 'Vyplňte prosím jméno nebo název firmy.'); return false; }
+  if (v.length < 2) { showError('nameError', 'Jméno musí mít alespoň 2 znaky.'); return false; }
+  if (/[<>{}\[\]]/.test(v)) { showError('nameError', 'Jméno obsahuje nepovolené znaky.'); return false; }
+  clearError('nameError'); return true;
+}
+
+function validateWebsite() {
+  const v = document.getElementById('website').value.trim();
+  if (!v) { clearError('websiteError'); return true; }
+  if (!/^https?:\/\/.+\..+/.test(v)) { showError('websiteError', 'URL musí začínat http:// nebo https://'); return false; }
+  clearError('websiteError'); return true;
+}
+
+function validateTextarea(id, errorId, max) {
+  const v = document.getElementById(id).value;
+  if (v.length > max) { showError(errorId, `Text je příliš dlouhý (max ${max} znaků).`); return false; }
+  clearError(errorId); return true;
+}
+
+function validateUrl(inputId, errorId) {
+  const v = document.getElementById(inputId).value.trim();
+  if (!v) { clearError(errorId); return true; }
+  if (!/^https?:\/\/.+\..+/.test(v)) { showError(errorId, 'Zadejte platnou URL (např. https://example.com)'); return false; }
+  clearError(errorId); return true;
+}
+
+function validateEmail() {
+  const v = document.getElementById('email').value.trim();
+  if (!v) { showError('emailError', 'Vyplňte prosím emailovou adresu.'); return false; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { showError('emailError', 'Zadejte platný email (např. jan@email.cz).'); return false; }
+  clearError('emailError'); return true;
+}
+
+function validatePhone() {
+  const v = document.getElementById('phone').value.trim();
+  if (!v) { clearError('phoneError'); return true; }
+  if (!/^[\d\s\+\-()]{5,20}$/.test(v)) { showError('phoneError', 'Telefon může obsahovat pouze čísla, mezery, +, - (max 20 znaků).'); return false; }
+  clearError('phoneError'); return true;
+}
+
+function validateConsent() {
+  if (!document.getElementById('consent').checked) { showError('consentError', 'Pro odeslání je potřeba souhlas se zpracováním údajů.'); return false; }
+  clearError('consentError'); return true;
+}
+
+// Character counters for textareas
+function setupCounter(inputId, counterId, max) {
+  const input = document.getElementById(inputId);
+  const counter = document.getElementById(counterId);
+  if (!input || !counter) return;
+  function update() {
+    const len = input.value.length;
+    counter.textContent = len + ' / ' + max;
+    counter.classList.remove('warn', 'over');
+    if (len > max) counter.classList.add('over');
+    else if (len > max * 0.85) counter.classList.add('warn');
+  }
+  input.addEventListener('input', update);
+  update();
+}
+
+// Step validation — returns true if step is valid
+function validateStep(stepNum) {
+  let valid = true;
+  if (stepNum === 0) {
+    if (!validateName()) valid = false;
+    if (!validateWebsite()) valid = false;
+    if (!validateTextarea('description', 'descriptionError', 1000)) valid = false;
+    if (!validateTextarea('audience', 'audienceError', 500)) valid = false;
+  }
+  if (stepNum === 2) {
+    if (!validateUrl('inspiration', 'inspiration1Error')) valid = false;
+    if (!validateUrl('inspiration2', 'inspiration2Error')) valid = false;
+  }
+  if (stepNum === 4) {
+    if (!validateTextarea('notes', 'notesError', 1000)) valid = false;
+  }
+  if (stepNum === 5) {
+    if (!validateEmail()) valid = false;
+    if (!validatePhone()) valid = false;
+    if (!validateConsent()) valid = false;
+  }
+  return valid;
+}
+
+// ── LIVE + BLUR VALIDATION ──
+// Validate on blur (first touch) and on input (once error is shown)
+function liveValidate(inputId, fn) {
+  const el = document.getElementById(inputId);
+  let touched = false;
+  el.addEventListener('blur', () => { touched = true; fn(); });
+  el.addEventListener('input', () => { if (touched) fn(); });
+}
+
+liveValidate('name', validateName);
+liveValidate('website', validateWebsite);
+liveValidate('description', () => validateTextarea('description', 'descriptionError', 1000));
+liveValidate('audience', () => validateTextarea('audience', 'audienceError', 500));
+liveValidate('inspiration', () => validateUrl('inspiration', 'inspiration1Error'));
+liveValidate('inspiration2', () => validateUrl('inspiration2', 'inspiration2Error'));
+liveValidate('notes', () => validateTextarea('notes', 'notesError', 1000));
+liveValidate('email', validateEmail);
+liveValidate('phone', validatePhone);
+document.getElementById('consent').addEventListener('change', validateConsent);
+
+// Character counters
+setupCounter('description', 'descriptionCounter', 1000);
+setupCounter('audience', 'audienceCounter', 500);
+setupCounter('notes', 'notesCounter', 1000);
+
+// Sanitize text inputs on blur
+document.querySelectorAll('.field input[type="text"], .field textarea').forEach(inp => {
+  inp.addEventListener('blur', () => { inp.value = sanitize(inp.value); });
+});
+
+// ── "JINÉ" TOGGLE FOR INDUSTRY ──
+const industrySelect = document.getElementById('industry');
+const industryOther = document.getElementById('industryOther');
+industrySelect.addEventListener('change', () => {
+  industryOther.style.display = industrySelect.value === 'Jiné' ? 'block' : 'none';
+  if (industrySelect.value !== 'Jiné') industryOther.value = '';
+});
+
+// ── WIZARD NAVIGATION ──
+let currentStep = 0;
+const steps = document.querySelectorAll('.step');
+const dots = document.querySelectorAll('.progress-dot');
+const fill = document.getElementById('progressFill');
+
+function goStep(n) {
+  // Validate current step before moving forward
+  if (n > currentStep && !validateStep(currentStep)) {
+    // Scroll to first error
+    const firstErr = steps[currentStep].querySelector('.field-error.visible');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  currentStep = n;
+  steps.forEach(s => s.classList.remove('active'));
+  steps[n].classList.add('active');
+
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i < n) d.classList.add('done');
+    if (i === n) d.classList.add('active');
+  });
+
+  fill.style.width = (n / (dots.length - 1) * 100) + '%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Clickable progress dots
+dots.forEach(d => {
+  d.addEventListener('click', () => {
+    const target = parseInt(d.dataset.step);
+    if (target <= currentStep) goStep(target);
+  });
+});
+
+// ── COLOR PICKER ──
+const mainColor = document.getElementById('mainColor');
+const colorHex = document.getElementById('colorHex');
+const presets = document.querySelectorAll('.color-preset');
+const paletteContainer = document.getElementById('paletteOptions');
+const paletteInput = document.getElementById('paletteInput');
+
+function hexToHsl(hex) {
+  let r = parseInt(hex.slice(1,3),16)/255;
+  let g = parseInt(hex.slice(3,5),16)/255;
+  let b = parseInt(hex.slice(5,7),16)/255;
+  const max = Math.max(r,g,b), min = Math.min(r,g,b);
+  let h, s, l = (max+min)/2;
+  if (max===min) { h=s=0; }
+  else {
+    const d = max-min;
+    s = l>0.5 ? d/(2-max-min) : d/(max+min);
+    switch(max) {
+      case r: h=((g-b)/d+(g<b?6:0))/6; break;
+      case g: h=((b-r)/d+2)/6; break;
+      case b: h=((r-g)/d+4)/6; break;
+    }
+  }
+  return [h*360, s*100, l*100];
+}
+
+function hslToHex(h, s, l) {
+  h = ((h % 360) + 360) % 360;
+  s /= 100; l /= 100;
+  const a = s * Math.min(l, 1-l);
+  const f = n => {
+    const k = (n + h/30) % 12;
+    const color = l - a * Math.max(Math.min(k-3, 9-k, 1), -1);
+    return Math.round(255 * color).toString(16).padStart(2,'0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+function generatePalettes(hex) {
+  const [h, s, l] = hexToHsl(hex);
+  return [
+    {
+      name: 'Komplementární',
+      colors: [hex, hslToHex(h+180, s, l), hslToHex(h, s*0.6, l+20), hslToHex(h+180, s*0.5, l+25), hslToHex(h, s*0.2, 92)]
+    },
+    {
+      name: 'Analogická',
+      colors: [hex, hslToHex(h+30, s, l), hslToHex(h-30, s, l), hslToHex(h+15, s*0.5, l+25), hslToHex(h, s*0.2, 92)]
+    },
+    {
+      name: 'Split-komplementární',
+      colors: [hex, hslToHex(h+150, s, l), hslToHex(h+210, s, l), hslToHex(h, s*0.5, l+20), hslToHex(h+180, s*0.15, 90)]
+    },
+    {
+      name: 'Triadic',
+      colors: [hex, hslToHex(h+120, s, l), hslToHex(h+240, s, l), hslToHex(h+60, s*0.4, l+25), hslToHex(h, s*0.15, 93)]
+    }
+  ];
+}
+
+function renderPalettes(hex) {
+  const palettes = generatePalettes(hex);
+  paletteContainer.innerHTML = palettes.map((p, i) => `
+    <div class="palette-row${i===0?' selected':''}" data-palette="${p.colors.join(',')}">
+      <div class="palette-swatches">
+        ${p.colors.map(c => `<div class="palette-swatch" style="background:${c}"></div>`).join('')}
+      </div>
+      <div class="palette-name">${p.name}</div>
+    </div>
+  `).join('');
+  paletteInput.value = palettes[0].colors.join(',');
+
+  paletteContainer.querySelectorAll('.palette-row').forEach(row => {
+    row.addEventListener('click', () => {
+      paletteContainer.querySelectorAll('.palette-row').forEach(r => r.classList.remove('selected'));
+      row.classList.add('selected');
+      paletteInput.value = row.dataset.palette;
+    });
+  });
+}
+
+function updateColor(hex) {
+  mainColor.value = hex;
+  colorHex.textContent = hex;
+  presets.forEach(p => p.classList.toggle('selected', p.dataset.color === hex));
+  renderPalettes(hex);
+}
+
+mainColor.addEventListener('input', e => updateColor(e.target.value));
+presets.forEach(p => p.addEventListener('click', () => updateColor(p.dataset.color)));
+renderPalettes('#2d6a4f');
+
+// ── FONT PICKER ──
+const fontPairs = [
+  { heading: "'Exo 2', sans-serif", body: "'Roboto Mono', monospace", name: "Exo 2 + Roboto Mono", url: null },
+  { heading: "'Playfair Display', serif", body: "'Inter', sans-serif", name: "Playfair Display + Inter", url: "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400&display=swap" },
+  { heading: "'Montserrat', sans-serif", body: "'Open Sans', sans-serif", name: "Montserrat + Open Sans", url: "https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400&display=swap" },
+  { heading: "'Cormorant Garamond', serif", body: "'Lato', sans-serif", name: "Cormorant Garamond + Lato", url: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Lato:wght@400&display=swap" },
+  { heading: "'Space Grotesk', sans-serif", body: "'DM Sans', sans-serif", name: "Space Grotesk + DM Sans", url: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=DM+Sans:wght@400&display=swap" },
+  { heading: "'Poppins', sans-serif", body: "'Roboto', sans-serif", name: "Poppins + Roboto", url: "https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Roboto:wght@400&display=swap" },
+  { heading: "'Libre Baskerville', serif", body: "'Source Sans 3', sans-serif", name: "Libre Baskerville + Source Sans", url: "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Source+Sans+3:wght@400&display=swap" },
+  { heading: "'Oswald', sans-serif", body: "'Merriweather', serif", name: "Oswald + Merriweather", url: "https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Merriweather:wght@400&display=swap" }
+];
+
+let fontsLoaded = false;
+const fontInput = document.getElementById('fontInput');
+const fontGrid = document.getElementById('fontGrid');
+
+function loadFonts() {
+  if (fontsLoaded) return;
+  fontsLoaded = true;
+  fontPairs.forEach(p => {
+    if (p.url) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = p.url;
+      document.head.appendChild(link);
+    }
+  });
+}
+
+function renderFonts() {
+  fontGrid.innerHTML = fontPairs.map((p, i) => `
+    <label class="font-card">
+      <input type="radio" name="font_radio" value="${p.name}" ${i===0?'checked':''}>
+      <div class="font-card-inner">
+        <div class="font-heading-preview" style="font-family:${p.heading}">Nadpis webu</div>
+        <div class="font-body-preview" style="font-family:${p.body}">Ukázkový text odstavce pro náhled kombinace písem na vašem webu.</div>
+        <div class="font-pair-name">${p.name}</div>
+      </div>
+    </label>
+  `).join('');
+  fontInput.value = fontPairs[0].name;
+  fontGrid.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('change', () => { fontInput.value = inp.value; });
+  });
+}
+renderFonts();
+
+// Lazy load fonts when step 3 becomes visible
+const step3observer = new MutationObserver(() => {
+  if (document.querySelector('.step[data-step="2"]').classList.contains('active')) loadFonts();
+});
+step3observer.observe(document.querySelector('.step[data-step="2"]'), { attributes: true, attributeFilter: ['class'] });
+
+// ── CLOUDINARY CONFIG ──
+// ⚠️ DOPLŇ SVÉ ÚDAJE z Cloudinary dashboardu:
+const CLOUDINARY_CLOUD = 'dbega2ziu';
+const CLOUDINARY_PRESET = 'konfigurator';
+
+// ── FILE UPLOAD ──
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+const previews = document.getElementById('uploadPreviews');
+let uploadedFiles = []; // { file, previewUrl, cloudinaryUrl, status }
+const MAX_FILE = 5 * 1024 * 1024;
+const MAX_TOTAL = 20 * 1024 * 1024;
+
+function totalSize() { return uploadedFiles.reduce((s, f) => s + f.file.size, 0); }
+
+function renderPreviews() {
+  previews.innerHTML = uploadedFiles.map((f, i) => `
+    <div class="upload-thumb">
+      <img src="${f.previewUrl}" alt="${f.file.name}">
+      <button type="button" class="upload-thumb-remove" data-idx="${i}" aria-label="Odebrat">&times;</button>
+      <div class="upload-thumb-name">${f.status === 'uploading' ? '⏳ Nahrávám...' : f.status === 'done' ? '✓ ' + f.file.name : f.file.name}</div>
+    </div>
+  `).join('');
+  previews.querySelectorAll('.upload-thumb-remove').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.idx);
+      URL.revokeObjectURL(uploadedFiles[idx].previewUrl);
+      uploadedFiles.splice(idx, 1);
+      renderPreviews();
+    });
+  });
+}
+
+async function uploadToCloudinary(fileObj) {
+  fileObj.status = 'uploading';
+  renderPreviews();
+
+  const fd = new FormData();
+  fd.append('file', fileObj.file);
+  fd.append('upload_preset', CLOUDINARY_PRESET);
+  fd.append('folder', 'konfigurator');
+
+  try {
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {
+      method: 'POST',
+      body: fd
+    });
+    const data = await res.json();
+    if (data.secure_url) {
+      fileObj.cloudinaryUrl = data.secure_url;
+      fileObj.status = 'done';
+    } else {
+      fileObj.status = 'error';
+    }
+  } catch {
+    fileObj.status = 'error';
+  }
+  renderPreviews();
+}
+
+function addFiles(files) {
+  for (const f of files) {
+    if (f.size > MAX_FILE) { alert(`${f.name} je příliš velký (max 5 MB).`); continue; }
+    if (totalSize() + f.size > MAX_TOTAL) { alert('Celková velikost souborů překročila 20 MB.'); break; }
+    if (!f.type.match(/^image\/(jpeg|png|svg\+xml|webp)$/)) { alert(`${f.name} — nepodporovaný formát.`); continue; }
+    const obj = { file: f, previewUrl: URL.createObjectURL(f), cloudinaryUrl: null, status: 'pending' };
+    uploadedFiles.push(obj);
+    uploadToCloudinary(obj);
+  }
+  renderPreviews();
+}
+
+fileInput.addEventListener('change', e => { addFiles(e.target.files); fileInput.value = ''; });
+
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  addFiles(e.dataTransfer.files);
+});
+
+// ── FORM SUBMIT ──
+const form = document.getElementById('configForm');
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+
+  const submitBtn = form.querySelector('.btn-submit');
+
+  // Validate all steps
+  let allValid = true;
+  // Check step 1 (name is required)
+  if (!validateName()) {
+    if (allValid) goStep(0);
+    allValid = false;
+  }
+  if (!validateWebsite()) {
+    if (allValid) goStep(0);
+    allValid = false;
+  }
+  // Check step 6 (email, phone, consent)
+  if (!validateEmail()) {
+    if (allValid) goStep(5);
+    allValid = false;
+  }
+  if (!validatePhone()) {
+    if (allValid) goStep(5);
+    allValid = false;
+  }
+  if (!validateConsent()) {
+    if (allValid) goStep(5);
+    allValid = false;
+  }
+  if (!allValid) return;
+
+  // Check if any files are still uploading
+  const uploading = uploadedFiles.some(f => f.status === 'uploading');
+  if (uploading) {
+    alert('Počkejte prosím, dokud se nenahrají všechny soubory.');
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Odesílám...';
+
+  const formData = new FormData(form);
+
+  // Remove raw file input (we send Cloudinary URLs instead)
+  formData.delete('files');
+
+  // Add Cloudinary URLs as text
+  const urls = uploadedFiles
+    .filter(f => f.cloudinaryUrl)
+    .map(f => f.cloudinaryUrl);
+  if (urls.length) {
+    formData.append('uploaded_files', urls.join('\n'));
+  }
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      form.style.display = 'none';
+      document.querySelector('.progress-wrap').style.display = 'none';
+      document.getElementById('successScreen').classList.add('active');
+    } else {
+      throw new Error('Chyba při odesílání');
+    }
+  } catch (err) {
+    alert('Nepodařilo se odeslat formulář. Zkuste to prosím znovu.');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Odeslat poptávku';
+  }
+});
+</script>
+
+</body>
+</html>
