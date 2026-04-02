@@ -396,12 +396,12 @@
       margin-bottom: 4rem; color: white;
     }
     @media (max-width: 724px) { .footer-left h4 { font-size: 3rem; line-height: 4rem; } }
-    @keyframes btnPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(232,201,122,0); }
-      50% { box-shadow: 0 0 20px 4px rgba(232,201,122,0.25); }
+    @keyframes sparkRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
     .footer-btn {
-      display: inline-block; position: relative; overflow: hidden;
+      display: inline-block; position: relative;
       background: linear-gradient(90deg, #b8922a, #e8c97a, #b8922a);
       background-size: 200% auto;
       border: none;
@@ -411,14 +411,45 @@
       font-size: 1.5rem; text-transform: uppercase;
       letter-spacing: 0.14em; font-weight: 600;
       transition: background-position 0.4s ease;
-      border-radius: 2px;
-      animation: btnPulse 3s ease-in-out infinite;
+      border-radius: 4px;
+      z-index: 1;
+      overflow: visible;
     }
-    .footer-btn::after {
+    .footer-btn-wrap {
+      position: relative;
+      display: inline-block;
+      padding: 2px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .footer-btn-wrap::before {
       content: '';
-      position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.45) 0%, transparent 65%);
-      transition: opacity 0.3s;
+      position: absolute;
+      inset: -40%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0%,
+        transparent 70%,
+        #f0d878 78%,
+        #fff 82%,
+        #f0d878 86%,
+        transparent 94%,
+        transparent 100%
+      );
+      animation: sparkRotate 4s linear infinite;
+      z-index: 0;
+    }
+    .footer-btn-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: linear-gradient(135deg, #1b4332, #1a1d20);
+      border-radius: 4px;
+      z-index: 0;
+    }
+    .footer-btn-wrap .footer-btn {
+      position: relative;
+      z-index: 1;
     }
     .footer-btn:hover { background-position: right center; text-decoration: none; }
     .footer-alt-contact {
@@ -1061,7 +1092,7 @@
   <div class="container">
     <div class="footer-left reveal">
       <h4>Pojďme vytvořit<br>váš web.</h4>
-      <a class="footer-btn" href="konfigurator.html">Spustit konfigurátor</a>
+      <span class="footer-btn-wrap"><a class="footer-btn" href="konfigurator.html">Spustit konfigurátor</a></span>
       <p class="footer-alt-contact">Máte otázku? Napište mi <a href="mailto:jun.milan@outlook.com">email</a></p>
     </div>
     <div class="footer-right reveal">
