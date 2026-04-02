@@ -718,25 +718,66 @@
     .success-screen {
       display: none;
       text-align: center;
-      padding: 6rem 2rem;
-      animation: fadeUp 0.5s ease forwards;
+      padding: 8rem 2rem;
+      animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     .success-screen.active { display: block; }
-    .success-icon {
-      font-size: 6rem;
-      margin-bottom: 2rem;
+    .success-check {
+      width: 8rem;
+      height: 8rem;
+      margin: 0 auto 3rem;
+      position: relative;
+    }
+    .success-check-circle {
+      width: 8rem;
+      height: 8rem;
+      border-radius: 50%;
+      background: var(--green-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: scaleIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      box-shadow: 0 8px 30px rgba(45,106,79,0.2);
+    }
+    .success-check-circle svg {
+      width: 3.6rem;
+      height: 3.6rem;
+      stroke: #fff;
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+      animation: drawCheck 0.4s ease 0.4s forwards;
+    }
+    @keyframes scaleIn {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @keyframes drawCheck {
+      to { stroke-dashoffset: 0; }
     }
     .success-screen h2 {
       font-size: 2.8rem;
       color: var(--text);
-      margin-bottom: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .success-screen .success-subtitle {
+      color: var(--green);
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2rem;
     }
     .success-screen p {
       color: var(--text-light);
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       line-height: 2.4rem;
-      max-width: 480px;
-      margin: 0 auto 3rem;
+      max-width: 460px;
+      margin: 0 auto 4rem;
     }
 
     /* ══════════════════════════════════
@@ -1192,9 +1233,14 @@
 
   <!-- Success screen -->
   <div class="success-screen" id="successScreen">
-    <div class="success-icon">✅</div>
-    <h2>Odesláno!</h2>
-    <p>Děkuji za vyplnění. Ozvu se vám do 24 hodin s prvními návrhy a doporučeními.</p>
+    <div class="success-check">
+      <div class="success-check-circle">
+        <svg viewBox="0 0 24 24"><polyline points="6 12 10 16 18 8"/></svg>
+      </div>
+    </div>
+    <h2>Poptávka odeslána</h2>
+    <div class="success-subtitle">Děkuji za váš zájem</div>
+    <p>Vaši poptávku jsem přijal a obratem se vám ozvu s prvními návrhy a doporučeními. Těším se na spolupráci.</p>
     <a href="index.html" class="btn btn-next" style="display:inline-block; text-decoration:none;">Zpět na portfolio</a>
   </div>
 
