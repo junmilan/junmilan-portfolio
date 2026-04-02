@@ -867,6 +867,23 @@
 
     /* ── NAV ACTIVE ── */
     .nav-d a.nav-active { color: var(--green-light) !important; }
+
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.9);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.1rem; font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.8rem;
+      cursor: pointer; transition: all 0.3s;
+      text-transform: uppercase;
+      margin-left: 2rem; border-radius: 3px;
+    }
+    .navbar.scrolled .lang-toggle { color: var(--text); border-color: var(--text); }
+    .lang-toggle:hover { background: var(--green-dark); color: #fff; border-color: var(--green-dark); }
+    .nav-mm .lang-toggle { margin: auto 0 0 0; border-color: var(--text); color: var(--text); }
   </style>
 </head>
 <body>
@@ -878,9 +895,10 @@
   <div class="container">
     <a href="#" class="nav-logo">Milan <span>Jun</span></a>
     <div class="nav-d">
-      <a href="#o-mne">O mně</a>
-      <a href="#projekty">Projekty</a>
-      <a href="#kontakt" class="nav-cta">Kontakt</a>
+      <a href="#o-mne" data-i18n="nav.about">O mně</a>
+      <a href="#projekty" data-i18n="nav.projects">Projekty</a>
+      <a href="#kontakt" class="nav-cta" data-i18n="nav.contact">Kontakt</a>
+      <button class="lang-toggle" onclick="toggleLang()">EN</button>
     </div>
     <div class="nav-m" id="navM">
       <button id="menuBtn" aria-label="Otevřít menu">
@@ -891,9 +909,10 @@
     </div>
   </div>
   <div class="nav-mm" id="navMM">
-    <a href="#o-mne" class="has-divider" onclick="closeMobileMenu()">O mně</a>
-    <a href="#projekty" onclick="closeMobileMenu()">Projekty</a>
-    <a href="#kontakt" onclick="closeMobileMenu()">Kontakt</a>
+    <a href="#o-mne" class="has-divider" onclick="closeMobileMenu()" data-i18n="nav.about">O mně</a>
+    <a href="#projekty" onclick="closeMobileMenu()" data-i18n="nav.projects">Projekty</a>
+    <a href="#kontakt" onclick="closeMobileMenu()" data-i18n="nav.contact">Kontakt</a>
+    <button class="lang-toggle" onclick="toggleLang()">EN</button>
   </div>
 </nav>
 
@@ -902,10 +921,10 @@
   <img class="hero-bg" src="Milan/landing_photo_official2.png" alt="">
   <div class="container">
     <div class="hero-content">
-      <span class="hero-tag">Dobrý den, jmenuji se</span>
+      <span class="hero-tag" data-i18n="hero.tag">Dobrý den, jmenuji se</span>
       <h2 class="hero-name">Milan Jun</h2>
-      <p class="hero-sub">Jsem freelance webdesigner — tvořím weby pro firmy a živnostníky,<br>kteří chtějí být vidět online.</p>
-      <a class="hero-btn" href="#kontakt">Napište mi</a>
+      <p class="hero-sub" data-i18n-html="hero.sub">Jsem freelance webdesigner — tvořím weby pro firmy a živnostníky,<br>kteří chtějí být vidět online.</p>
+      <a class="hero-btn" href="#kontakt" data-i18n="hero.cta">Napište mi</a>
       <img class="hero-img-mobile" src="Milan/landing_photo_official2.png" alt="Milan Jun">
     </div>
   </div>
@@ -914,21 +933,21 @@
 <!-- ABOUT -->
 <div id="o-mne">
   <div class="container reveal">
-    <h2>O mně</h2>
+    <h2 data-i18n="about.title">O mně</h2>
     <div class="body" style="margin-top: 2rem;">
-      <p>Jmenuji se Milan Jun a tvořím webové stránky pro malé firmy a živnostníky. Zaměřuji se na moderní, rychlé a přehledné weby, které skutečně přináší nové zákazníky – ne jen hezký vzhled.</p>
-      <p>Vycházím z přesvědčení, že dobrý web nemusí být drahý ani složitý. Musí být funkční, estetický a šitý na míru konkrétní firmě. Každý projekt beru jako partnerství – záleží mi na výsledku stejně jako vám.</p>
-      <p>Pokud chcete někoho, kdo s vámi bude komunikovat přímo a odvede poctivou práci - ozvěte se mi s Vaší představou. První návrh pro vás vytvořím zcela zdarma.</p>
+      <p data-i18n="about.p1">Jmenuji se Milan Jun a tvořím webové stránky pro malé firmy a živnostníky. Zaměřuji se na moderní, rychlé a přehledné weby, které skutečně přináší nové zákazníky – ne jen hezký vzhled.</p>
+      <p data-i18n="about.p2">Vycházím z přesvědčení, že dobrý web nemusí být drahý ani složitý. Musí být funkční, estetický a šitý na míru konkrétní firmě. Každý projekt beru jako partnerství – záleží mi na výsledku stejně jako vám.</p>
+      <p data-i18n="about.p3">Pokud chcete někoho, kdo s vámi bude komunikovat přímo a odvede poctivou práci - ozvěte se mi s Vaší představou. První návrh pro vás vytvořím zcela zdarma.</p>
     </div>
     <div class="skills" style="margin-top: 3rem;">
-      <span class="skill-pill">HTML / CSS / JS</span>
-      <span class="skill-pill">Responzivní design</span>
-      <span class="skill-pill">UI / UX</span>
-      <span class="skill-pill">Bootstrap 5</span>
-      <span class="skill-pill">WordPress</span>
-      <span class="skill-pill">SEO základy</span>
-      <span class="skill-pill">Animace</span>
-      <span class="skill-pill">Formuláře & API</span>
+      <span class="skill-pill" data-i18n="about.s1">HTML / CSS / JS</span>
+      <span class="skill-pill" data-i18n="about.s2">Responzivní design</span>
+      <span class="skill-pill" data-i18n="about.s3">UI / UX</span>
+      <span class="skill-pill" data-i18n="about.s4">Bootstrap 5</span>
+      <span class="skill-pill" data-i18n="about.s5">WordPress</span>
+      <span class="skill-pill" data-i18n="about.s6">SEO základy</span>
+      <span class="skill-pill" data-i18n="about.s7">Animace</span>
+      <span class="skill-pill" data-i18n="about.s8">Formuláře & API</span>
     </div>
   </div>
 </div>
@@ -937,25 +956,25 @@
 
 <!-- PROJECT 1: Bellavita -->
 <div id="projekty" class="project-block pb-1">
-  <h2 class="proj-section-title">Projekty</h2>
+  <h2 class="proj-section-title" data-i18n="projects.title">Projekty</h2>
   <div class="container">
     <div class="proj-left reveal-left">
       <div class="proj-title"><h3>Bellavita</h3></div>
       <div class="proj-desc">
-        <p>Prezentační web pro italskou restauraci. Elegantní design s rezervačním systémem, full-width galerií a tabbovaným menu. Luxusní animace a paralaxní efekty.</p>
+        <p data-i18n="proj1.desc">Prezentační web pro italskou restauraci. Elegantní design s rezervačním systémem, full-width galerií a tabbovaným menu. Luxusní animace a paralaxní efekty.</p>
       </div>
       <div class="proj-tags">
-        <p>Technologie</p>
+        <p data-i18n="proj.techLabel">Technologie</p>
         <ul>
           <li>HTML / CSS / JS</li>
           <li>Bootstrap 5</li>
-          <li>Scroll animace</li>
-          <li>Rezervační formulář</li>
-          <li>Galerie slider</li>
+          <li data-i18n="proj1.tech3">Scroll animace</li>
+          <li data-i18n="proj1.tech4">Rezervační formulář</li>
+          <li data-i18n="proj1.tech5">Galerie slider</li>
         </ul>
       </div>
       <div class="proj-cta">
-        <a href="bellavita.html" target="_blank">Zobrazit projekt</a>
+        <a href="bellavita.html" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a>
       </div>
     </div>
     <div class="proj-right reveal-right">
@@ -970,7 +989,7 @@
           src="obrazky/bellavita3.png"
           alt="Bellavita – další sekce">
         <img class="proj-click-hint" src="obrazky/click.png" alt="Klikněte pro další obrázky">
-        <div class="proj-img-overlay"><a href="bellavita.html" target="_blank">Zobrazit projekt</a></div>
+        <div class="proj-img-overlay"><a href="bellavita.html" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a></div>
       </div>
     </div>
   </div>
@@ -980,22 +999,22 @@
 <div class="project-block pb-2">
   <div class="container">
     <div class="proj-left reveal-left">
-      <div class="proj-title"><h3>Osobní trenér</h3></div>
+      <div class="proj-title"><h3 data-i18n="proj2.title">Osobní trenér</h3></div>
       <div class="proj-desc">
-        <p>Profesionální web pro osobního trenéra s funkčním rezervačním systémem (Formspree), ceníkem služeb a scroll animacemi. Lokální fotografie klienta.</p>
+        <p data-i18n="proj2.desc">Profesionální web pro osobního trenéra s funkčním rezervačním systémem (Formspree), ceníkem služeb a scroll animacemi. Lokální fotografie klienta.</p>
       </div>
       <div class="proj-tags">
-        <p>Technologie</p>
+        <p data-i18n="proj.techLabel">Technologie</p>
         <ul>
           <li>HTML / CSS / JS</li>
           <li>Formspree API</li>
           <li>IntersectionObserver</li>
-          <li>Pricing sekce</li>
-          <li>Responzivní layout</li>
+          <li data-i18n="proj2.tech4">Pricing sekce</li>
+          <li data-i18n="proj2.tech5">Responzivní layout</li>
         </ul>
       </div>
       <div class="proj-cta">
-        <a href="trener.html" target="_blank">Zobrazit projekt</a>
+        <a href="trener.html" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a>
       </div>
     </div>
     <div class="proj-right reveal-right">
@@ -1010,7 +1029,7 @@
         <img class="proj-img-tertiary"
           src="obrazky/trener3.png"
           alt="Osobní trenér – další sekce">
-        <div class="proj-img-overlay"><a href="trener.html" target="_blank">Zobrazit projekt</a></div>
+        <div class="proj-img-overlay"><a href="trener.html" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a></div>
       </div>
     </div>
   </div>
@@ -1022,18 +1041,18 @@
 <div class="how-section">
   <div class="container" style="flex-direction: column;">
     <div class="how-header">
-      <h2>Jak probíhá spolupráce</h2>
-      <p>Od prvního kontaktu po spuštění webu.</p>
+      <h2 data-i18n="how.title">Jak probíhá spolupráce</h2>
+      <p data-i18n="how.subtitle">Od prvního kontaktu po spuštění webu.</p>
     </div>
     <div class="how-steps">
 
       <div class="how-step">
         <div class="how-step-num">01</div>
         <div class="how-step-content">
-          <span class="how-step-label">Krok 1</span>
-          <h3 class="how-step-title">Poptávka</h3>
-          <p>Napíšete mi základní představu — jaký web potřebujete, pro koho je určený, jaký styl a obsah si představujete. Stačí pár vět.</p>
-          <a href="konfigurator.html" style="display:inline-block;margin-top:1.5rem;padding:1rem 2.4rem;background:var(--green-light);color:var(--green-dark);font-family:'Roboto Mono',monospace;font-size:1.2rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;border-radius:4px;text-decoration:none;transition:all 0.3s;">Vyplnit konfigurátor</a>
+          <span class="how-step-label" data-i18n="how.s1label">Krok 1</span>
+          <h3 class="how-step-title" data-i18n="how.s1title">Poptávka</h3>
+          <p data-i18n="how.s1desc">Napíšete mi základní představu — jaký web potřebujete, pro koho je určený, jaký styl a obsah si představujete. Stačí pár vět.</p>
+          <a href="konfigurator.html" data-i18n="how.cfgBtn" style="display:inline-block;margin-top:1.5rem;padding:1rem 2.4rem;background:var(--green-light);color:var(--green-dark);font-family:'Roboto Mono',monospace;font-size:1.2rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;border-radius:4px;text-decoration:none;transition:all 0.3s;">Vyplnit konfigurátor</a>
         </div>
         <div class="how-step-img-wrap">
           <img class="how-step-img" src="obrazky/poptavka.png" alt="Odeslání poptávky přes formulář">
@@ -1044,9 +1063,9 @@
       <div class="how-step">
         <div class="how-step-num">02</div>
         <div class="how-step-content">
-          <span class="how-step-label">Krok 2</span>
-          <h3 class="how-step-title">Návrh zdarma</h3>
-          <p>Připravím nezávazný návrh struktury a vizuálního směru, abyste viděli, jak bude web vypadat — a to úplně zdarma.</p>
+          <span class="how-step-label" data-i18n="how.s2label">Krok 2</span>
+          <h3 class="how-step-title" data-i18n="how.s2title">Návrh zdarma</h3>
+          <p data-i18n="how.s2desc">Připravím nezávazný návrh struktury a vizuálního směru, abyste viděli, jak bude web vypadat — a to úplně zdarma.</p>
         </div>
         <div class="how-step-img-wrap">
           <img class="how-step-img" src="obrazky/trener_jak.png" alt="Ukázka návrhu webových stránek">
@@ -1057,9 +1076,9 @@
       <div class="how-step">
         <div class="how-step-num">03</div>
         <div class="how-step-content">
-          <span class="how-step-label">Krok 3</span>
-          <h3 class="how-step-title">Úpravy a doladění</h3>
-          <p>Společně doladíme detaily, obsah, design i funkčnost tak, aby výsledek přesně odpovídal vašim očekáváním.</p>
+          <span class="how-step-label" data-i18n="how.s3label">Krok 3</span>
+          <h3 class="how-step-title" data-i18n="how.s3title">Úpravy a doladění</h3>
+          <p data-i18n="how.s3desc">Společně doladíme detaily, obsah, design i funkčnost tak, aby výsledek přesně odpovídal vašim očekáváním.</p>
         </div>
         <div class="how-step-img-wrap">
           <img class="how-step-img" src="obrazky/upravy.jpg" alt="Konzultace a úpravy návrhu">
@@ -1070,9 +1089,9 @@
       <div class="how-step">
         <div class="how-step-num">04</div>
         <div class="how-step-content">
-          <span class="how-step-label">Krok 4</span>
-          <h3 class="how-step-title">Spuštění webu</h3>
-          <p>Po finálním schválení web nasadím, otestuji na všech zařízeních a připravím k ostrému spuštění.</p>
+          <span class="how-step-label" data-i18n="how.s4label">Krok 4</span>
+          <h3 class="how-step-title" data-i18n="how.s4title">Spuštění webu</h3>
+          <p data-i18n="how.s4desc">Po finálním schválení web nasadím, otestuji na všech zařízeních a připravím k ostrému spuštění.</p>
         </div>
         <div class="how-step-img-wrap">
           <img class="how-step-img" src="obrazky/spusten.jpg" alt="Finální spuštění webových stránek">
@@ -1091,9 +1110,9 @@
 <div id="kontakt">
   <div class="container">
     <div class="footer-left reveal">
-      <h4>Pojďme vytvořit<br>váš web.</h4>
-      <span class="footer-btn-wrap"><a class="footer-btn" href="konfigurator.html">Spustit konfigurátor</a></span>
-      <p class="footer-alt-contact">Máte otázku? Napište mi <a href="mailto:jun.milan@outlook.com">email</a></p>
+      <h4 data-i18n-html="contact.title">Pojďme vytvořit<br>váš web.</h4>
+      <span class="footer-btn-wrap"><a class="footer-btn" href="konfigurator.html" data-i18n="contact.cta">Spustit konfigurátor</a></span>
+      <p class="footer-alt-contact" data-i18n-html="contact.alt">Máte otázku? Napište mi <a href="mailto:jun.milan@outlook.com">email</a></p>
     </div>
     <div class="footer-right reveal">
       <ul>
@@ -1102,7 +1121,7 @@
       </ul>
     </div>
     <div class="footer-copy">
-      <span>© 2025 − <a href="#">Milan Jun</a> − Freelance Webdesigner</span>
+      <span data-i18n-html="footer.copy">© 2025 − <a href="#">Milan Jun</a> − Freelance Webdesigner</span>
     </div>
   </div>
 </div>
@@ -1276,6 +1295,87 @@ if (shineBtn) {
     shineBtn.style.setProperty('--my', y);
   });
 }
+
+// ── I18N LANGUAGE SWITCHER ──
+const i18n = {
+  en: {
+    'nav.about': 'About',
+    'nav.projects': 'Projects',
+    'nav.contact': 'Contact',
+    'hero.tag': 'Hello, my name is',
+    'hero.sub': 'I\'m a freelance web designer — I create websites for businesses and entrepreneurs<br>who want to be visible online.',
+    'hero.cta': 'Get in touch',
+    'about.title': 'About me',
+    'about.p1': 'My name is Milan Jun and I create websites for small businesses and entrepreneurs. I focus on modern, fast, and clear websites that actually bring new customers — not just a pretty look.',
+    'about.p2': 'I believe a good website doesn\'t have to be expensive or complicated. It needs to be functional, aesthetic, and tailored to the specific business. I treat every project as a partnership — I care about the result just as much as you do.',
+    'about.p3': 'If you\'re looking for someone who communicates directly and delivers honest work — reach out with your idea. I\'ll create the first design for you completely free of charge.',
+    'about.s1': 'HTML / CSS / JS',
+    'about.s2': 'Responsive design',
+    'about.s3': 'UI / UX',
+    'about.s4': 'Bootstrap 5',
+    'about.s5': 'WordPress',
+    'about.s6': 'SEO basics',
+    'about.s7': 'Animations',
+    'about.s8': 'Forms & API',
+    'projects.title': 'Projects',
+    'proj1.desc': 'Presentation website for an Italian restaurant. Elegant design with a reservation system, full-width gallery, and tabbed menu. Luxury animations and parallax effects.',
+    'proj.techLabel': 'Technologies',
+    'proj1.tech3': 'Scroll animations',
+    'proj1.tech4': 'Reservation form',
+    'proj1.tech5': 'Gallery slider',
+    'proj.viewBtn': 'View project',
+    'proj2.title': 'Personal trainer',
+    'proj2.desc': 'Professional website for a personal trainer with a functional booking system (Formspree), service pricing, and scroll animations. Client\'s local photography.',
+    'proj2.tech4': 'Pricing section',
+    'proj2.tech5': 'Responsive layout',
+    'how.title': 'How we work together',
+    'how.subtitle': 'From first contact to website launch.',
+    'how.s1label': 'Step 1', 'how.s2label': 'Step 2', 'how.s3label': 'Step 3', 'how.s4label': 'Step 4',
+    'how.s1title': 'Inquiry',
+    'how.s2title': 'Free proposal',
+    'how.s3title': 'Revisions & refinement',
+    'how.s4title': 'Website launch',
+    'how.s1desc': 'Tell me your basic idea — what kind of website you need, who it\'s for, what style and content you have in mind. A few sentences are enough.',
+    'how.s2desc': 'I\'ll prepare a non-binding proposal of the structure and visual direction so you can see what the website will look like — completely free of charge.',
+    'how.s3desc': 'Together we\'ll fine-tune the details, content, design, and functionality so the result matches your expectations perfectly.',
+    'how.s4desc': 'After final approval, I\'ll deploy the website, test it on all devices, and prepare it for launch.',
+    'how.cfgBtn': 'Open configurator',
+    'contact.title': 'Let\'s build<br>your website.',
+    'contact.cta': 'Launch configurator',
+    'contact.alt': 'Have a question? Send me an <a href="mailto:jun.milan@outlook.com">email</a>',
+    'footer.copy': '© 2025 − <a href="#">Milan Jun</a> − Freelance Web Designer'
+  }
+};
+
+const czStore = {}, czHtmlStore = {};
+document.querySelectorAll('[data-i18n]').forEach(el => {
+  czStore[el.getAttribute('data-i18n')] = el.textContent;
+});
+document.querySelectorAll('[data-i18n-html]').forEach(el => {
+  czHtmlStore[el.getAttribute('data-i18n-html')] = el.innerHTML;
+});
+
+function applyLang(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    el.textContent = lang === 'en' ? (i18n.en[k] || czStore[k]) : czStore[k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const k = el.getAttribute('data-i18n-html');
+    el.innerHTML = lang === 'en' ? (i18n.en[k] || czHtmlStore[k]) : czHtmlStore[k];
+  });
+  document.documentElement.lang = lang === 'en' ? 'en' : 'cs';
+  document.querySelectorAll('.lang-toggle').forEach(b => b.textContent = lang === 'en' ? 'CZ' : 'EN');
+}
+
+function toggleLang() {
+  const cur = localStorage.getItem('lang') || 'cs';
+  const next = cur === 'cs' ? 'en' : 'cs';
+  localStorage.setItem('lang', next);
+  applyLang(next);
+}
+
+if (localStorage.getItem('lang') === 'en') applyLang('en');
 </script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
