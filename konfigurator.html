@@ -375,8 +375,21 @@
       background: rgba(45,106,79,0.06);
     }
     .style-emoji {
-      font-size: 3rem;
       margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .style-emoji svg {
+      width: 3.2rem;
+      height: 3.2rem;
+      stroke: var(--text-mid);
+      stroke-width: 1.5;
+      fill: none;
+      transition: stroke 0.3s;
+    }
+    .style-card input:checked + .style-card-inner .style-emoji svg {
+      stroke: var(--green-light);
     }
     .style-name {
       font-family: 'Exo 2', sans-serif;
@@ -509,6 +522,7 @@
     }
     .font-card-inner {
       padding: 2.4rem;
+      min-height: 16rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 10px;
@@ -713,20 +727,49 @@
       background: transparent;
       border: 1px solid var(--border);
       color: var(--text-light);
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: all 0.3s;
+    }
+    .btn-back::before {
+      content: '←';
+      font-size: 1.5rem;
+      transition: transform 0.3s;
     }
     .btn-back:hover {
-      border-color: rgba(255,255,255,0.3);
-      color: #fff;
+      border-color: rgba(0,0,0,0.2);
+      color: var(--text);
+    }
+    .btn-back:hover::before {
+      transform: translateX(-3px);
     }
     .btn-next {
-      background: var(--green-light);
+      background: linear-gradient(135deg, var(--green-light), #1b4332);
       color: #fff;
       font-weight: 600;
       margin-left: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1.4rem 2.8rem;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-next::after {
+      content: '→';
+      font-size: 1.5rem;
+      transition: transform 0.3s;
     }
     .btn-next:hover {
-      background: #245a42;
-      box-shadow: 0 4px 20px rgba(45,106,79,0.25);
+      background: linear-gradient(135deg, #245a42, #0d2818);
+      box-shadow: 0 6px 24px rgba(45,106,79,0.3);
+      transform: translateY(-1px);
+    }
+    .btn-next:hover::after {
+      transform: translateX(3px);
     }
     .btn-submit {
       background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
@@ -1008,7 +1051,7 @@
           <label class="style-card">
             <input type="radio" name="style" value="Minimalistický">
             <span class="style-card-inner">
-              <span class="style-emoji">◻️</span>
+              <span class="style-emoji"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg></span>
               <span class="style-name">Minimalistický</span>
               <span class="style-desc">Čistý, hodně bílého prostoru</span>
             </span>
@@ -1016,7 +1059,7 @@
           <label class="style-card">
             <input type="radio" name="style" value="Odvážný">
             <span class="style-card-inner">
-              <span class="style-emoji">⚡</span>
+              <span class="style-emoji"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
               <span class="style-name">Odvážný</span>
               <span class="style-desc">Výrazné barvy, velká typografie</span>
             </span>
@@ -1024,7 +1067,7 @@
           <label class="style-card">
             <input type="radio" name="style" value="Elegantní">
             <span class="style-card-inner">
-              <span class="style-emoji">✨</span>
+              <span class="style-emoji"><svg viewBox="0 0 24 24"><path d="M12 2L9 9H2l5.5 4.5L5 22l7-5 7 5-2.5-8.5L22 9h-7z"/></svg></span>
               <span class="style-name">Elegantní</span>
               <span class="style-desc">Luxusní, sofistikovaný</span>
             </span>
@@ -1032,7 +1075,7 @@
           <label class="style-card">
             <input type="radio" name="style" value="Hravý">
             <span class="style-card-inner">
-              <span class="style-emoji">🎈</span>
+              <span class="style-emoji"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></span>
               <span class="style-name">Hravý</span>
               <span class="style-desc">Barevný, přátelský, kreativní</span>
             </span>
@@ -1040,7 +1083,7 @@
           <label class="style-card">
             <input type="radio" name="style" value="Korporátní">
             <span class="style-card-inner">
-              <span class="style-emoji">💼</span>
+              <span class="style-emoji"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span>
               <span class="style-name">Korporátní</span>
               <span class="style-desc">Seriózní, důvěryhodný</span>
             </span>
@@ -1048,7 +1091,7 @@
           <label class="style-card">
             <input type="radio" name="style" value="Jiný">
             <span class="style-card-inner">
-              <span class="style-emoji">🎯</span>
+              <span class="style-emoji"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
               <span class="style-name">Jiný</span>
               <span class="style-desc">Popíšu níže</span>
             </span>
