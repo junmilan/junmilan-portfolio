@@ -370,44 +370,6 @@
     .pb-2 { background: linear-gradient(135deg, #1a1d20 0%, #2d3436 55%, #1f3329 100%); }
     .pb-3 { background: linear-gradient(135deg, #1e2d3d 0%, #2c3e50 50%, #1b3a2e 100%); }
 
-    /* ── TESTIMONIALS ── */
-    #reference {
-      background: white;
-      min-height: 100vh;
-      display: flex; align-items: center;
-      padding: 8rem 0;
-    }
-    #reference .container { flex-direction: column; width: var(--content-w); max-width: 100%; }
-    #reference h2 { color: var(--green); margin-bottom: 2rem; }
-    .test-module { background: var(--gradient); padding: 0.2rem; }
-    .test-inner {
-      background: white;
-      min-height: 360px;
-      display: flex; padding: 2rem;
-      position: relative;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .test-nav {
-      position: absolute; top: 2rem; left: 0;
-      width: 100%; display: flex;
-      justify-content: center; gap: 2rem; z-index: 10;
-    }
-    .test-dot {
-      height: 1rem; width: 1rem;
-      border: none; border-radius: 50%; padding: 0;
-      background: var(--gradient); cursor: pointer;
-      display: flex; justify-content: center; align-items: center;
-    }
-    .test-dot div { transition: all 0.1s; height: 0; width: 0; background: white; border-radius: 50%; }
-    .test-dot.active div { height: 0.6rem; width: 0.6rem; }
-    .test-slide { display: none; padding: 0 3rem; }
-    @media (max-width: 600px) { .test-slide { padding: 0 1rem; } }
-    .test-slide.active { display: flex; flex-direction: column; animation: fadeUp 0.3s ease; }
-    .test-quote { padding: 4rem 0; }
-    .test-quote p { font-family: 'Exo 2', sans-serif; font-size: 2rem; font-weight: bold; line-height: 3.2rem; }
-    .test-author { text-align: right; }
-    .test-author p:first-child { font-weight: bold; margin: 0; }
 
     /* ── FOOTER / CONTACT ── */
     #kontakt {
@@ -457,57 +419,23 @@
       background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.45) 0%, transparent 65%);
       transition: opacity 0.3s;
     }
-    .footer-btn:hover { background-position: right center; }
-    .contact-form {
-      width: 100%; max-width: 540px; margin: 0 auto 2rem;
-      text-align: left;
+    .footer-btn:hover { background-position: right center; text-decoration: none; }
+    .footer-alt-contact {
+      color: rgba(255,255,255,0.5);
+      font-size: 1.3rem; line-height: 2.2rem;
+      margin-top: 3rem;
+      max-width: 460px;
+      margin-left: auto; margin-right: auto;
     }
-    .contact-form-intro {
-      color: rgba(255,255,255,0.7);
-      font-size: 1.3rem; line-height: 2rem;
-      text-align: center; margin-bottom: 3rem;
-    }
-    .contact-form-intro strong {
+    .footer-alt-contact a {
       color: #e8c97a;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(232,201,122,0.3);
+      transition: border-color 0.3s;
     }
-    .contact-form label {
-      display: block; color: rgba(255,255,255,0.5);
-      font-size: 1.1rem; letter-spacing: 0.08em;
-      text-transform: uppercase; margin-bottom: 0.6rem;
-    }
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%; padding: 1.2rem 1.4rem;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 3px; color: white;
-      font-family: 'Roboto Mono', monospace;
-      font-size: 1.3rem; margin-bottom: 2rem;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .contact-form input::placeholder,
-    .contact-form textarea::placeholder {
-      color: rgba(255,255,255,0.3);
-    }
-    .contact-form input:focus,
-    .contact-form textarea:focus {
-      outline: none;
+    .footer-alt-contact a:hover {
       border-color: #e8c97a;
-      background: rgba(255,255,255,0.1);
     }
-    .contact-form textarea { min-height: 15rem; resize: vertical; }
-    .contact-form-btn {
-      display: inline-block; width: 100%;
-      background: linear-gradient(90deg, #b8922a, #e8c97a, #b8922a);
-      background-size: 200% auto;
-      border: none; color: #1b1a14;
-      padding: 1.4rem; font-family: 'Roboto Mono', monospace;
-      font-size: 1.3rem; text-transform: uppercase;
-      letter-spacing: 0.14em; font-weight: 600;
-      cursor: pointer; border-radius: 2px;
-      transition: background-position 0.4s ease;
-    }
-    .contact-form-btn:hover { background-position: right center; }
     .footer-right { padding-top: 4rem; width: 100%; }
     .footer-right ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
     .footer-right li { margin: 0; position: relative; }
@@ -920,7 +848,6 @@
     <div class="nav-d">
       <a href="#o-mne">O mně</a>
       <a href="#projekty">Projekty</a>
-      <a href="#reference">Reference</a>
       <a href="#kontakt" class="nav-cta">Kontakt</a>
     </div>
     <div class="nav-m" id="navM">
@@ -934,7 +861,6 @@
   <div class="nav-mm" id="navMM">
     <a href="#o-mne" class="has-divider" onclick="closeMobileMenu()">O mně</a>
     <a href="#projekty" onclick="closeMobileMenu()">Projekty</a>
-    <a href="#reference" onclick="closeMobileMenu()">Reference</a>
     <a href="#kontakt" onclick="closeMobileMenu()">Kontakt</a>
   </div>
 </nav>
@@ -1128,48 +1054,6 @@
 
 <div class="divider-gold"></div>
 
-<!-- TESTIMONIALS -->
-<div id="reference">
-  <div class="container reveal">
-    <h2>Co říkají klienti</h2>
-    <div class="test-module" style="margin-top: 0;">
-      <div class="test-inner">
-        <div class="test-nav" id="testNav"></div>
-        <div id="testSlides">
-          <div class="test-slide active">
-            <div class="test-quote">
-              <p>"Milan vytvořil web pro naši restauraci přesně podle našich představ. Komunikace byla rychlá a výsledek předčil očekávání. Doporučujeme každému, kdo hledá spolehlivého webdesignera."</p>
-            </div>
-            <div class="test-author">
-              <p>Tomáš K.</p>
-              <p>Restaurace Bellavita</p>
-            </div>
-          </div>
-          <div class="test-slide">
-            <div class="test-quote">
-              <p>"Hledal jsem někoho, kdo mi udělá web rychle a bez zbytečného složitého vysvětlování. Milan přesně věděl, co potřebuji, a web byl hotov dříve, než jsem čekal."</p>
-            </div>
-            <div class="test-author">
-              <p>Jakub M.</p>
-              <p>Osobní trenér</p>
-            </div>
-          </div>
-          <div class="test-slide">
-            <div class="test-quote">
-              <p>"Profesionální přístup, krásný design a web, který skutečně funguje. Milan nám pomohl i s texty. Rozhodně budeme spolupracovat i na dalším projektu."</p>
-            </div>
-            <div class="test-author">
-              <p>Petra N.</p>
-              <p>Kosmetické studio</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="divider-gold-center"></div>
 
 <!-- FOOTER / CONTACT -->
 <div id="kontakt">
@@ -1177,16 +1061,8 @@
     <div class="footer-left reveal">
       <h4>Potřebujete web?<br>Pojďme na to.</h4>
       <p class="footer-tagline">Ozvu se do 24 hodin. První konzultace zdarma.</p>
-      <a href="konfigurator.html" style="display:inline-block;margin-bottom:3rem;padding:1.2rem 3rem;background:linear-gradient(90deg,#b8922a,#e8c97a,#b8922a);background-size:200% auto;color:#1b1a14;font-family:'Roboto Mono',monospace;font-size:1.3rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;border-radius:3px;text-decoration:none;transition:background-position 0.4s;">Nebo vyplňte konfigurátor webu</a>
-      <form class="contact-form" action="https://formspree.io/f/mqegpylb" method="POST">
-        <p class="contact-form-intro">Napište mi svoji představu o webu.<br><strong>Prvotní návrh a konzultaci máte zdarma.</strong></p>
-        <label for="email">Váš email</label>
-        <input type="email" id="email" name="email" placeholder="jan@example.com" required>
-        <label for="message">Popište svou představu</label>
-        <textarea id="message" name="message" placeholder="Např. potřebuji web pro kavárnu, chci moderní design, fotogalerii a kontaktní formulář..." required></textarea>
-        <button type="submit" class="contact-form-btn">Odeslat nezávazně</button>
-      </form>
-      <a class="footer-btn" href="mailto:jun.milan@outlook.com">Nebo napište přímo na email</a>
+      <a class="footer-btn" href="konfigurator.html">Začít poptávku</a>
+      <p class="footer-alt-contact">Pokud máte jakékoli jiné otázky, můžete mi napsat na <a href="mailto:jun.milan@outlook.com">jun.milan@outlook.com</a></p>
     </div>
     <div class="footer-right reveal">
       <ul>
@@ -1239,28 +1115,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-// ── TESTIMONIALS
-const slides = document.querySelectorAll('.test-slide');
-const navEl  = document.getElementById('testNav');
-let current  = 0;
-
-slides.forEach((_, i) => {
-  const btn = document.createElement('button');
-  btn.className = 'test-dot' + (i === 0 ? ' active' : '');
-  btn.innerHTML = '<div></div>';
-  btn.addEventListener('click', () => goTo(i));
-  navEl.appendChild(btn);
-});
-
-function goTo(i) {
-  slides[current].classList.remove('active');
-  navEl.children[current].classList.remove('active');
-  current = i;
-  slides[current].classList.add('active');
-  navEl.children[current].classList.add('active');
-}
-
-setInterval(() => goTo((current + 1) % slides.length), 5000);
 
 // ── SCROLL PROGRESS BAR
 const progressBar = document.getElementById('progressBar');
@@ -1286,7 +1140,7 @@ function updateParallax() {
 window.addEventListener('scroll', updateParallax, { passive: true });
 
 // ── SCROLL SPY (nav links)
-const spySections = ['o-mne','projekty','reference','kontakt'].map(id => document.getElementById(id)).filter(Boolean);
+const spySections = ['o-mne','projekty','kontakt'].map(id => document.getElementById(id)).filter(Boolean);
 const navLinks    = document.querySelectorAll('.nav-d a[href^="#"]');
 
 function updateScrollSpy() {
