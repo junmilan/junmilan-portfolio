@@ -280,6 +280,14 @@
     .field-counter.warn { color: #e67e22; }
     .field-counter.over { color: #d32f2f; }
 
+    /* ── Span-as-block (label children must be span, not div) ── */
+    .card-icon, .card-label,
+    .style-emoji, .style-name, .style-desc,
+    .radio-card-inner,
+    .font-heading-preview, .font-body-preview, .font-pair-name {
+      display: block;
+    }
+
     /* ── Multi-select cards ── */
     .card-grid {
       display: grid;
@@ -921,45 +929,45 @@
         <div class="card-grid">
           <label class="card-option">
             <input type="checkbox" name="purpose" value="Prezentace firmy">
-            <div class="card-option-inner">
-              <div class="card-icon">🏢</div>
-              <div class="card-label">Prezentace firmy</div>
-            </div>
+            <span class="card-option-inner">
+              <span class="card-icon">🏢</span>
+              <span class="card-label">Prezentace firmy</span>
+            </span>
           </label>
           <label class="card-option">
             <input type="checkbox" name="purpose" value="E-shop">
-            <div class="card-option-inner">
-              <div class="card-icon">🛒</div>
-              <div class="card-label">Prodej / e-shop</div>
-            </div>
+            <span class="card-option-inner">
+              <span class="card-icon">🛒</span>
+              <span class="card-label">Prodej / e-shop</span>
+            </span>
           </label>
           <label class="card-option">
             <input type="checkbox" name="purpose" value="Generování poptávek">
-            <div class="card-option-inner">
-              <div class="card-icon">📩</div>
-              <div class="card-label">Generování poptávek</div>
-            </div>
+            <span class="card-option-inner">
+              <span class="card-icon">📩</span>
+              <span class="card-label">Generování poptávek</span>
+            </span>
           </label>
           <label class="card-option">
             <input type="checkbox" name="purpose" value="Portfolio">
-            <div class="card-option-inner">
-              <div class="card-icon">🎨</div>
-              <div class="card-label">Portfolio / ukázky</div>
-            </div>
+            <span class="card-option-inner">
+              <span class="card-icon">🎨</span>
+              <span class="card-label">Portfolio / ukázky</span>
+            </span>
           </label>
           <label class="card-option">
             <input type="checkbox" name="purpose" value="Blog">
-            <div class="card-option-inner">
-              <div class="card-icon">✏️</div>
-              <div class="card-label">Blog / obsah</div>
-            </div>
+            <span class="card-option-inner">
+              <span class="card-icon">✏️</span>
+              <span class="card-label">Blog / obsah</span>
+            </span>
           </label>
           <label class="card-option">
             <input type="checkbox" name="purpose" value="Rezervace">
-            <div class="card-option-inner">
-              <div class="card-icon">📅</div>
-              <div class="card-label">Rezervační systém</div>
-            </div>
+            <span class="card-option-inner">
+              <span class="card-icon">📅</span>
+              <span class="card-label">Rezervační systém</span>
+            </span>
           </label>
         </div>
       </div>
@@ -999,51 +1007,51 @@
         <div class="style-grid">
           <label class="style-card">
             <input type="radio" name="style" value="Minimalistický">
-            <div class="style-card-inner">
-              <div class="style-emoji">◻️</div>
-              <div class="style-name">Minimalistický</div>
-              <div class="style-desc">Čistý, hodně bílého prostoru</div>
-            </div>
+            <span class="style-card-inner">
+              <span class="style-emoji">◻️</span>
+              <span class="style-name">Minimalistický</span>
+              <span class="style-desc">Čistý, hodně bílého prostoru</span>
+            </span>
           </label>
           <label class="style-card">
             <input type="radio" name="style" value="Odvážný">
-            <div class="style-card-inner">
-              <div class="style-emoji">⚡</div>
-              <div class="style-name">Odvážný</div>
-              <div class="style-desc">Výrazné barvy, velká typografie</div>
-            </div>
+            <span class="style-card-inner">
+              <span class="style-emoji">⚡</span>
+              <span class="style-name">Odvážný</span>
+              <span class="style-desc">Výrazné barvy, velká typografie</span>
+            </span>
           </label>
           <label class="style-card">
             <input type="radio" name="style" value="Elegantní">
-            <div class="style-card-inner">
-              <div class="style-emoji">✨</div>
-              <div class="style-name">Elegantní</div>
-              <div class="style-desc">Luxusní, sofistikovaný</div>
-            </div>
+            <span class="style-card-inner">
+              <span class="style-emoji">✨</span>
+              <span class="style-name">Elegantní</span>
+              <span class="style-desc">Luxusní, sofistikovaný</span>
+            </span>
           </label>
           <label class="style-card">
             <input type="radio" name="style" value="Hravý">
-            <div class="style-card-inner">
-              <div class="style-emoji">🎈</div>
-              <div class="style-name">Hravý</div>
-              <div class="style-desc">Barevný, přátelský, kreativní</div>
-            </div>
+            <span class="style-card-inner">
+              <span class="style-emoji">🎈</span>
+              <span class="style-name">Hravý</span>
+              <span class="style-desc">Barevný, přátelský, kreativní</span>
+            </span>
           </label>
           <label class="style-card">
             <input type="radio" name="style" value="Korporátní">
-            <div class="style-card-inner">
-              <div class="style-emoji">💼</div>
-              <div class="style-name">Korporátní</div>
-              <div class="style-desc">Seriózní, důvěryhodný</div>
-            </div>
+            <span class="style-card-inner">
+              <span class="style-emoji">💼</span>
+              <span class="style-name">Korporátní</span>
+              <span class="style-desc">Seriózní, důvěryhodný</span>
+            </span>
           </label>
           <label class="style-card">
             <input type="radio" name="style" value="Jiný">
-            <div class="style-card-inner">
-              <div class="style-emoji">🎯</div>
-              <div class="style-name">Jiný</div>
-              <div class="style-desc">Popíšu níže</div>
-            </div>
+            <span class="style-card-inner">
+              <span class="style-emoji">🎯</span>
+              <span class="style-name">Jiný</span>
+              <span class="style-desc">Popíšu níže</span>
+            </span>
           </label>
         </div>
       </div>
@@ -1105,15 +1113,15 @@
         <div class="radio-grid">
           <label class="radio-card">
             <input type="radio" name="texts" value="Ano">
-            <div class="radio-card-inner">Ano, mám připravené</div>
+            <span class="radio-card-inner">Ano, mám připravené</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="texts" value="Částečně">
-            <div class="radio-card-inner">Částečně</div>
+            <span class="radio-card-inner">Částečně</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="texts" value="Ne">
-            <div class="radio-card-inner">Ne, potřebuji pomoct</div>
+            <span class="radio-card-inner">Ne, potřebuji pomoct</span>
           </label>
         </div>
       </div>
@@ -1123,15 +1131,15 @@
         <div class="radio-grid">
           <label class="radio-card">
             <input type="radio" name="logo" value="Ano">
-            <div class="radio-card-inner">Ano</div>
+            <span class="radio-card-inner">Ano</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="logo" value="Ne">
-            <div class="radio-card-inner">Ne</div>
+            <span class="radio-card-inner">Ne</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="logo" value="Potřebuji vytvořit">
-            <div class="radio-card-inner">Potřebuji vytvořit</div>
+            <span class="radio-card-inner">Potřebuji vytvořit</span>
           </label>
         </div>
       </div>
@@ -1163,23 +1171,23 @@
         <div class="radio-grid">
           <label class="radio-card">
             <input type="radio" name="budget" value="Do 5 000 Kč">
-            <div class="radio-card-inner">Do 5 000 Kč</div>
+            <span class="radio-card-inner">Do 5 000 Kč</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="budget" value="5 000 – 15 000 Kč">
-            <div class="radio-card-inner">5 000 – 15 000 Kč</div>
+            <span class="radio-card-inner">5 000 – 15 000 Kč</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="budget" value="15 000 – 30 000 Kč">
-            <div class="radio-card-inner">15 000 – 30 000 Kč</div>
+            <span class="radio-card-inner">15 000 – 30 000 Kč</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="budget" value="30 000+ Kč">
-            <div class="radio-card-inner">30 000+ Kč</div>
+            <span class="radio-card-inner">30 000+ Kč</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="budget" value="Chci konzultovat">
-            <div class="radio-card-inner">Nevím / chci konzultovat</div>
+            <span class="radio-card-inner">Nevím / chci konzultovat</span>
           </label>
         </div>
       </div>
@@ -1189,23 +1197,23 @@
         <div class="radio-grid">
           <label class="radio-card">
             <input type="radio" name="deadline" value="Co nejdříve">
-            <div class="radio-card-inner">Co nejdříve</div>
+            <span class="radio-card-inner">Co nejdříve</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="deadline" value="Do 2 týdnů">
-            <div class="radio-card-inner">Do 2 týdnů</div>
+            <span class="radio-card-inner">Do 2 týdnů</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="deadline" value="Do měsíce">
-            <div class="radio-card-inner">Do měsíce</div>
+            <span class="radio-card-inner">Do měsíce</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="deadline" value="Do 3 měsíců">
-            <div class="radio-card-inner">Do 3 měsíců</div>
+            <span class="radio-card-inner">Do 3 měsíců</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="deadline" value="Není spěch">
-            <div class="radio-card-inner">Není spěch</div>
+            <span class="radio-card-inner">Není spěch</span>
           </label>
         </div>
       </div>
@@ -1245,15 +1253,15 @@
         <div class="radio-grid">
           <label class="radio-card">
             <input type="radio" name="communication" value="Email">
-            <div class="radio-card-inner">Email</div>
+            <span class="radio-card-inner">Email</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="communication" value="Telefon">
-            <div class="radio-card-inner">Telefon</div>
+            <span class="radio-card-inner">Telefon</span>
           </label>
           <label class="radio-card">
             <input type="radio" name="communication" value="WhatsApp">
-            <div class="radio-card-inner">WhatsApp</div>
+            <span class="radio-card-inner">WhatsApp</span>
           </label>
         </div>
       </div>
@@ -1603,11 +1611,11 @@ function renderFonts() {
   fontGrid.innerHTML = fontPairs.map((p, i) => `
     <label class="font-card">
       <input type="radio" name="font_radio" value="${p.name}" ${i===0?'checked':''}>
-      <div class="font-card-inner">
-        <div class="font-heading-preview" style="font-family:${p.heading}">Nadpis webu</div>
-        <div class="font-body-preview" style="font-family:${p.body}">Ukázkový text odstavce pro náhled kombinace písem na vašem webu.</div>
-        <div class="font-pair-name">${p.name}</div>
-      </div>
+      <span class="font-card-inner">
+        <span class="font-heading-preview" style="font-family:${p.heading}">Nadpis webu</span>
+        <span class="font-body-preview" style="font-family:${p.body}">Ukázkový text odstavce pro náhled kombinace písem na vašem webu.</span>
+        <span class="font-pair-name">${p.name}</span>
+      </span>
     </label>
   `).join('');
   fontInput.value = fontPairs[0].name;
