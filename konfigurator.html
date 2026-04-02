@@ -253,6 +253,33 @@
       color: var(--text);
     }
 
+    /* ── Validation ── */
+    .field-error {
+      color: #d32f2f;
+      font-size: 1.1rem;
+      margin-top: 0.4rem;
+      display: none;
+    }
+    .field-error.visible { display: block; }
+    .field.has-error input,
+    .field.has-error textarea,
+    .field.has-error select {
+      border-color: #d32f2f;
+    }
+    .field.has-error input:focus,
+    .field.has-error textarea:focus,
+    .field.has-error select:focus {
+      box-shadow: 0 0 0 3px rgba(211,47,47,0.1);
+    }
+    .field-counter {
+      text-align: right;
+      font-size: 1rem;
+      color: #aaa;
+      margin-top: 0.3rem;
+    }
+    .field-counter.warn { color: #e67e22; }
+    .field-counter.over { color: #d32f2f; }
+
     /* ── Multi-select cards ── */
     .card-grid {
       display: grid;
@@ -836,7 +863,8 @@
 
       <div class="field">
         <label for="name">Jméno / název firmy *</label>
-        <input type="text" id="name" name="name" placeholder="např. Jan Novák / Firma s.r.o.">
+        <input type="text" id="name" name="name" placeholder="např. Jan Novák / Firma s.r.o." maxlength="100" aria-describedby="nameError">
+        <div class="field-error" id="nameError"></div>
       </div>
 
       <div class="field">
@@ -854,22 +882,27 @@
           <option value="Kreativní">Kreativní / design / fotografie</option>
           <option value="Jiné">Jiné</option>
         </select>
-        <input type="text" id="industryOther" name="industry_other" placeholder="Upřesněte obor..." style="display:none; margin-top:0.8rem;">
+        <input type="text" id="industryOther" name="industry_other" placeholder="Upřesněte obor..." maxlength="100" style="display:none; margin-top:0.8rem;">
       </div>
 
       <div class="field">
         <label for="website">Stávající web (pokud existuje)</label>
-        <input type="text" id="website" name="website" placeholder="https://...">
+        <input type="text" id="website" name="website" placeholder="https://..." maxlength="200" aria-describedby="websiteError">
+        <div class="field-error" id="websiteError"></div>
       </div>
 
       <div class="field">
         <label for="description">Krátký popis činnosti</label>
-        <textarea id="description" name="description" placeholder="Co děláte, čím se zabýváte, jaké produkty nebo služby nabízíte..."></textarea>
+        <textarea id="description" name="description" placeholder="Co děláte, čím se zabýváte, jaké produkty nebo služby nabízíte..." maxlength="1000" aria-describedby="descriptionError"></textarea>
+        <div class="field-counter" id="descriptionCounter">0 / 1000</div>
+        <div class="field-error" id="descriptionError"></div>
       </div>
 
       <div class="field">
         <label for="audience">Kdo jsou vaši zákazníci?</label>
-        <textarea id="audience" name="audience" rows="3" placeholder="Např. mladé ženy 25–35, lokální zákazníci, firmy z oboru..."></textarea>
+        <textarea id="audience" name="audience" rows="3" placeholder="Např. mladé ženy 25–35, lokální zákazníci, firmy z oboru..." maxlength="500" aria-describedby="audienceError"></textarea>
+        <div class="field-counter" id="audienceCounter">0 / 500</div>
+        <div class="field-error" id="audienceError"></div>
         <div class="field-hint">Pomůže mi to lépe zacílit design i obsah webu.</div>
       </div>
 
@@ -933,7 +966,8 @@
 
       <div class="field">
         <label for="cta">Co má návštěvník na webu udělat?</label>
-        <input type="text" id="cta" name="cta" placeholder="Např. objednat, zavolat, vyplnit formulář, rezervovat...">
+        <input type="text" id="cta" name="cta" placeholder="Např. objednat, zavolat, vyplnit formulář, rezervovat..." maxlength="300" aria-describedby="ctaError">
+        <div class="field-error" id="ctaError"></div>
       </div>
 
       <div class="field">
@@ -1048,8 +1082,10 @@
       <!-- Inspiration -->
       <div class="field">
         <label for="inspiration">Weby, které se vám líbí (volitelné)</label>
-        <input type="text" id="inspiration" name="inspiration_1" placeholder="https://..." style="margin-bottom:0.8rem">
-        <input type="text" name="inspiration_2" placeholder="https://...">
+        <input type="text" id="inspiration" name="inspiration_1" placeholder="https://..." maxlength="200" style="margin-bottom:0.8rem" aria-describedby="inspiration1Error">
+        <div class="field-error" id="inspiration1Error"></div>
+        <input type="text" id="inspiration2" name="inspiration_2" placeholder="https://..." maxlength="200" aria-describedby="inspiration2Error">
+        <div class="field-error" id="inspiration2Error"></div>
         <div class="field-hint">Pomohou mi pochopit, jakým směrem chcete jít.</div>
       </div>
 
@@ -1176,7 +1212,9 @@
 
       <div class="field">
         <label for="notes">Něco dalšího?</label>
-        <textarea id="notes" name="notes" rows="4" placeholder="Cokoli dalšího, co bych měl vědět..."></textarea>
+        <textarea id="notes" name="notes" rows="4" placeholder="Cokoli dalšího, co bych měl vědět..." maxlength="1000" aria-describedby="notesError"></textarea>
+        <div class="field-counter" id="notesCounter">0 / 1000</div>
+        <div class="field-error" id="notesError"></div>
       </div>
 
       <div class="btn-row">
@@ -1192,12 +1230,14 @@
 
       <div class="field">
         <label for="email">Email *</label>
-        <input type="email" id="email" name="email" placeholder="vas@email.cz">
+        <input type="email" id="email" name="email" placeholder="vas@email.cz" maxlength="200" aria-describedby="emailError">
+        <div class="field-error" id="emailError"></div>
       </div>
 
       <div class="field">
         <label for="phone">Telefon</label>
-        <input type="tel" id="phone" name="phone" placeholder="+420 ...">
+        <input type="tel" id="phone" name="phone" placeholder="+420 ..." maxlength="20" aria-describedby="phoneError">
+        <div class="field-error" id="phoneError"></div>
       </div>
 
       <div class="field">
@@ -1219,9 +1259,10 @@
       </div>
 
       <label class="checkbox-wrap">
-        <input type="checkbox" id="consent" name="consent">
+        <input type="checkbox" id="consent" name="consent" aria-describedby="consentError">
         <span>Souhlasím se zpracováním osobních údajů za účelem zpracování poptávky. Data budou použita pouze pro komunikaci ohledně projektu.</span>
       </label>
+      <div class="field-error" id="consentError" style="margin-top:-1rem; margin-bottom:1rem;"></div>
 
       <div class="btn-row" style="flex-direction:column; gap:1rem;">
         <button type="submit" class="btn btn-submit">Odeslat poptávku</button>
@@ -1250,6 +1291,148 @@
      FONT IMPORTS (lazy loaded in step 3)
 ══════════════════════════════════ -->
 <script>
+// ══════════════════════════════════
+// VALIDATION HELPERS
+// ══════════════════════════════════
+function sanitize(str) {
+  return str.replace(/<[^>]*>/g, '').trim();
+}
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('visible');
+  const field = el.closest('.field');
+  if (field) field.classList.add('has-error');
+}
+
+function clearError(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = '';
+  el.classList.remove('visible');
+  const field = el.closest('.field');
+  if (field) field.classList.remove('has-error');
+}
+
+function validateName() {
+  const v = sanitize(document.getElementById('name').value);
+  if (!v) { showError('nameError', 'Vyplňte prosím jméno nebo název firmy.'); return false; }
+  if (v.length < 2) { showError('nameError', 'Jméno musí mít alespoň 2 znaky.'); return false; }
+  if (/[<>{}\[\]]/.test(v)) { showError('nameError', 'Jméno obsahuje nepovolené znaky.'); return false; }
+  clearError('nameError'); return true;
+}
+
+function validateWebsite() {
+  const v = document.getElementById('website').value.trim();
+  if (!v) { clearError('websiteError'); return true; }
+  if (!/^https?:\/\/.+\..+/.test(v)) { showError('websiteError', 'URL musí začínat http:// nebo https://'); return false; }
+  clearError('websiteError'); return true;
+}
+
+function validateTextarea(id, errorId, max) {
+  const v = document.getElementById(id).value;
+  if (v.length > max) { showError(errorId, `Text je příliš dlouhý (max ${max} znaků).`); return false; }
+  clearError(errorId); return true;
+}
+
+function validateUrl(inputId, errorId) {
+  const v = document.getElementById(inputId).value.trim();
+  if (!v) { clearError(errorId); return true; }
+  if (!/^https?:\/\/.+\..+/.test(v)) { showError(errorId, 'Zadejte platnou URL (např. https://example.com)'); return false; }
+  clearError(errorId); return true;
+}
+
+function validateEmail() {
+  const v = document.getElementById('email').value.trim();
+  if (!v) { showError('emailError', 'Vyplňte prosím emailovou adresu.'); return false; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { showError('emailError', 'Zadejte platný email (např. jan@email.cz).'); return false; }
+  clearError('emailError'); return true;
+}
+
+function validatePhone() {
+  const v = document.getElementById('phone').value.trim();
+  if (!v) { clearError('phoneError'); return true; }
+  if (!/^[\d\s\+\-()]{5,20}$/.test(v)) { showError('phoneError', 'Telefon může obsahovat pouze čísla, mezery, +, - (max 20 znaků).'); return false; }
+  clearError('phoneError'); return true;
+}
+
+function validateConsent() {
+  if (!document.getElementById('consent').checked) { showError('consentError', 'Pro odeslání je potřeba souhlas se zpracováním údajů.'); return false; }
+  clearError('consentError'); return true;
+}
+
+// Character counters for textareas
+function setupCounter(inputId, counterId, max) {
+  const input = document.getElementById(inputId);
+  const counter = document.getElementById(counterId);
+  if (!input || !counter) return;
+  function update() {
+    const len = input.value.length;
+    counter.textContent = len + ' / ' + max;
+    counter.classList.remove('warn', 'over');
+    if (len > max) counter.classList.add('over');
+    else if (len > max * 0.85) counter.classList.add('warn');
+  }
+  input.addEventListener('input', update);
+  update();
+}
+
+// Step validation — returns true if step is valid
+function validateStep(stepNum) {
+  let valid = true;
+  if (stepNum === 0) {
+    if (!validateName()) valid = false;
+    if (!validateWebsite()) valid = false;
+    if (!validateTextarea('description', 'descriptionError', 1000)) valid = false;
+    if (!validateTextarea('audience', 'audienceError', 500)) valid = false;
+  }
+  if (stepNum === 2) {
+    if (!validateUrl('inspiration', 'inspiration1Error')) valid = false;
+    if (!validateUrl('inspiration2', 'inspiration2Error')) valid = false;
+  }
+  if (stepNum === 4) {
+    if (!validateTextarea('notes', 'notesError', 1000)) valid = false;
+  }
+  if (stepNum === 5) {
+    if (!validateEmail()) valid = false;
+    if (!validatePhone()) valid = false;
+    if (!validateConsent()) valid = false;
+  }
+  return valid;
+}
+
+// ── LIVE + BLUR VALIDATION ──
+// Validate on blur (first touch) and on input (once error is shown)
+function liveValidate(inputId, fn) {
+  const el = document.getElementById(inputId);
+  let touched = false;
+  el.addEventListener('blur', () => { touched = true; fn(); });
+  el.addEventListener('input', () => { if (touched) fn(); });
+}
+
+liveValidate('name', validateName);
+liveValidate('website', validateWebsite);
+liveValidate('description', () => validateTextarea('description', 'descriptionError', 1000));
+liveValidate('audience', () => validateTextarea('audience', 'audienceError', 500));
+liveValidate('inspiration', () => validateUrl('inspiration', 'inspiration1Error'));
+liveValidate('inspiration2', () => validateUrl('inspiration2', 'inspiration2Error'));
+liveValidate('notes', () => validateTextarea('notes', 'notesError', 1000));
+liveValidate('email', validateEmail);
+liveValidate('phone', validatePhone);
+document.getElementById('consent').addEventListener('change', validateConsent);
+
+// Character counters
+setupCounter('description', 'descriptionCounter', 1000);
+setupCounter('audience', 'audienceCounter', 500);
+setupCounter('notes', 'notesCounter', 1000);
+
+// Sanitize text inputs on blur
+document.querySelectorAll('.field input[type="text"], .field textarea').forEach(inp => {
+  inp.addEventListener('blur', () => { inp.value = sanitize(inp.value); });
+});
+
 // ── "JINÉ" TOGGLE FOR INDUSTRY ──
 const industrySelect = document.getElementById('industry');
 const industryOther = document.getElementById('industryOther');
@@ -1265,15 +1448,12 @@ const dots = document.querySelectorAll('.progress-dot');
 const fill = document.getElementById('progressFill');
 
 function goStep(n) {
-  // Validate required fields on current step before moving forward
-  if (n > currentStep) {
-    const cur = steps[currentStep];
-    const required = cur.querySelectorAll('[required]');
-    let valid = true;
-    required.forEach(inp => {
-      if (!inp.value.trim()) { inp.focus(); valid = false; }
-    });
-    if (!valid) return;
+  // Validate current step before moving forward
+  if (n > currentStep && !validateStep(currentStep)) {
+    // Scroll to first error
+    const firstErr = steps[currentStep].querySelector('.field-error.visible');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
   }
 
   currentStep = n;
@@ -1532,14 +1712,31 @@ form.addEventListener('submit', async e => {
 
   const submitBtn = form.querySelector('.btn-submit');
 
-  // Validate required fields
-  const nameVal = document.getElementById('name').value.trim();
-  const emailVal = document.getElementById('email').value.trim();
-  const consentVal = document.getElementById('consent').checked;
-
-  if (!nameVal) { alert('Vyplňte prosím jméno nebo název firmy.'); goStep(0); return; }
-  if (!emailVal) { alert('Vyplňte prosím email.'); goStep(5); return; }
-  if (!consentVal) { alert('Pro odeslání je potřeba souhlas se zpracováním údajů.'); return; }
+  // Validate all steps
+  let allValid = true;
+  // Check step 1 (name is required)
+  if (!validateName()) {
+    if (allValid) goStep(0);
+    allValid = false;
+  }
+  if (!validateWebsite()) {
+    if (allValid) goStep(0);
+    allValid = false;
+  }
+  // Check step 6 (email, phone, consent)
+  if (!validateEmail()) {
+    if (allValid) goStep(5);
+    allValid = false;
+  }
+  if (!validatePhone()) {
+    if (allValid) goStep(5);
+    allValid = false;
+  }
+  if (!validateConsent()) {
+    if (allValid) goStep(5);
+    allValid = false;
+  }
+  if (!allValid) return;
 
   // Check if any files are still uploading
   const uploading = uploadedFiles.some(f => f.status === 'uploading');
