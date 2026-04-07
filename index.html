@@ -370,44 +370,6 @@
     .pb-2 { background: linear-gradient(135deg, #1a1d20 0%, #2d3436 55%, #1f3329 100%); }
     .pb-3 { background: linear-gradient(135deg, #1e2d3d 0%, #2c3e50 50%, #1b3a2e 100%); }
 
-    /* ── TESTIMONIALS ── */
-    #reference {
-      background: white;
-      min-height: 100vh;
-      display: flex; align-items: center;
-      padding: 8rem 0;
-    }
-    #reference .container { flex-direction: column; width: var(--content-w); max-width: 100%; }
-    #reference h2 { color: var(--green); margin-bottom: 2rem; }
-    .test-module { background: var(--gradient); padding: 0.2rem; }
-    .test-inner {
-      background: white;
-      min-height: 360px;
-      display: flex; padding: 2rem;
-      position: relative;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .test-nav {
-      position: absolute; top: 2rem; left: 0;
-      width: 100%; display: flex;
-      justify-content: center; gap: 2rem; z-index: 10;
-    }
-    .test-dot {
-      height: 1rem; width: 1rem;
-      border: none; border-radius: 50%; padding: 0;
-      background: var(--gradient); cursor: pointer;
-      display: flex; justify-content: center; align-items: center;
-    }
-    .test-dot div { transition: all 0.1s; height: 0; width: 0; background: white; border-radius: 50%; }
-    .test-dot.active div { height: 0.6rem; width: 0.6rem; }
-    .test-slide { display: none; padding: 0 3rem; }
-    @media (max-width: 600px) { .test-slide { padding: 0 1rem; } }
-    .test-slide.active { display: flex; flex-direction: column; animation: fadeUp 0.3s ease; }
-    .test-quote { padding: 4rem 0; }
-    .test-quote p { font-family: 'Exo 2', sans-serif; font-size: 2rem; font-weight: bold; line-height: 3.2rem; }
-    .test-author { text-align: right; }
-    .test-author p:first-child { font-weight: bold; margin: 0; }
 
     /* ── FOOTER / CONTACT ── */
     #kontakt {
@@ -431,15 +393,15 @@
     .footer-left { width: 100%; text-align: center; }
     .footer-left h4 {
       font-size: 5rem; line-height: 6rem;
-      margin-bottom: 1.5rem; color: white;
+      margin-bottom: 4rem; color: white;
     }
     @media (max-width: 724px) { .footer-left h4 { font-size: 3rem; line-height: 4rem; } }
-    .footer-tagline {
-      color: #555;
-      font-size: 1.4rem; margin-bottom: 3.5rem;
+    @keyframes sparkRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
     .footer-btn {
-      display: inline-block; position: relative; overflow: hidden;
+      display: inline-block; position: relative;
       background: linear-gradient(90deg, #b8922a, #e8c97a, #b8922a);
       background-size: 200% auto;
       border: none;
@@ -449,65 +411,63 @@
       font-size: 1.5rem; text-transform: uppercase;
       letter-spacing: 0.14em; font-weight: 600;
       transition: background-position 0.4s ease;
-      border-radius: 2px;
+      border-radius: 4px;
+      z-index: 1;
+      overflow: visible;
     }
-    .footer-btn::after {
+    .footer-btn-wrap {
+      position: relative;
+      display: inline-block;
+      padding: 2px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .footer-btn-wrap::before {
       content: '';
-      position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.45) 0%, transparent 65%);
-      transition: opacity 0.3s;
+      position: absolute;
+      inset: -40%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0%,
+        transparent 70%,
+        #f0d878 78%,
+        #fff 82%,
+        #f0d878 86%,
+        transparent 94%,
+        transparent 100%
+      );
+      animation: sparkRotate 8s linear infinite;
+      z-index: 0;
     }
-    .footer-btn:hover { background-position: right center; }
-    .contact-form {
-      width: 100%; max-width: 540px; margin: 0 auto 2rem;
-      text-align: left;
+    .footer-btn-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: linear-gradient(135deg, #1b4332, #1a1d20);
+      border-radius: 4px;
+      z-index: 0;
     }
-    .contact-form-intro {
-      color: rgba(255,255,255,0.7);
-      font-size: 1.3rem; line-height: 2rem;
-      text-align: center; margin-bottom: 3rem;
+    .footer-btn-wrap .footer-btn {
+      position: relative;
+      z-index: 1;
     }
-    .contact-form-intro strong {
+    .footer-btn:hover { background-position: right center; text-decoration: none; }
+    .footer-alt-contact {
+      color: rgba(255,255,255,0.5);
+      font-size: 1.3rem; line-height: 2.2rem;
+      margin-top: 3rem;
+      max-width: 460px;
+      margin-left: auto; margin-right: auto;
+    }
+    .footer-alt-contact a {
       color: #e8c97a;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(232,201,122,0.3);
+      transition: border-color 0.3s;
     }
-    .contact-form label {
-      display: block; color: rgba(255,255,255,0.5);
-      font-size: 1.1rem; letter-spacing: 0.08em;
-      text-transform: uppercase; margin-bottom: 0.6rem;
-    }
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%; padding: 1.2rem 1.4rem;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 3px; color: white;
-      font-family: 'Roboto Mono', monospace;
-      font-size: 1.3rem; margin-bottom: 2rem;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .contact-form input::placeholder,
-    .contact-form textarea::placeholder {
-      color: rgba(255,255,255,0.3);
-    }
-    .contact-form input:focus,
-    .contact-form textarea:focus {
-      outline: none;
+    .footer-alt-contact a:hover {
       border-color: #e8c97a;
-      background: rgba(255,255,255,0.1);
     }
-    .contact-form textarea { min-height: 15rem; resize: vertical; }
-    .contact-form-btn {
-      display: inline-block; width: 100%;
-      background: linear-gradient(90deg, #b8922a, #e8c97a, #b8922a);
-      background-size: 200% auto;
-      border: none; color: #1b1a14;
-      padding: 1.4rem; font-family: 'Roboto Mono', monospace;
-      font-size: 1.3rem; text-transform: uppercase;
-      letter-spacing: 0.14em; font-weight: 600;
-      cursor: pointer; border-radius: 2px;
-      transition: background-position 0.4s ease;
-    }
-    .contact-form-btn:hover { background-position: right center; }
     .footer-right { padding-top: 4rem; width: 100%; }
     .footer-right ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
     .footer-right li { margin: 0; position: relative; }
@@ -935,6 +895,23 @@
 
     /* ── NAV ACTIVE ── */
     .nav-d a.nav-active { color: var(--green-light) !important; }
+
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.9);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.1rem; font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.8rem;
+      cursor: pointer; transition: all 0.3s;
+      text-transform: uppercase;
+      margin-left: 2rem; border-radius: 3px;
+    }
+    .navbar.scrolled .lang-toggle { color: var(--text); border-color: var(--text); }
+    .lang-toggle:hover { background: var(--green-dark); color: #fff; border-color: var(--green-dark); }
+    .nav-mm .lang-toggle { margin: auto 0 0 0; border-color: var(--text); color: var(--text); }
   </style>
 </head>
 <body>
@@ -970,10 +947,10 @@
   <img class="hero-bg" src="Milan/landing_photo_official2.png" alt="">
   <div class="container">
     <div class="hero-content">
-      <span class="hero-tag">Dobrý den, jmenuji se</span>
+      <span class="hero-tag" data-i18n="hero.tag">Dobrý den, jmenuji se</span>
       <h2 class="hero-name">Milan Jun</h2>
-      <p class="hero-sub">Jsem freelance webdesigner — tvořím weby pro firmy a živnostníky,<br>kteří chtějí být vidět online.</p>
-      <a class="hero-btn" href="#kontakt">Napište mi</a>
+      <p class="hero-sub" data-i18n-html="hero.sub">Jsem freelance webdesigner — tvořím weby pro firmy a živnostníky,<br>kteří chtějí být vidět online.</p>
+      <a class="hero-btn" href="#kontakt" data-i18n="hero.cta">Napište mi</a>
       <img class="hero-img-mobile" src="Milan/landing_photo_official2.png" alt="Milan Jun">
     </div>
   </div>
@@ -982,21 +959,21 @@
 <!-- ABOUT -->
 <div id="o-mne">
   <div class="container reveal">
-    <h2>O mně</h2>
+    <h2 data-i18n="about.title">O mně</h2>
     <div class="body" style="margin-top: 2rem;">
-      <p>Jmenuji se Milan Jun a tvořím webové stránky pro malé firmy a živnostníky. Zaměřuji se na moderní, rychlé a přehledné weby, které skutečně přináší nové zákazníky – ne jen hezký vzhled.</p>
-      <p>Vycházím z přesvědčení, že dobrý web nemusí být drahý ani složitý. Musí být funkční, estetický a šitý na míru konkrétní firmě. Každý projekt beru jako partnerství – záleží mi na výsledku stejně jako vám.</p>
-      <p>Pokud chcete někoho, kdo s vámi bude komunikovat přímo a odvede poctivou práci - ozvěte se mi s Vaší představou. První návrh pro vás vytvořím zcela zdarma.</p>
+      <p data-i18n="about.p1">Jmenuji se Milan Jun a tvořím webové stránky pro malé firmy a živnostníky. Zaměřuji se na moderní, rychlé a přehledné weby, které skutečně přináší nové zákazníky – ne jen hezký vzhled.</p>
+      <p data-i18n="about.p2">Vycházím z přesvědčení, že dobrý web nemusí být drahý ani složitý. Musí být funkční, estetický a šitý na míru konkrétní firmě. Každý projekt beru jako partnerství – záleží mi na výsledku stejně jako vám.</p>
+      <p data-i18n="about.p3">Pokud chcete někoho, kdo s vámi bude komunikovat přímo a odvede poctivou práci - ozvěte se mi s Vaší představou. První návrh pro vás vytvořím zcela zdarma.</p>
     </div>
     <div class="skills" style="margin-top: 3rem;">
-      <span class="skill-pill">HTML / CSS / JS</span>
-      <span class="skill-pill">Responzivní design</span>
-      <span class="skill-pill">UI / UX</span>
-      <span class="skill-pill">Bootstrap 5</span>
-      <span class="skill-pill">WordPress</span>
-      <span class="skill-pill">SEO základy</span>
-      <span class="skill-pill">Animace</span>
-      <span class="skill-pill">Formuláře & API</span>
+      <span class="skill-pill" data-i18n="about.s1">HTML / CSS / JS</span>
+      <span class="skill-pill" data-i18n="about.s2">Responzivní design</span>
+      <span class="skill-pill" data-i18n="about.s3">UI / UX</span>
+      <span class="skill-pill" data-i18n="about.s4">Bootstrap 5</span>
+      <span class="skill-pill" data-i18n="about.s5">WordPress</span>
+      <span class="skill-pill" data-i18n="about.s6">SEO základy</span>
+      <span class="skill-pill" data-i18n="about.s7">Animace</span>
+      <span class="skill-pill" data-i18n="about.s8">Formuláře & API</span>
     </div>
   </div>
 </div>
@@ -1005,25 +982,25 @@
 
 <!-- PROJECT 1: Bellavita -->
 <div id="projekty" class="project-block pb-1">
-  <h2 class="proj-section-title">Projekty</h2>
+  <h2 class="proj-section-title" data-i18n="projects.title">Projekty</h2>
   <div class="container">
     <div class="proj-left reveal-left">
       <div class="proj-title"><h3>Bellavita</h3></div>
       <div class="proj-desc">
-        <p>Prezentační web pro italskou restauraci. Elegantní design s rezervačním systémem, full-width galerií a tabbovaným menu. Luxusní animace a paralaxní efekty.</p>
+        <p data-i18n="proj1.desc">Prezentační web pro italskou restauraci. Elegantní design s rezervačním systémem, full-width galerií a tabbovaným menu. Luxusní animace a paralaxní efekty.</p>
       </div>
       <div class="proj-tags">
-        <p>Technologie</p>
+        <p data-i18n="proj.techLabel">Technologie</p>
         <ul>
           <li>HTML / CSS / JS</li>
           <li>Bootstrap 5</li>
-          <li>Scroll animace</li>
-          <li>Rezervační formulář</li>
-          <li>Galerie slider</li>
+          <li data-i18n="proj1.tech3">Scroll animace</li>
+          <li data-i18n="proj1.tech4">Rezervační formulář</li>
+          <li data-i18n="proj1.tech5">Galerie slider</li>
         </ul>
       </div>
       <div class="proj-cta">
-        <a href="bellavita.html" target="_blank">Zobrazit projekt</a>
+        <a href="bellavita.html" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a>
       </div>
     </div>
     <div class="proj-right reveal-right">
@@ -1038,7 +1015,7 @@
           src="obrazky/bellavita3.png"
           alt="Bellavita – další sekce">
         <img class="proj-click-hint" src="obrazky/click.png" alt="Klikněte pro další obrázky">
-        <div class="proj-img-overlay"><a href="bellavita.html" target="_blank">Zobrazit projekt</a></div>
+        <div class="proj-img-overlay"><a href="bellavita.html" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a></div>
       </div>
     </div>
   </div>
@@ -1048,22 +1025,22 @@
 <div class="project-block pb-2">
   <div class="container">
     <div class="proj-left reveal-left">
-      <div class="proj-title"><h3>Osobní trenér</h3></div>
+      <div class="proj-title"><h3 data-i18n="proj2.title">Osobní trenér</h3></div>
       <div class="proj-desc">
-        <p>Profesionální web pro osobního trenéra s funkčním rezervačním systémem (Formspree), ceníkem služeb a scroll animacemi. Lokální fotografie klienta.</p>
+        <p data-i18n="proj2.desc">Profesionální web pro osobního trenéra s funkčním rezervačním systémem (Formspree), ceníkem služeb a scroll animacemi. Lokální fotografie klienta.</p>
       </div>
       <div class="proj-tags">
-        <p>Technologie</p>
+        <p data-i18n="proj.techLabel">Technologie</p>
         <ul>
           <li>HTML / CSS / JS</li>
           <li>Formspree API</li>
           <li>IntersectionObserver</li>
-          <li>Pricing sekce</li>
-          <li>Responzivní layout</li>
+          <li data-i18n="proj2.tech4">Pricing sekce</li>
+          <li data-i18n="proj2.tech5">Responzivní layout</li>
         </ul>
       </div>
       <div class="proj-cta">
-        <a href="trener.html" target="_blank">Zobrazit projekt</a>
+        <a href="trener.html" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a>
       </div>
     </div>
     <div class="proj-right reveal-right">
@@ -1078,7 +1055,7 @@
         <img class="proj-img-tertiary"
           src="obrazky/trener3.png"
           alt="Osobní trenér – další sekce">
-        <div class="proj-img-overlay"><a href="trener.html" target="_blank">Zobrazit projekt</a></div>
+        <div class="proj-img-overlay"><a href="trener.html" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a></div>
       </div>
     </div>
   </div>
@@ -1119,8 +1096,8 @@
 <div class="how-section">
   <div class="container" style="flex-direction: column;">
     <div class="how-header">
-      <h2>Jak probíhá spolupráce</h2>
-      <p>Od prvního kontaktu po spuštění webu.</p>
+      <h2 data-i18n="how.title">Jak probíhá spolupráce</h2>
+      <p data-i18n="how.subtitle">Od prvního kontaktu po spuštění webu.</p>
     </div>
     <div class="how-steps">
 
@@ -1153,9 +1130,9 @@
       <div class="how-step">
         <div class="how-step-num">03</div>
         <div class="how-step-content">
-          <span class="how-step-label">Krok 3</span>
-          <h3 class="how-step-title">Úpravy a doladění</h3>
-          <p>Společně doladíme detaily, obsah, design i funkčnost tak, aby výsledek přesně odpovídal vašim očekáváním.</p>
+          <span class="how-step-label" data-i18n="how.s3label">Krok 3</span>
+          <h3 class="how-step-title" data-i18n="how.s3title">Úpravy a doladění</h3>
+          <p data-i18n="how.s3desc">Společně doladíme detaily, obsah, design i funkčnost tak, aby výsledek přesně odpovídal vašim očekáváním.</p>
         </div>
         <div class="how-step-img-wrap">
           <img class="how-step-img" src="obrazky/upravy.jpg" alt="Konzultace a úpravy návrhu">
@@ -1166,9 +1143,9 @@
       <div class="how-step">
         <div class="how-step-num">04</div>
         <div class="how-step-content">
-          <span class="how-step-label">Krok 4</span>
-          <h3 class="how-step-title">Spuštění webu</h3>
-          <p>Po finálním schválení web nasadím, otestuji na všech zařízeních a připravím k ostrému spuštění.</p>
+          <span class="how-step-label" data-i18n="how.s4label">Krok 4</span>
+          <h3 class="how-step-title" data-i18n="how.s4title">Spuštění webu</h3>
+          <p data-i18n="how.s4desc">Po finálním schválení web nasadím, otestuji na všech zařízeních a připravím k ostrému spuštění.</p>
         </div>
         <div class="how-step-img-wrap">
           <img class="how-step-img" src="obrazky/spusten.jpg" alt="Finální spuštění webových stránek">
@@ -1192,27 +1169,18 @@
 <div id="kontakt">
   <div class="container">
     <div class="footer-left reveal">
-      <h4>Potřebujete web?<br>Pojďme na to.</h4>
-      <p class="footer-tagline">Ozvu se do 24 hodin. První konzultace zdarma.</p>
-      <form class="contact-form" action="https://formspree.io/f/mqegpylb" method="POST">
-        <p class="contact-form-intro">Napište mi svoji představu o webu.<br><strong>Prvotní návrh a konzultaci máte zdarma.</strong></p>
-        <label for="email">Váš email</label>
-        <input type="email" id="email" name="email" placeholder="jan@example.com" required>
-        <label for="message">Popište svou představu</label>
-        <textarea id="message" name="message" placeholder="Např. potřebuji web pro kavárnu, chci moderní design, fotogalerii a kontaktní formulář..." required></textarea>
-        <button type="submit" class="contact-form-btn">Odeslat nezávazně</button>
-      </form>
-      <a class="footer-btn" href="mailto:jun.milan@outlook.com">Nebo napište přímo na email</a>
+      <h4 data-i18n-html="contact.title">Pojďme vytvořit<br>váš web.</h4>
+      <span class="footer-btn-wrap"><a class="footer-btn" href="konfigurator.html" data-i18n="contact.cta">Spustit konfigurátor</a></span>
+      <p class="footer-alt-contact" data-i18n-html="contact.alt">Máte otázku? Napište mi <a href="mailto:jun.milan@outlook.com">email</a></p>
     </div>
     <div class="footer-right reveal">
       <ul>
         <li><a href="https://linkedin.com/in/milanjun" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="https://github.com/milanjun" target="_blank" rel="noopener">GitHub</a></li>
         <li><a href="mailto:jun.milan@outlook.com">Email</a></li>
       </ul>
     </div>
     <div class="footer-copy">
-      <span>© 2025 − <a href="#">Milan Jun</a> − Freelance Webdesigner</span>
+      <span data-i18n-html="footer.copy">© 2025 − <a href="#">Milan Jun</a> − Freelance Webdesigner</span>
     </div>
   </div>
 </div>
