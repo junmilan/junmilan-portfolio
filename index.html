@@ -1072,12 +1072,13 @@
       <div class="how-step">
         <div class="how-step-num">01</div>
         <div class="how-step-content">
-          <span class="how-step-label">Krok 1</span>
-          <h3 class="how-step-title">Poptávka</h3>
-          <p>Napíšete mi základní představu — jaký web potřebujete, pro koho je určený, jaký styl a obsah si představujete. Stačí pár vět.</p>
+          <span class="how-step-label" data-i18n="how.s1label">Krok 1</span>
+          <h3 class="how-step-title" data-i18n="how.s1title">Konfigurátor</h3>
+          <p data-i18n="how.s1desc">Vyplňte online konfigurátor, ve kterém popíšete svou firmu, své zákazníky a to, čeho chcete webem dosáhnout. Můžete si rovnou zvolit barevnou paletu, písmo a nahrát firemní fotky nebo logo.</p>
+          <a href="konfigurator.html" data-i18n="how.cfgBtn" style="display:inline-block;margin-top:1.5rem;padding:1rem 2.4rem;background:var(--green-light);color:var(--green-dark);font-family:'Roboto Mono',monospace;font-size:1.2rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;border-radius:4px;text-decoration:none;transition:all 0.3s;">Vyplnit konfigurátor</a>
         </div>
         <div class="how-step-img-wrap">
-          <img class="how-step-img" src="obrazky/poptavka.png" alt="Odeslání poptávky přes formulář">
+          <img class="how-step-img" src="obrazky/konfigurator.png" alt="Online konfigurátor webových stránek">
           <div class="how-step-img-glow"></div>
         </div>
       </div>
@@ -1390,6 +1391,87 @@ if (shineBtn) {
     shineBtn.style.setProperty('--my', y);
   });
 }
+
+// ── I18N LANGUAGE SWITCHER ──
+const i18n = {
+  en: {
+    'nav.about': 'About',
+    'nav.projects': 'Projects',
+    'nav.contact': 'Contact',
+    'hero.tag': 'Hello, my name is',
+    'hero.sub': 'I\'m a freelance web designer — I create websites for businesses and entrepreneurs<br>who want to be visible online.',
+    'hero.cta': 'Get in touch',
+    'about.title': 'About me',
+    'about.p1': 'My name is Milan Jun and I create websites for small businesses and entrepreneurs. I focus on modern, fast, and clear websites that actually bring new customers — not just a pretty look.',
+    'about.p2': 'I believe a good website doesn\'t have to be expensive or complicated. It needs to be functional, aesthetic, and tailored to the specific business. I treat every project as a partnership — I care about the result just as much as you do.',
+    'about.p3': 'If you\'re looking for someone who communicates directly and delivers honest work — reach out with your idea. I\'ll create the first design for you completely free of charge.',
+    'about.s1': 'HTML / CSS / JS',
+    'about.s2': 'Responsive design',
+    'about.s3': 'UI / UX',
+    'about.s4': 'Bootstrap 5',
+    'about.s5': 'WordPress',
+    'about.s6': 'SEO basics',
+    'about.s7': 'Animations',
+    'about.s8': 'Forms & API',
+    'projects.title': 'Projects',
+    'proj1.desc': 'Presentation website for an Italian restaurant. Elegant design with a reservation system, full-width gallery, and tabbed menu. Luxury animations and parallax effects.',
+    'proj.techLabel': 'Technologies',
+    'proj1.tech3': 'Scroll animations',
+    'proj1.tech4': 'Reservation form',
+    'proj1.tech5': 'Gallery slider',
+    'proj.viewBtn': 'View project',
+    'proj2.title': 'Personal trainer',
+    'proj2.desc': 'Professional website for a personal trainer with a functional booking system (Formspree), service pricing, and scroll animations. Client\'s local photography.',
+    'proj2.tech4': 'Pricing section',
+    'proj2.tech5': 'Responsive layout',
+    'how.title': 'How we work together',
+    'how.subtitle': 'From first contact to website launch.',
+    'how.s1label': 'Step 1', 'how.s2label': 'Step 2', 'how.s3label': 'Step 3', 'how.s4label': 'Step 4',
+    'how.s1title': 'Configurator',
+    'how.s2title': 'Free proposal',
+    'how.s3title': 'Revisions & refinement',
+    'how.s4title': 'Website launch',
+    'how.s1desc': 'Fill out the online configurator — describe your business, your customers, and what you want your website to achieve. You can also choose a color palette, font, and upload your company photos or logo.',
+    'how.s2desc': 'I\'ll prepare a non-binding proposal of the structure and visual direction so you can see what the website will look like — completely free of charge.',
+    'how.s3desc': 'Together we\'ll fine-tune the details, content, design, and functionality so the result matches your expectations perfectly.',
+    'how.s4desc': 'After final approval, I\'ll deploy the website, test it on all devices, and prepare it for launch.',
+    'how.cfgBtn': 'Open configurator',
+    'contact.title': 'Let\'s build<br>your website.',
+    'contact.cta': 'Launch configurator',
+    'contact.alt': 'Have a question? Send me an <a href="mailto:jun.milan@outlook.com">email</a>',
+    'footer.copy': '© 2025 − <a href="#">Milan Jun</a> − Freelance Web Designer'
+  }
+};
+
+const czStore = {}, czHtmlStore = {};
+document.querySelectorAll('[data-i18n]').forEach(el => {
+  czStore[el.getAttribute('data-i18n')] = el.textContent;
+});
+document.querySelectorAll('[data-i18n-html]').forEach(el => {
+  czHtmlStore[el.getAttribute('data-i18n-html')] = el.innerHTML;
+});
+
+function applyLang(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    el.textContent = lang === 'en' ? (i18n.en[k] || czStore[k]) : czStore[k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const k = el.getAttribute('data-i18n-html');
+    el.innerHTML = lang === 'en' ? (i18n.en[k] || czHtmlStore[k]) : czHtmlStore[k];
+  });
+  document.documentElement.lang = lang === 'en' ? 'en' : 'cs';
+  document.querySelectorAll('.lang-toggle').forEach(b => b.textContent = lang === 'en' ? 'CZ' : 'EN');
+}
+
+function toggleLang() {
+  const cur = localStorage.getItem('lang') || 'cs';
+  const next = cur === 'cs' ? 'en' : 'cs';
+  localStorage.setItem('lang', next);
+  applyLang(next);
+}
+
+if (localStorage.getItem('lang') === 'en') applyLang('en');
 </script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
