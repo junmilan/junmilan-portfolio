@@ -871,6 +871,31 @@
       pointer-events: none;
     }
 
+    .cfg-link {
+      color: var(--green-dark);
+      text-decoration: none;
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+      background: linear-gradient(90deg, var(--green-light), rgba(82,183,136,0.15));
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      border-bottom: 2px solid var(--green-dark);
+    }
+    .cfg-link:hover {
+      background: var(--green-dark);
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 4px 20px rgba(82,183,136,0.4);
+    }
+    @keyframes cfg-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(82,183,136,0.3); }
+      50% { box-shadow: 0 0 0 8px rgba(82,183,136,0); }
+    }
+    .cfg-link { animation: cfg-pulse 2.5s ease-in-out infinite; }
+    .cfg-link:hover { animation: none; }
+
     /* Responsive */
     @media (max-width: 900px) {
       .how-section { padding: 6rem 0 8rem; }
@@ -1074,8 +1099,7 @@
         <div class="how-step-content">
           <span class="how-step-label" data-i18n="how.s1label">Krok 1</span>
           <h3 class="how-step-title" data-i18n="how.s1title">Konfigurátor</h3>
-          <p data-i18n="how.s1desc">Vyplňte online konfigurátor, ve kterém popíšete svou firmu, své zákazníky a to, čeho chcete webem dosáhnout. Můžete si rovnou zvolit barevnou paletu, písmo a nahrát firemní fotky nebo logo.</p>
-          <a href="konfigurator.html" data-i18n="how.cfgBtn" style="display:inline-block;margin-top:1.5rem;padding:1rem 2.4rem;background:var(--green-light);color:var(--green-dark);font-family:'Roboto Mono',monospace;font-size:1.2rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;border-radius:4px;text-decoration:none;transition:all 0.3s;">Vyplnit konfigurátor</a>
+          <p data-i18n-html="how.s1desc">Vyplňte <a href="konfigurator.html" target="_blank" class="cfg-link">online konfigurátor</a>, ve kterém popíšete svou firmu, své zákazníky a to, čeho chcete webem dosáhnout. Můžete si rovnou zvolit barevnou paletu, písmo a nahrát firemní fotky nebo logo.</p>
         </div>
         <div class="how-step-img-wrap">
           <img class="how-step-img" src="obrazky/konfigurator.png" alt="Online konfigurátor webových stránek">
@@ -1435,11 +1459,10 @@ const i18n = {
     'how.s2title': 'Free proposal',
     'how.s3title': 'Revisions & refinement',
     'how.s4title': 'Website launch',
-    'how.s1desc': 'Fill out the online configurator — describe your business, your customers, and what you want your website to achieve. You can also choose a color palette, font, and upload your company photos or logo.',
+    'how.s1desc': 'Fill out the <a href="konfigurator.html" target="_blank" class="cfg-link">online configurator</a> — describe your business, your customers, and what you want your website to achieve. You can also choose a color palette, font, and upload your company photos or logo.',
     'how.s2desc': 'Based on your configurator input, I\'ll design everything that makes a website truly work — who it speaks to, what it says first, how it guides visitors to contact you, and how it all looks. I\'ll prepare the page structure, visual style, and content layout. You\'ll receive a live link to preview on both mobile and desktop — completely free, no strings attached.',
     'how.s3desc': 'Together we\'ll fine-tune the details, content, design, and functionality so the result matches your expectations perfectly.',
     'how.s4desc': 'After final approval, I\'ll deploy the website, test it on all devices, and prepare it for launch.',
-    'how.cfgBtn': 'Open configurator',
     'how.cfgBtn2': 'Open configurator',
     'contact.title': 'Let\'s build<br>your website.',
     'contact.cta': 'Launch configurator',
