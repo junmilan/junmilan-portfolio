@@ -874,27 +874,12 @@
     .cfg-link {
       color: var(--green-dark);
       text-decoration: none;
-      font-weight: 600;
-      position: relative;
-      display: inline-block;
-      background: linear-gradient(90deg, var(--green-light), rgba(82,183,136,0.15));
-      padding: 0.1em 0.4em;
-      border-radius: 4px;
-      transition: all 0.3s ease;
-      border-bottom: 2px solid var(--green-dark);
+      border-bottom: 1px solid rgba(82,183,136,0.4);
+      transition: border-color 0.2s, color 0.2s;
     }
     .cfg-link:hover {
-      background: var(--green-dark);
-      color: #fff;
-      transform: scale(1.05);
-      box-shadow: 0 4px 20px rgba(82,183,136,0.4);
+      border-bottom-color: var(--green-dark);
     }
-    @keyframes cfg-pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(82,183,136,0.3); }
-      50% { box-shadow: 0 0 0 8px rgba(82,183,136,0); }
-    }
-    .cfg-link { animation: cfg-pulse 2.5s ease-in-out infinite; }
-    .cfg-link:hover { animation: none; }
 
     /* Responsive */
     @media (max-width: 900px) {
