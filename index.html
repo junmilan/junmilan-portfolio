@@ -930,7 +930,6 @@
     <div class="nav-d">
       <a href="#o-mne">O mně</a>
       <a href="#projekty">Projekty</a>
-      <a href="#reference">Reference</a>
       <a href="#kontakt" class="nav-cta">Kontakt</a>
     </div>
     <div class="nav-m" id="navM">
@@ -944,7 +943,6 @@
   <div class="nav-mm" id="navMM">
     <a href="#o-mne" class="has-divider" onclick="closeMobileMenu()">O mně</a>
     <a href="#projekty" onclick="closeMobileMenu()">Projekty</a>
-    <a href="#reference" onclick="closeMobileMenu()">Reference</a>
     <a href="#kontakt" onclick="closeMobileMenu()">Kontakt</a>
   </div>
 </nav>
@@ -1068,6 +1066,35 @@
   </div>
 </div>
 
+<!-- PROJECT 3: LeadCRM -->
+<div class="project-block pb-3">
+  <div class="container">
+    <div class="proj-left reveal-left">
+      <div class="proj-title"><h3 data-i18n="proj3.title">LeadCRM</h3></div>
+      <div class="proj-desc">
+        <p data-i18n="proj3.desc">Víc než jen webovky — dokážu vytvořit i kompletní webovou aplikaci na míru. LeadCRM je interní nástroj pro vyhledávání a oslovování klientů. Automaticky prohledává Google Maps, analyzuje kvalitu webů firem a umožňuje hromadné oslovení přes email i WhatsApp. Kanban board s drag & drop, klávesové zkratky, filtrování a export dat.</p>
+      </div>
+      <div class="proj-tags">
+        <p data-i18n="proj.techLabel">Technologie</p>
+        <ul>
+          <li>Python / FastAPI</li>
+          <li>SQLite + async</li>
+          <li>Google Maps API</li>
+          <li data-i18n="proj3.tech4">Analýza webů (BeautifulSoup)</li>
+          <li data-i18n="proj3.tech5">Kanban board + klávesové zkratky</li>
+        </ul>
+      </div>
+    </div>
+    <div class="proj-right reveal-right">
+      <div class="proj-img-wrap">
+        <img class="proj-img"
+          src="obrazky/leadcrm.png"
+          alt="LeadCRM – kanban board s kontakty">
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="divider-gold"></div>
 
 <!-- JAK PROBÍHÁ SPOLUPRÁCE -->
@@ -1141,47 +1168,6 @@
 
 <div class="divider-gold"></div>
 
-<!-- TESTIMONIALS -->
-<div id="reference">
-  <div class="container reveal">
-    <h2>Co říkají klienti</h2>
-    <div class="test-module" style="margin-top: 0;">
-      <div class="test-inner">
-        <div class="test-nav" id="testNav"></div>
-        <div id="testSlides">
-          <div class="test-slide active">
-            <div class="test-quote">
-              <p>"Milan vytvořil web pro naši restauraci přesně podle našich představ. Komunikace byla rychlá a výsledek předčil očekávání. Doporučujeme každému, kdo hledá spolehlivého webdesignera."</p>
-            </div>
-            <div class="test-author">
-              <p>Tomáš K.</p>
-              <p>Restaurace Bellavita</p>
-            </div>
-          </div>
-          <div class="test-slide">
-            <div class="test-quote">
-              <p>"Hledal jsem někoho, kdo mi udělá web rychle a bez zbytečného složitého vysvětlování. Milan přesně věděl, co potřebuji, a web byl hotov dříve, než jsem čekal."</p>
-            </div>
-            <div class="test-author">
-              <p>Jakub M.</p>
-              <p>Osobní trenér</p>
-            </div>
-          </div>
-          <div class="test-slide">
-            <div class="test-quote">
-              <p>"Profesionální přístup, krásný design a web, který skutečně funguje. Milan nám pomohl i s texty. Rozhodně budeme spolupracovat i na dalším projektu."</p>
-            </div>
-            <div class="test-author">
-              <p>Petra N.</p>
-              <p>Kosmetické studio</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="divider-gold-center"></div>
 
 <!-- FOOTER / CONTACT -->
@@ -1251,29 +1237,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-// ── TESTIMONIALS
-const slides = document.querySelectorAll('.test-slide');
-const navEl  = document.getElementById('testNav');
-let current  = 0;
-
-slides.forEach((_, i) => {
-  const btn = document.createElement('button');
-  btn.className = 'test-dot' + (i === 0 ? ' active' : '');
-  btn.innerHTML = '<div></div>';
-  btn.addEventListener('click', () => goTo(i));
-  navEl.appendChild(btn);
-});
-
-function goTo(i) {
-  slides[current].classList.remove('active');
-  navEl.children[current].classList.remove('active');
-  current = i;
-  slides[current].classList.add('active');
-  navEl.children[current].classList.add('active');
-}
-
-setInterval(() => goTo((current + 1) % slides.length), 5000);
-
 // ── SCROLL PROGRESS BAR
 const progressBar = document.getElementById('progressBar');
 function updateProgress() {
@@ -1298,7 +1261,7 @@ function updateParallax() {
 window.addEventListener('scroll', updateParallax, { passive: true });
 
 // ── SCROLL SPY (nav links)
-const spySections = ['o-mne','projekty','reference','kontakt'].map(id => document.getElementById(id)).filter(Boolean);
+const spySections = ['o-mne','projekty','kontakt'].map(id => document.getElementById(id)).filter(Boolean);
 const navLinks    = document.querySelectorAll('.nav-d a[href^="#"]');
 
 function updateScrollSpy() {
@@ -1437,6 +1400,10 @@ const i18n = {
     'proj2.desc': 'Professional website for a personal trainer with a functional booking system (Formspree), service pricing, and scroll animations. Client\'s local photography.',
     'proj2.tech4': 'Pricing section',
     'proj2.tech5': 'Responsive layout',
+    'proj3.title': 'LeadCRM',
+    'proj3.desc': 'More than just websites — I can also build complete custom web applications. LeadCRM is an internal tool for finding and contacting potential clients. It automatically searches Google Maps, analyzes company website quality, and enables bulk outreach via email and WhatsApp. Kanban board with drag & drop, keyboard shortcuts, filtering, and data export.',
+    'proj3.tech4': 'Web analysis (BeautifulSoup)',
+    'proj3.tech5': 'Kanban board + keyboard shortcuts',
     'how.title': 'How we work together',
     'how.subtitle': 'From first contact to website launch.',
     'how.s1label': 'Step 1', 'how.s2label': 'Step 2', 'how.s3label': 'Step 3', 'how.s4label': 'Step 4',
