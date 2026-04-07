@@ -831,6 +831,101 @@
       pointer-events: none;
     }
 
+    /* ── PRICING ── */
+    .pricing-section {
+      background: #0d1117;
+      padding: 8rem 0;
+    }
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    .pricing-header h2 {
+      color: white;
+      font-size: 4.5rem;
+      font-weight: 800;
+      letter-spacing: 0.2rem;
+    }
+    .pricing-header p {
+      color: rgba(255,255,255,0.55);
+      font-size: 1.5rem;
+      margin-top: 1rem;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    @media (max-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .pricing-grid { grid-template-columns: 1fr; } }
+    .pricing-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 3rem 2.4rem;
+      transition: all 0.3s;
+    }
+    .pricing-card:hover {
+      border-color: var(--green-dark);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(82,183,136,0.1);
+    }
+    .pricing-card-title {
+      color: white;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .pricing-card-price {
+      color: var(--green-light);
+      font-size: 2.2rem;
+      font-weight: 800;
+      font-family: 'Roboto Mono', monospace;
+      margin-bottom: 2rem;
+    }
+    .pricing-card-price span {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.4);
+    }
+    .pricing-card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .pricing-card ul li {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.3rem;
+      padding: 0.5rem 0;
+      padding-left: 1.6rem;
+      position: relative;
+    }
+    .pricing-card ul li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--green-dark);
+      font-weight: 700;
+    }
+    .pricing-card-cta {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      border: 1px solid var(--green-dark);
+      color: var(--green-dark);
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .pricing-card-cta:hover {
+      background: var(--green-dark);
+      color: white;
+    }
+
     .cfg-link {
       color: var(--green-dark);
       text-decoration: none;
@@ -925,6 +1020,7 @@
     <div class="nav-d">
       <a href="#o-mne">O mně</a>
       <a href="#projekty">Projekty</a>
+      <a href="#cenik">Ceník</a>
       <a href="#kontakt" class="nav-cta">Kontakt</a>
     </div>
     <div class="nav-m" id="navM">
@@ -938,6 +1034,7 @@
   <div class="nav-mm" id="navMM">
     <a href="#o-mne" class="has-divider" onclick="closeMobileMenu()">O mně</a>
     <a href="#projekty" onclick="closeMobileMenu()">Projekty</a>
+    <a href="#cenik" onclick="closeMobileMenu()">Ceník</a>
     <a href="#kontakt" onclick="closeMobileMenu()">Kontakt</a>
   </div>
 </nav>
@@ -1161,7 +1258,67 @@
   </div>
 </div>
 
-<div class="divider-gold"></div>
+<!-- CENÍK -->
+<div id="cenik" class="pricing-section">
+  <div class="pricing-header reveal">
+    <h2 data-i18n="pricing.title">Ceník</h2>
+    <p data-i18n="pricing.subtitle">Transparentní ceny bez skrytých poplatků.</p>
+  </div>
+  <div class="pricing-grid">
+
+    <div class="pricing-card reveal">
+      <div class="pricing-card-title" data-i18n="pricing.t1">Optimalizace webu</div>
+      <div class="pricing-card-price">3 000 Kč <span data-i18n="pricing.from">od</span></div>
+      <ul>
+        <li data-i18n="pricing.o1">Audit rychlosti a SEO</li>
+        <li data-i18n="pricing.o2">Oprava responzivity</li>
+        <li data-i18n="pricing.o3">Optimalizace obrázků a kódu</li>
+        <li data-i18n="pricing.o4">Nasazení HTTPS</li>
+      </ul>
+      <a href="konfigurator.html" class="pricing-card-cta" data-i18n="pricing.cta">Mám zájem</a>
+    </div>
+
+    <div class="pricing-card reveal">
+      <div class="pricing-card-title" data-i18n="pricing.t2">Základní web</div>
+      <div class="pricing-card-price">5 990 Kč</div>
+      <ul>
+        <li data-i18n="pricing.z1">Jednostránkový web (landing page)</li>
+        <li data-i18n="pricing.z2">Responzivní design</li>
+        <li data-i18n="pricing.z3">Kontaktní formulář</li>
+        <li data-i18n="pricing.z4">SEO základ</li>
+        <li data-i18n="pricing.z5">Google Analytics</li>
+      </ul>
+      <a href="konfigurator.html" class="pricing-card-cta" data-i18n="pricing.cta">Mám zájem</a>
+    </div>
+
+    <div class="pricing-card reveal">
+      <div class="pricing-card-title" data-i18n="pricing.t3">Pokročilý web</div>
+      <div class="pricing-card-price">8 990 Kč</div>
+      <ul>
+        <li data-i18n="pricing.p1">Vícestránkový web (až 10 stránek)</li>
+        <li data-i18n="pricing.p2">Vlastní grafický návrh</li>
+        <li data-i18n="pricing.p3">Animace a interaktivní prvky</li>
+        <li data-i18n="pricing.p4">Rezervační systém / galerie</li>
+        <li data-i18n="pricing.p5">Správa obsahu (CMS)</li>
+      </ul>
+      <a href="konfigurator.html" class="pricing-card-cta" data-i18n="pricing.cta">Mám zájem</a>
+    </div>
+
+    <div class="pricing-card reveal">
+      <div class="pricing-card-title" data-i18n="pricing.t4">Webová aplikace</div>
+      <div class="pricing-card-price" data-i18n="pricing.individual">Individuální</div>
+      <ul>
+        <li data-i18n="pricing.a1">Nástroj na míru vašim procesům</li>
+        <li data-i18n="pricing.a2">Backend, databáze, API</li>
+        <li data-i18n="pricing.a3">Automatizace a reporty</li>
+        <li data-i18n="pricing.a4">Průběžné konzultace</li>
+        <li data-i18n="pricing.a5">Dlouhodobá podpora</li>
+      </ul>
+      <a href="mailto:jun.milan@outlook.com" class="pricing-card-cta" data-i18n="pricing.ctaContact">Kontaktujte mě</a>
+    </div>
+
+  </div>
+</div>
 
 <div class="divider-gold-center"></div>
 
@@ -1246,7 +1403,7 @@ function updateParallax() {
 window.addEventListener('scroll', updateParallax, { passive: true });
 
 // ── SCROLL SPY (nav links)
-const spySections = ['o-mne','projekty','kontakt'].map(id => document.getElementById(id)).filter(Boolean);
+const spySections = ['o-mne','projekty','cenik','kontakt'].map(id => document.getElementById(id)).filter(Boolean);
 const navLinks    = document.querySelectorAll('.nav-d a[href^="#"]');
 
 function updateScrollSpy() {
@@ -1402,6 +1559,35 @@ const i18n = {
     'how.s3desc': 'Together we\'ll fine-tune the details, content, design, and functionality so the result matches your expectations perfectly.',
     'how.s4desc': 'After final approval, I\'ll deploy the website, test it on all devices, and prepare it for launch.',
     'how.cfgBtn2': 'Open configurator',
+    'pricing.title': 'Pricing',
+    'pricing.subtitle': 'Transparent prices with no hidden fees.',
+    'pricing.from': 'from',
+    'pricing.t1': 'Website optimization',
+    'pricing.o1': 'Speed & SEO audit',
+    'pricing.o2': 'Responsiveness fixes',
+    'pricing.o3': 'Image & code optimization',
+    'pricing.o4': 'HTTPS setup',
+    'pricing.t2': 'Basic website',
+    'pricing.z1': 'Single-page website (landing page)',
+    'pricing.z2': 'Responsive design',
+    'pricing.z3': 'Contact form',
+    'pricing.z4': 'SEO basics',
+    'pricing.z5': 'Google Analytics',
+    'pricing.t3': 'Advanced website',
+    'pricing.p1': 'Multi-page website (up to 10 pages)',
+    'pricing.p2': 'Custom graphic design',
+    'pricing.p3': 'Animations & interactive elements',
+    'pricing.p4': 'Booking system / gallery',
+    'pricing.p5': 'Content management (CMS)',
+    'pricing.t4': 'Web application',
+    'pricing.individual': 'Custom quote',
+    'pricing.a1': 'Tool tailored to your processes',
+    'pricing.a2': 'Backend, database, API',
+    'pricing.a3': 'Automation & reports',
+    'pricing.a4': 'Ongoing consultations',
+    'pricing.a5': 'Long-term support',
+    'pricing.cta': 'I\'m interested',
+    'pricing.ctaContact': 'Contact me',
     'contact.title': 'Let\'s build<br>your website.',
     'contact.cta': 'Launch configurator',
     'contact.alt': 'Have a question? Send me an <a href="mailto:jun.milan@outlook.com">email</a>',
