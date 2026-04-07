@@ -881,6 +881,24 @@
       border-bottom-color: var(--green-dark);
     }
 
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 9999;
+      cursor: zoom-out;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
+      border-radius: 8px;
+      box-shadow: 0 0 60px rgba(0,0,0,0.5);
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
       .how-section { padding: 6rem 0 8rem; }
@@ -1086,7 +1104,7 @@
       </div>
     </div>
     <div class="proj-right reveal-right">
-      <div class="proj-img-wrap">
+      <div class="proj-img-wrap" style="cursor:zoom-in" onclick="openLightbox('obrazky/leadcrm.png')">
         <img class="proj-img"
           src="obrazky/leadcrm.png"
           alt="LeadCRM – kanban board s kontakty">
@@ -1453,7 +1471,24 @@ function toggleLang() {
 }
 
 if (localStorage.getItem('lang') === 'en') applyLang('en');
+
+// ── LIGHTBOX
+function openLightbox(src) {
+  const lb = document.getElementById('lightbox');
+  lb.querySelector('img').src = src;
+  lb.classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});
 </script>
+
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <img src="" alt="Zvětšený náhled">
+</div>
 <script defer src="/_vercel/speed-insights/script.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 </body>
