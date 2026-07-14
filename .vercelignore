@@ -1,0 +1,12 @@
+# Osobni dokumenty - nikdy nesmi na web
+*CV*
+cv_*
+*.docx
+*.pdf
+Images_HelpDesk/
+PROMPT_KONFIGURATOR.md
+obrazky/naplavka_final*
+obrazky/Obrazky_vizualizace/
+images/
+Milan/
+*.md
