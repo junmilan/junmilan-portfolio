@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milan Jun – Freelance Webdesigner</title>
+  <meta name="description" content="Tvořím moderní, rychlé a přehledné weby pro firmy a živnostníky. Prvotní návrh a konzultace zdarma.">
+  <meta name="author" content="Milan Jun">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Milan Jun – Freelance Webdesigner">
+  <meta property="og:description" content="Tvořím moderní, rychlé a přehledné weby pro firmy a živnostníky. Prvotní návrh a konzultace zdarma.">
+  <meta property="og:image" content="Milan/landing_photo_official2.png">
+  <meta property="og:locale" content="cs_CZ">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Milan Jun – Freelance Webdesigner">
+  <meta name="twitter:description" content="Tvořím moderní, rychlé a přehledné weby pro firmy a živnostníky.">
+  <meta name="twitter:image" content="Milan/landing_photo_official2.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #2d6a4f;
+      --green-dark: #1b4332;
+      --green-light: #52b788;
+      --gradient: linear-gradient(90deg, #52b788, #1b4332);
+      --text: #212529;
+      --max-w: 1400px;
+      --content-w: 1020px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html {
+      font-size: 62.5%; -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.4rem;
+      line-height: 2.5rem;
+      color: var(--text);
+      background: #fff;
+    }
+    h1,h2,h3,h4,h5,h6 {
+      font-family: 'Exo 2', sans-serif;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    h2 { font-size: 4rem; line-height: 5.1rem; }
+    h3 { font-size: 2rem; line-height: 3.1rem; }
+    p,li,span { font-family: 'Roboto Mono', monospace; font-size: 1.4rem; line-height: 2.8rem; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── CONTAINER ── */
+    .container {
+      display: flex;
+      width: 100%;
+      max-width: var(--max-w);
+      margin: auto;
+      padding: 0 60px;
+    }
+    @media (max-width: 900px) { .container { padding: 0 40px; } }
+    @media (max-width: 600px) { .container { padding: 0 20px; } }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      background: transparent;
+      position: fixed;
+      width: 100%;
+      top: 0; left: 0;
+      z-index: 1000;
+    }
+    .navbar.scrolled {
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .navbar .container {
+      height: 80px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15rem;
+      color: white;
+    }
+    .navbar.scrolled .nav-logo { color: var(--text); }
+    .nav-logo span {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Desktop nav */
+    .nav-d { display: none; }
+    @media (min-width: 900px) { .nav-d { display: flex; } }
+    .nav-d a {
+      color: rgba(255,255,255,0.9);
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      margin-left: 2rem;
+      position: relative;
+      transition: color 0.3s;
+      padding: 0.2rem 0.4rem;
+      z-index: 10;
+      letter-spacing: 0.05em;
+    }
+    .navbar.scrolled .nav-d a { color: var(--text); }
+    .nav-d a:hover { color: var(--green-light) !important; }
+    .nav-d a::before { display: none; }
+    .nav-d a.nav-cta {
+      border: 1px solid rgba(255,255,255,0.7);
+      padding: 0.4rem 1.4rem;
+    }
+    .navbar.scrolled .nav-d a.nav-cta { border-color: var(--text); }
+    .nav-d a.nav-cta::before { display: none; }
+    .nav-d a.nav-cta:hover { background: var(--green-dark); border-color: var(--green-dark); }
+
+    /* Mobile hamburger */
+    .nav-m { display: block; }
+    @media (min-width: 900px) { .nav-m { display: none; } }
+    .nav-m button {
+      height: 2.5rem; width: 3.5rem;
+      background: transparent; border: none; cursor: pointer;
+      position: relative;
+    }
+    .nav-m button span {
+      transition: all 0.2s; height: 3px; width: 100%;
+      background: white; position: absolute; display: block;
+    }
+    .navbar.scrolled .nav-m button span { background: var(--text); }
+    .nav-m button span.first { top: 0; }
+    .nav-m button span.second { top: calc(50% - 1.5px); }
+    .nav-m button span.third { bottom: 0; }
+    .nav-m.open button span { background: var(--gradient); }
+    .nav-m.open button span.first { transform: rotate(45deg); top: 1.1rem; }
+    .nav-m.open button span.second { opacity: 0; }
+    .nav-m.open button span.third { transform: rotate(-45deg); bottom: 1.1rem; }
+
+    /* Mobile menu */
+    .nav-mm {
+      text-transform: uppercase;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex; flex-direction: column;
+      position: fixed; top: 80px; left: 0;
+      width: 100%; background: white;
+      height: calc(100vh - 80px);
+      padding: 2rem; z-index: 999;
+    }
+    .nav-mm.open { transform: translateX(0); }
+    @media (min-width: 600px) { .nav-mm { padding: 4rem; } }
+    @media (min-width: 900px) { .nav-mm { display: none !important; } }
+    .nav-mm a {
+      color: var(--text); margin-bottom: 3rem;
+      font-size: 1.6rem;
+    }
+    .nav-mm a.has-divider {
+      margin-bottom: 6rem; position: relative;
+    }
+    .nav-mm a.has-divider::after {
+      content: ''; position: absolute;
+      bottom: -3rem; left: 0;
+      width: 100%; height: 0.2rem;
+      background: var(--gradient);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--green-dark);
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    @media (max-width: 900px) { .hero { min-height: 100svh; padding-top: 80px; } }
+    .hero .container {
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      z-index: 2;
+    }
+    @media (max-width: 900px) {
+      .hero .container { flex-wrap: wrap; min-height: unset; padding-bottom: 4rem; padding-top: 2rem; }
+    }
+    .hero-bg {
+      position: absolute; top: 0; right: 0;
+      height: 100%; width: 52%;
+      object-fit: cover; object-position: center top;
+      opacity: 0.68; z-index: 1;
+    }
+    /* Gradient překryv — zleva zelená, zprava průhledná */
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(
+        to right,
+        #1b4332 40%,
+        rgba(27,67,50,0.75) 60%,
+        rgba(27,67,50,0.5) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+    @media (max-width: 900px) { .hero-bg { display: none; } }
+
+    .hero-content { position: relative; z-index: 2; width: 60%; padding-right: 2rem; }
+    @media (max-width: 900px) { .hero-content { width: 100%; padding-right: 0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* vejire projektovych screenshotu nesmi vytvorit vodorovny scroll */
+    html, body { overflow-x: clip; }
+    @supports not (overflow-x: clip) { html, body { overflow-x: hidden; } }
+
+    a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+      outline: 2px solid transparent;
+      box-shadow: 0 0 0 2px #fff, 0 0 0 5px #2d6a4f;
+      border-radius: 4px;
+    }
+
+    .hero-tag {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.6rem;
+      line-height: 2.2rem;
+      font-weight: 400;
+      color: var(--green-light);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .hero-name {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 900;
+      font-size: 7rem;
+      line-height: 7rem;
+      color: white;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 600px) { .hero-name { font-size: 4.5rem; line-height: 5rem; } }
+    .hero-sub {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.6rem;
+      line-height: 2.4rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 3rem;
+    }
+    .hero-btn {
+      display: inline-block;
+      border: 0.15rem solid white;
+      color: white;
+      padding: 0 2.5rem;
+      height: 5.5rem;
+      line-height: 5.5rem;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: all 0.3s;
+    }
+    .hero-btn:hover { background: white; color: var(--green-dark); }
+    .hero-img-mobile {
+      display: none; width: 100%; margin-top: 3rem;
+      border-radius: 4px; opacity: 0.85;
+    }
+    @media (max-width: 900px) { .hero-img-mobile { display: block; } }
+
+    /* ── ABOUT ── */
+    #o-mne {
+      background: white;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 0;
+    }
+    #o-mne .container { flex-direction: column; width: var(--content-w); max-width: 100%; }
+    #o-mne h2 { color: var(--green); margin-bottom: 2rem; }
+    #o-mne .body p { margin-bottom: 2rem; }
+    #o-mne .body a {
+      position: relative; z-index: 5;
+      color: white; padding: 0 0.5rem;
+    }
+    #o-mne .body a::before {
+      z-index: -5; content: '';
+      position: absolute; height: 100%; width: 100%;
+      bottom: -1px; left: 0;
+      transition: all 0.3s; background: var(--gradient);
+    }
+    #o-mne .body a:hover::before { height: 2px; }
+    #o-mne .body a:hover { color: var(--text); }
+
+    .skills { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 3rem; }
+    .skill-pill {
+      border: 1px solid var(--green);
+      color: var(--green);
+      padding: 0.4rem 1.2rem;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.2rem;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .skill-pill:hover { background: var(--green); color: white; }
+
+    /* ── PROJECTS ── */
+    .proj-section-title {
+      text-align: center;
+      color: white;
+      font-size: 6.5rem;
+      line-height: 1;
+      letter-spacing: 0.4rem;
+      padding: 7rem 0 3rem;
+      opacity: 0.92;
+    }
+    @media (max-width: 600px) { .proj-section-title { font-size: 4rem; padding: 5rem 0 2rem; } }
+
+    .project-block { position: relative; min-height: 100vh; }
+    @media (max-width: 900px) { .project-block { min-height: unset; } }
+    @media (max-width: 900px) {
+      .project-block { padding: 4rem 0; }
+      .project-block .container { flex-wrap: wrap; }
+      .proj-left, .proj-right { width: 100% !important; }
+    }
+    .project-block .container { height: 100%; align-items: center; min-height: inherit; }
+    .proj-left { width: 38%; color: white; }
+    .proj-right { width: 62%; }
+
+    .proj-title h3 {
+      color: white; font-weight: 800;
+      font-size: 4.5rem; line-height: 5.5rem;
+      letter-spacing: 0.3rem; margin-bottom: 1.5rem;
+    }
+    @media (max-width: 600px) { .proj-title h3 { font-size: 3rem; line-height: 4rem; } }
+    .proj-desc p { margin-bottom: 1.5rem; color: rgba(255,255,255,0.82); }
+    .proj-tags p { font-weight: bold; text-transform: uppercase; margin-bottom: 1rem; color: white; }
+    .proj-tags ul { list-style: none; padding-left: 1.5rem; }
+    .proj-tags ul li {
+      margin-bottom: 0.8rem;
+      position: relative;
+      color: rgba(255,255,255,0.78);
+    }
+    .proj-tags ul li::before {
+      content: ''; position: absolute;
+      height: 8px; width: 2px;
+      background: var(--green-light);
+      top: 0.9rem; left: -1.5rem; z-index: 5;
+    }
+    .proj-tags ul li::after {
+      content: ''; position: absolute;
+      height: 8px; width: 2px;
+      background: var(--green-light);
+      top: 0.9rem; left: -1.5rem; z-index: 5;
+      transform: rotate(90deg);
+    }
+    .proj-cta { margin-top: 2.5rem; }
+    .proj-cta a {
+      display: inline-block;
+      border: 0.1rem solid white;
+      height: 5.5rem; line-height: 5.5rem;
+      padding: 0 2rem; color: white;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.3rem; text-transform: uppercase;
+      letter-spacing: 0.05em; transition: background 0.3s;
+    }
+    .proj-cta a:hover { background: rgba(255,255,255,0.12); }
+    .proj-img {
+      width: 100%; display: block;
+      border-radius: 2px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+    @media (min-width: 900px) { .proj-right { margin-bottom: -7rem; } }
+    @media (max-width: 900px) { .proj-right { margin-top: 3rem; } }
+
+    .pb-1 { background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 50%, #1a3a2a 100%); }
+    .pb-2 { background: linear-gradient(135deg, #1a1d20 0%, #2d3436 55%, #1f3329 100%); }
+    .pb-3 { background: linear-gradient(135deg, #1e2d3d 0%, #2c3e50 50%, #1b3a2e 100%); }
+
+
+    /* ── FOOTER / CONTACT ── */
+    #kontakt {
+      background: linear-gradient(135deg, #1b4332 0%, #1a1d20 60%, #0d1f17 100%);
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 6rem 0;
+      position: relative;
+      text-align: center;
+    }
+    #kontakt::after {
+      content: ''; height: 4px; width: 100%;
+      position: absolute; bottom: 0; left: 0;
+      background: linear-gradient(to right, transparent 0%, #c9a84c 25%, #f0d878 50%, #c9a84c 75%, transparent 100%);
+    }
+    #kontakt .container {
+      max-width: 760px;
+      flex-direction: column;
+      align-items: center;
+    }
+    .footer-left { width: 100%; text-align: center; }
+    .footer-left h4 {
+      font-size: 5rem; line-height: 6rem;
+      margin-bottom: 4rem; color: white;
+    }
+    @media (max-width: 724px) { .footer-left h4 { font-size: 3rem; line-height: 4rem; } }
+    @keyframes sparkRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .footer-btn {
+      display: inline-block; position: relative;
+      background: linear-gradient(90deg, #b8922a, #e8c97a, #b8922a);
+      background-size: 200% auto;
+      border: none;
+      color: #1b1a14;
+      padding: 0 5rem; height: 7rem; line-height: 7rem;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.5rem; text-transform: uppercase;
+      letter-spacing: 0.14em; font-weight: 600;
+      transition: background-position 0.4s ease;
+      border-radius: 4px;
+      z-index: 1;
+      overflow: visible;
+    }
+    .footer-btn-wrap {
+      position: relative;
+      display: inline-block;
+      padding: 2px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .footer-btn-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -40%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0%,
+        transparent 70%,
+        #f0d878 78%,
+        #fff 82%,
+        #f0d878 86%,
+        transparent 94%,
+        transparent 100%
+      );
+      animation: sparkRotate 8s linear infinite;
+      z-index: 0;
+    }
+    .footer-btn-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: linear-gradient(135deg, #1b4332, #1a1d20);
+      border-radius: 4px;
+      z-index: 0;
+    }
+    .footer-btn-wrap .footer-btn {
+      position: relative;
+      z-index: 1;
+    }
+    .footer-btn:hover { background-position: right center; text-decoration: none; }
+    .footer-alt-contact {
+      color: rgba(255,255,255,0.5);
+      font-size: 1.3rem; line-height: 2.2rem;
+      margin-top: 3rem;
+      max-width: 460px;
+      margin-left: auto; margin-right: auto;
+    }
+    .footer-alt-contact a {
+      color: #e8c97a;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(232,201,122,0.3);
+      transition: border-color 0.3s;
+    }
+    .footer-alt-contact a:hover {
+      border-color: #e8c97a;
+    }
+    .footer-right { padding-top: 4rem; width: 100%; }
+    .footer-right ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .footer-right li { margin: 0; position: relative; }
+    .footer-right li::before, .footer-right li::after { display: none; }
+    .footer-right a {
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em; font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+    .footer-right a:hover { color: #e8c97a; }
+    .footer-copy { width: 100%; text-align: center; margin: 4rem 0 0; }
+    .footer-copy a {
+      color: rgba(255,255,255,0.3); font-weight: 400;
+      transition: color 0.3s;
+    }
+    .footer-copy a:hover { color: #e8c97a; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SCROLL PROGRESS BAR ── */
+    #progressBar {
+      position: fixed; top: 0; left: 0;
+      height: 3px; width: 0%;
+      background: var(--gradient);
+      z-index: 99999;
+      transition: width 0.08s linear;
+    }
+
+    /* ── HERO ENTRANCE ── */
+    .hero-tag  { opacity: 0; transform: translateY(22px); animation: heroIn 0.65s ease 0.25s forwards; }
+    .hero-name { opacity: 0; transform: translateY(22px); animation: heroIn 0.65s ease 0.45s forwards; }
+    .hero-sub  { opacity: 0; transform: translateY(22px); animation: heroIn 0.65s ease 0.65s forwards; }
+    .hero-btn  { opacity: 0; transform: translateY(22px); animation: heroIn 0.65s ease 0.85s forwards; }
+    @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
+
+    /* ── REVEAL VARIANTS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px) scale(0.97);
+      filter: blur(5px);
+      transition: opacity 0.75s ease, transform 0.75s ease, filter 0.75s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+
+    .reveal-left {
+      opacity: 0; transform: translateX(-50px) scale(0.97);
+      filter: blur(5px);
+      transition: opacity 0.75s ease, transform 0.75s ease, filter 0.75s ease;
+    }
+    .reveal-right {
+      opacity: 0; transform: translateX(50px) scale(0.97);
+      filter: blur(5px);
+      transition: opacity 0.75s ease, transform 0.75s ease, filter 0.75s ease;
+    }
+    .reveal-left.visible, .reveal-right.visible {
+      opacity: 1; transform: translateX(0) scale(1); filter: blur(0);
+    }
+
+    /* ── PROJECT IMAGE HOVER ── */
+    .proj-right { padding-left: 5rem; }
+    @media (max-width: 900px) { .proj-right { padding-left: 0; } }
+
+    .proj-img-wrap {
+      position: relative; border-radius: 12px;
+      overflow: visible; margin: 1.5rem 1.5rem 12rem 0;
+    }
+    /* Podsvícení za obrázky */
+    .proj-img-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3rem;
+      background: radial-gradient(ellipse at 50% 50%, rgba(82,183,136,0.25) 0%, rgba(82,183,136,0.08) 40%, transparent 70%);
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(30px);
+    }
+    /* Dekorativní offset rámeček za obrázkem */
+    .proj-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 14px -14px -14px 14px;
+      border: 2px solid rgba(82,183,136,0.4);
+      border-radius: 14px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .proj-img-wrap .proj-img {
+      transition: transform 0.5s ease; display: block; width: 100%;
+      border-radius: 12px; overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+      position: relative; z-index: 2;
+    }
+    .proj-img-secondary, .proj-img-tertiary {
+      position: absolute;
+      width: 100%; z-index: 1;
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      transition: transform 0.5s ease, z-index 0s;
+      cursor: pointer;
+    }
+    .proj-img-secondary {
+      bottom: -5.5rem; right: -5rem;
+    }
+    .proj-img-tertiary {
+      bottom: -11rem; right: -10rem;
+      z-index: 0;
+    }
+    .proj-img-secondary:hover, .proj-img-tertiary:hover {
+      z-index: 4;
+      transform: scale(1.05) !important;
+    }
+    .proj-img-wrap:hover .proj-img { transform: scale(1.02); }
+    .proj-img-wrap:hover .proj-img-secondary { transform: scale(1.03) translate(-4px, -4px); }
+    .proj-img-wrap:hover .proj-img-tertiary { transform: scale(1.03) translate(-8px, -8px); }
+    /* Click hint icon */
+    .proj-click-hint {
+      position: absolute;
+      bottom: -14.6rem; left: 9.5rem;
+      width: 7.5rem; height: 7.5rem;
+      z-index: 5;
+      opacity: 0.85;
+      pointer-events: none;
+      filter: drop-shadow(0 3px 10px rgba(0,0,0,0.6));
+      opacity: 0;
+      visibility: hidden;
+    }
+    .proj-click-hint.active {
+      visibility: visible;
+      animation: clickPulse 1.5s ease-in-out infinite;
+    }
+    .proj-click-hint.hidden {
+      animation: clickFadeOut 0.4s ease-out forwards;
+    }
+    @keyframes clickPulse {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(1.18); opacity: 1; }
+    }
+    @keyframes clickFadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+    @media (max-width: 900px) {
+      .proj-img-secondary { bottom: -4rem; right: -2.5rem; }
+      .proj-img-tertiary { bottom: -8rem; right: -5rem; }
+      .proj-img-wrap { margin-bottom: 10rem; }
+      .proj-click-hint { width: 5rem; height: 5rem; }
+    }
+    .proj-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(27,67,50,0) 0%, rgba(15,35,25,0.82) 100%);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.45s ease;
+      border-radius: 12px; z-index: 3;
+    }
+    .proj-img-wrap:hover .proj-img-overlay { opacity: 1; }
+    .proj-img-overlay a {
+      display: flex; align-items: center; justify-content: center;
+      width: 14rem; height: 14rem;
+      border: 2px solid rgba(255,255,255,0.85);
+      color: white;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.15rem; text-transform: uppercase;
+      letter-spacing: 0.1em; text-align: center;
+      line-height: 1.6;
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(4px);
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      transform: scale(0.88);
+      padding: 1rem;
+    }
+    .proj-img-wrap:hover .proj-img-overlay a { transform: scale(1); }
+    .proj-img-overlay a:hover {
+      background: rgba(255,255,255,0.18);
+      border-color: white;
+    }
+
+    /* ── SKILL PILLS STAGGER ── */
+    .skill-pill {
+      opacity: 0; transform: translateY(12px);
+      transition: opacity 0.4s ease, transform 0.4s ease, background 0.2s, color 0.2s;
+    }
+    .skill-pill.vis { opacity: 1; transform: translateY(0); }
+
+    /* ── GOLDEN DIVIDER ── */
+    .divider-gold {
+      height: 2px;
+      background: linear-gradient(to right, transparent 0%, #b8922a 30%, #e8c97a 70%, #c9a84c 100%);
+      width: 100%;
+    }
+    .divider-gold-center {
+      height: 2px;
+      background: linear-gradient(to right, transparent 0%, #c9a84c 25%, #f0d878 50%, #c9a84c 75%, transparent 100%);
+      width: 100%;
+    }
+
+    /* ── JAK PROBÍHÁ SPOLUPRÁCE ── */
+    .how-section {
+      padding: 10rem 0 12rem;
+      background: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .how-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(180deg, transparent 0%, rgba(45,106,79,0.15) 10%, rgba(45,106,79,0.15) 90%, transparent 100%);
+      z-index: 0;
+    }
+    .how-header {
+      text-align: center;
+      margin-bottom: 8rem;
+      position: relative;
+      z-index: 1;
+    }
+    .how-header h2 {
+      color: var(--text);
+      font-size: 4rem;
+      margin-bottom: 2rem;
+    }
+    .how-header p {
+      color: #777;
+      font-size: 1.5rem;
+      line-height: 2.4rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .how-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Jednotlivý krok */
+    .how-step {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      padding: 5rem 0;
+      position: relative;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .how-step.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Sudé kroky — obrázek vlevo, text vpravo */
+    .how-step:nth-child(even) .how-step-content { order: 2; }
+    .how-step:nth-child(even) .how-step-img-wrap { order: 1; }
+
+    /* Timeline dot */
+    .how-step::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      background: var(--green-light);
+      border-radius: 50%;
+      border: 3px solid #fff;
+      z-index: 2;
+      transition: box-shadow 0.4s ease;
+    }
+    .how-step.is-visible::before {
+      box-shadow: 0 0 20px rgba(82,183,136,0.5), 0 0 40px rgba(82,183,136,0.2);
+    }
+
+    /* Číslo kroku */
+    .how-step-num {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 8rem;
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(45,106,79,0.07);
+      position: absolute;
+      transition: color 0.6s ease;
+      top: 2rem;
+      letter-spacing: -0.04em;
+      pointer-events: none;
+    }
+    .how-step:nth-child(odd) .how-step-num { right: 52%; }
+    .how-step:nth-child(even) .how-step-num { left: 52%; }
+    .how-step.is-active .how-step-num {
+      color: rgba(82,183,136,0.3);
+    }
+
+    /* Obsah */
+    .how-step-content {
+      position: relative;
+    }
+    .how-step-label {
+      display: inline-block;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #2d6a4f; /* tmavsi zelena kvuli kontrastu na bilem pozadi (WCAG AA) */
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.2rem;
+    }
+    .how-step-title {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+    .how-step p {
+      font-size: 1.4rem;
+      line-height: 2.6rem;
+      color: #555;
+    }
+
+    /* Obrázek */
+    .how-step-img-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .how-step-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      border: 1px solid rgba(82,183,136,0.15);
+      pointer-events: none;
+    }
+    .how-step-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      object-position: left center;
+      display: block;
+      border-radius: 16px;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .how-step-img-wrap:hover .how-step-img {
+      transform: scale(1.03);
+    }
+    .how-step-img-glow {
+      position: absolute;
+      inset: -1px;
+      border-radius: 16px;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.12), 0 0 60px rgba(82,183,136,0.06);
+      pointer-events: none;
+    }
+
+    /* ── PRICING ── */
+    .pricing-section {
+      background: #0d1117;
+      padding: 8rem 0;
+    }
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    .pricing-header h2 {
+      color: white;
+      font-size: 4.5rem;
+      font-weight: 800;
+      letter-spacing: 0.2rem;
+    }
+    .pricing-header p {
+      color: rgba(255,255,255,0.55);
+      font-size: 1.5rem;
+      margin-top: 1rem;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } }
+    .pricing-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 3rem 2.4rem;
+      transition: all 0.3s;
+    }
+    .pricing-card:hover {
+      border-color: var(--green-dark);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(82,183,136,0.1);
+    }
+    .pricing-card-title {
+      color: white;
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .pricing-card-price {
+      color: var(--green-light);
+      font-size: 2.2rem;
+      font-weight: 800;
+      font-family: 'Roboto Mono', monospace;
+      margin-bottom: 2rem;
+    }
+    .pricing-card-price span {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.4);
+    }
+    .pricing-card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .pricing-card ul li {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.3rem;
+      padding: 0.5rem 0;
+      padding-left: 1.6rem;
+      position: relative;
+    }
+    .pricing-card ul li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--green-dark);
+      font-weight: 700;
+    }
+    .pricing-card-cta {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      border: 1px solid var(--green-dark);
+      color: var(--green-dark);
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .pricing-card-cta:hover {
+      background: var(--green-dark);
+      color: white;
+    }
+
+    .cfg-link {
+      color: var(--green-dark);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(82,183,136,0.4);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .cfg-link:hover {
+      border-bottom-color: var(--green-dark);
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 9999;
+      cursor: zoom-out;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
+      border-radius: 8px;
+      box-shadow: 0 0 60px rgba(0,0,0,0.5);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .how-section { padding: 6rem 0 8rem; }
+      .how-section::before { left: 2rem; }
+      .how-header { margin-bottom: 5rem; }
+      .how-header h2 { font-size: 3rem; }
+      .how-step {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 3rem 0 3rem 4rem;
+      }
+      .how-step::before {
+        left: 2rem;
+        top: 4rem;
+        transform: translate(-50%, 0);
+      }
+      .how-step:nth-child(even) .how-step-content { order: 1; }
+      .how-step:nth-child(even) .how-step-img-wrap { order: 2; }
+      .how-step-num {
+        font-size: 5rem;
+        position: relative;
+        top: auto; right: auto; left: auto;
+        margin-bottom: 0.5rem;
+      }
+      .how-step:nth-child(odd) .how-step-num,
+      .how-step:nth-child(even) .how-step-num { right: auto; left: auto; }
+      .how-step-title { font-size: 2rem; }
+    }
+    @media (max-width: 560px) {
+      .how-step { padding-left: 3rem; }
+      .how-section::before { left: 1.5rem; }
+      .how-step::before { left: 1.5rem; }
+    }
+
+    /* ── NAV ACTIVE ── */
+    .nav-d a.nav-active { color: var(--green-light) !important; }
+
+    /* ── LANG TOGGLE ── */
+    .lang-toggle {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.9);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 1.1rem; font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.8rem;
+      cursor: pointer; transition: all 0.3s;
+      text-transform: uppercase;
+      margin-left: 2rem; border-radius: 3px;
+    }
+    .navbar.scrolled .lang-toggle { color: var(--text); border-color: var(--text); }
+    .lang-toggle:hover { background: var(--green-dark); color: #fff; border-color: var(--green-dark); }
+    .nav-mm .lang-toggle { margin: auto 0 0 0; border-color: var(--text); color: var(--text); }
+  
+    /* ── VIZ CHAIN (projekt vizualizace) ── */
+    .proj-right.viz-right { margin-bottom: 0 !important; padding: 2rem 0 2rem 5rem; }
+    @media (max-width: 900px) { .proj-right.viz-right { padding-left: 0; } }
+    .viz-chain { display: flex; flex-direction: column; gap: 18px; max-width: 560px; margin: 0 auto; }
+    .viz-group { display: flex; flex-direction: column; min-width: 0; }
+    .viz-label { font-family: 'Roboto Mono', monospace; font-size: .78rem; letter-spacing: .18em; text-transform: uppercase; color: var(--green-light); margin-bottom: .8rem; }
+    .viz-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .viz-thumbs img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 6px; cursor: pointer; transition: transform .25s; animation: vizGlowSrc 6s linear infinite; }
+    @keyframes vizGlowSrc {
+      0%   { box-shadow: 0 0 12px 2px rgba(82,183,136,.3), 0 0 0 1px rgba(82,183,136,.38); }
+      25%  { box-shadow: 0 0 12px 2px rgba(82,183,136,.3), 0 0 0 1px rgba(82,183,136,.38); }
+      35%  { box-shadow: 0 0 0 0 rgba(82,183,136,0), 0 0 0 0 rgba(82,183,136,0); }
+      88%  { box-shadow: 0 0 0 0 rgba(82,183,136,0), 0 0 0 0 rgba(82,183,136,0); }
+      100% { box-shadow: 0 0 12px 2px rgba(82,183,136,.3), 0 0 0 1px rgba(82,183,136,.38); }
+    }
+    .viz-thumbs img:hover { transform: scale(1.05); }
+    .viz-thumbs .viz-wide { grid-column: 1/-1; aspect-ratio: 16/6.5; }
+    .viz-flow { position: relative; height: 72px; display: flex; justify-content: center; }
+    .viz-flow::before {
+      content: ""; width: 2px; height: 100%; border-radius: 2px;
+      background: linear-gradient(180deg, transparent, var(--green-light) 25%, var(--green-light) 75%, transparent);
+      opacity: .35;
+    }
+    .viz-flow::after {
+      content: ""; position: absolute; left: 50%; top: 0; margin-left: -5px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--green-light);
+      filter: drop-shadow(0 0 7px var(--green-light));
+      animation: vizDrop 6s cubic-bezier(.45,.05,.55,.95) infinite;
+    }
+    @keyframes vizDrop {
+      0%  { top: -6px; opacity: 0; }
+      8%  { top: -6px; opacity: 1; }
+      58% { top: calc(100% - 4px); opacity: 1; }
+      64% { top: calc(100% - 4px); opacity: 0; }
+      100% { top: calc(100% - 4px); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { .viz-flow::after { animation: none; top: 50%; } }
+    .viz-results-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .viz-results-imgs img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 8px; cursor: pointer;
+      transition: transform .25s;
+      /* glow pulsne presne ve chvili, kdy tecka dojede dolu — stejna delka cyklu jako vizDrop (6s) */
+      animation: vizGlow 6s linear infinite;
+    }
+    .viz-results-imgs img:hover { transform: scale(1.03); }
+    @keyframes vizGlow {
+      0%   { box-shadow: 0 12px 34px rgba(0,0,0,.35), 0 0 0 0 rgba(82,183,136,0), 0 0 0 0 rgba(82,183,136,0); }
+      52%  { box-shadow: 0 12px 34px rgba(0,0,0,.35), 0 0 0 0 rgba(82,183,136,0), 0 0 0 0 rgba(82,183,136,0); }
+      60%  { box-shadow: 0 12px 34px rgba(0,0,0,.35), 0 0 14px 2px rgba(82,183,136,.32), 0 0 0 1px rgba(82,183,136,.4); }
+      85%  { box-shadow: 0 12px 34px rgba(0,0,0,.35), 0 0 14px 2px rgba(82,183,136,.32), 0 0 0 1px rgba(82,183,136,.4); }
+      96%  { box-shadow: 0 12px 34px rgba(0,0,0,.35), 0 0 0 0 rgba(82,183,136,0), 0 0 0 0 rgba(82,183,136,0); }
+      100% { box-shadow: 0 12px 34px rgba(0,0,0,.35), 0 0 0 0 rgba(82,183,136,0), 0 0 0 0 rgba(82,183,136,0); }
+    }
+    @media (prefers-reduced-motion: reduce) { .viz-results-imgs img, .viz-thumbs img { animation: none; } .viz-results-imgs img { box-shadow: 0 12px 34px rgba(0,0,0,.35); } }
+</style>
+</head>
+<body>
+
+<div id="progressBar"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="#" class="nav-logo">Milan <span>Jun</span></a>
+    <div class="nav-d">
+      <a href="#o-mne">O mně</a>
+      <a href="#projekty">Projekty</a>
+      <a href="#cenik">Ceník</a>
+      <a href="#kontakt" class="nav-cta">Kontakt</a>
+      <button class="lang-toggle" onclick="toggleLang()">EN</button>
+    </div>
+    <div class="nav-m" id="navM">
+      <button id="menuBtn" aria-label="Otevřít menu">
+        <span class="first"></span>
+        <span class="second"></span>
+        <span class="third"></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mm" id="navMM">
+    <a href="#o-mne" class="has-divider" onclick="closeMobileMenu()">O mně</a>
+    <a href="#projekty" onclick="closeMobileMenu()">Projekty</a>
+    <a href="#cenik" onclick="closeMobileMenu()">Ceník</a>
+    <a href="#kontakt" onclick="closeMobileMenu()">Kontakt</a>
+    <button class="lang-toggle" onclick="toggleLang()">EN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <img class="hero-bg" src="Milan/landing_photo_official2.webp" alt="" fetchpriority="high" decoding="async">
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-tag" data-i18n="hero.tag">Dobrý den, jmenuji se</span>
+      <h1 class="hero-name">Milan Jun</h1>
+      <p class="hero-sub" data-i18n-html="hero.sub">Jsem freelance webdesigner — tvořím weby pro firmy a živnostníky,<br>kteří chtějí být vidět online.</p>
+      <a class="hero-btn" href="#kontakt" data-i18n="hero.cta">Napište mi</a>
+      <img class="hero-img-mobile" src="Milan/landing_photo_official2.webp" alt="Milan Jun" decoding="async">
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="o-mne">
+  <div class="container reveal">
+    <h2 data-i18n="about.title">O mně</h2>
+    <div class="body" style="margin-top: 2rem;">
+      <p data-i18n="about.p1">Jmenuji se Milan Jun a tvořím webové stránky pro malé firmy a živnostníky. Zaměřuji se na moderní, rychlé a přehledné weby, které skutečně přináší nové zákazníky – ne jen hezký vzhled.</p>
+      <p data-i18n="about.p2">Vycházím z přesvědčení, že dobrý web nemusí být drahý ani složitý. Musí být funkční, estetický a šitý na míru konkrétní firmě. Každý projekt beru jako partnerství – záleží mi na výsledku stejně jako vám.</p>
+      <p data-i18n="about.p3">Pokud chcete někoho, kdo s vámi bude komunikovat přímo a odvede poctivou práci - ozvěte se mi s Vaší představou. První návrh pro vás vytvořím zcela zdarma.</p>
+    </div>
+    <div class="skills" style="margin-top: 3rem;">
+      <span class="skill-pill" data-i18n="about.s1">HTML / CSS / JS</span>
+      <span class="skill-pill" data-i18n="about.s2">Responzivní design</span>
+      <span class="skill-pill" data-i18n="about.s3">UI / UX</span>
+      <span class="skill-pill" data-i18n="about.s4">Bootstrap 5</span>
+      <span class="skill-pill" data-i18n="about.s5">WordPress</span>
+      <span class="skill-pill" data-i18n="about.s6">SEO základy</span>
+      <span class="skill-pill" data-i18n="about.s7">Animace</span>
+      <span class="skill-pill" data-i18n="about.s8">Formuláře & API</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider-gold"></div>
+
+<!-- PROJECT 2: Klempirstvi Chmelar -->
+<div id="projekty" class="project-block pb-1">
+  <div class="container">
+    <div class="proj-left reveal-left">
+      <div class="proj-title"><h3>Klempířství Chmelař</h3></div>
+      <div class="proj-desc">
+        <p data-i18n="proj5.desc">Prezentační web pro řemeslnou klempířskou firmu z Vysočiny. Čistý design důvěryhodný pro starší klientelu, sekce služeb, galerie referencí s lightboxem a nezávazná poptávka. Důraz na poctivost a regionální dosah.</p>
+      </div>
+      <div class="proj-tags">
+        <p data-i18n="proj.techLabel">Technologie</p>
+        <ul>
+          <li>HTML / CSS / JS</li>
+          <li data-i18n="proj5.tech2">Responzivní design</li>
+          <li data-i18n="proj5.tech3">Galerie + lightbox</li>
+          <li data-i18n="proj5.tech4">Poptávkový formulář</li>
+          <li data-i18n="proj5.tech5">SEO optimalizace</li>
+        </ul>
+      </div>
+      <div class="proj-cta">
+        <a href="https://klempirstvi-chmelar.vercel.app" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a>
+      </div>
+    </div>
+    <div class="proj-right reveal-right">
+      <div class="proj-img-wrap">
+        <img class="proj-img"
+          src="obrazky/klempirstvi1.jpg"
+          alt="Klempířství Chmelař – hlavní stránka" loading="lazy" decoding="async">
+        <img class="proj-img-secondary"
+          src="obrazky/klempirstvi2.jpg"
+          alt="Klempířství Chmelař – služby" loading="lazy" decoding="async">
+        <img class="proj-img-tertiary"
+          src="obrazky/klempirstvi3.png"
+          alt="Klempířství Chmelař – reference" loading="lazy" decoding="async">
+        <img class="proj-click-hint" src="obrazky/click.png" alt="Klikněte pro další obrázky" loading="lazy" decoding="async">
+        <div class="proj-img-overlay"><a href="https://klempirstvi-chmelar.vercel.app" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT 3: InfraShape -->
+<div class="project-block pb-2">
+  <div class="container">
+    <div class="proj-left reveal-left">
+      <div class="proj-title"><h3>InfraShape</h3></div>
+      <div class="proj-desc">
+        <p data-i18n="proj4.desc">Prezentační web pro studio infračervených saun v Brně. Čistý moderní design s rezervací, sekcí přínosů, galerií prostorů a stránkou kontraindikací. Plně dvojjazyčný (CZ/EN).</p>
+      </div>
+      <div class="proj-tags">
+        <p data-i18n="proj.techLabel">Technologie</p>
+        <ul>
+          <li>HTML / CSS / JS</li>
+          <li data-i18n="proj4.tech2">Responzivní design</li>
+          <li data-i18n="proj4.tech3">Rezervační formulář</li>
+          <li data-i18n="proj4.tech4">CZ + EN verze</li>
+          <li data-i18n="proj4.tech5">SEO optimalizace</li>
+        </ul>
+      </div>
+      <div class="proj-cta">
+        <a href="https://infrashape.vercel.app/" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a>
+      </div>
+    </div>
+    <div class="proj-right reveal-right">
+      <div class="proj-img-wrap">
+        <img class="proj-img"
+          src="obrazky/infrashape1.jpg"
+          alt="InfraShape – studio infračervených saun" loading="lazy" decoding="async">
+        <img class="proj-img-secondary"
+          src="obrazky/infrashape2.jpg"
+          alt="InfraShape – další sekce" loading="lazy" decoding="async">
+        <img class="proj-img-tertiary"
+          src="obrazky/infrashape3.png"
+          alt="InfraShape – detail" loading="lazy" decoding="async">
+        <img class="proj-click-hint" src="obrazky/click.png" alt="Klikněte pro další obrázky" loading="lazy" decoding="async">
+        <div class="proj-img-overlay"><a href="https://infrashape.vercel.app/" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT 4: Trener -->
+<div class="project-block pb-3">
+  <div class="container">
+    <div class="proj-left reveal-left">
+      <div class="proj-title"><h3 data-i18n="proj2.title">Osobní trenér</h3></div>
+      <div class="proj-desc">
+        <p data-i18n="proj2.desc">Profesionální web pro osobního trenéra s funkčním rezervačním systémem (Formspree), ceníkem služeb a scroll animacemi. Lokální fotografie klienta.</p>
+      </div>
+      <div class="proj-tags">
+        <p data-i18n="proj.techLabel">Technologie</p>
+        <ul>
+          <li>HTML / CSS / JS</li>
+          <li>Formspree API</li>
+          <li>IntersectionObserver</li>
+          <li data-i18n="proj2.tech4">Pricing sekce</li>
+          <li data-i18n="proj2.tech5">Responzivní layout</li>
+        </ul>
+      </div>
+      <div class="proj-cta">
+        <a href="trener.html" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a>
+      </div>
+    </div>
+    <div class="proj-right reveal-right">
+      <div class="proj-img-wrap">
+        <img class="proj-img"
+          src="obrazky/trener.jpg"
+          alt="Osobní trenér web" loading="lazy" decoding="async">
+        <img class="proj-img-secondary"
+          src="obrazky/trener2.jpg"
+          alt="Osobní trenér – detail" loading="lazy" decoding="async">
+        <img class="proj-click-hint" src="obrazky/click.png" alt="Klikněte pro další obrázky" loading="lazy" decoding="async">
+        <img class="proj-img-tertiary"
+          src="obrazky/trener3.png"
+          alt="Osobní trenér – další sekce" loading="lazy" decoding="async">
+        <div class="proj-img-overlay"><a href="trener.html" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT 1: Bellavita -->
+<div class="project-block pb-1">
+  <h2 class="proj-section-title" data-i18n="projects.title">Projekty</h2>
+  <div class="container">
+    <div class="proj-left reveal-left">
+      <div class="proj-title"><h3>Bellavita</h3></div>
+      <div class="proj-desc">
+        <p data-i18n="proj1.desc">Prezentační web pro italskou restauraci. Elegantní design s rezervačním systémem, full-width galerií a tabbovaným menu. Luxusní animace a paralaxní efekty.</p>
+      </div>
+      <div class="proj-tags">
+        <p data-i18n="proj.techLabel">Technologie</p>
+        <ul>
+          <li>HTML / CSS / JS</li>
+          <li>Bootstrap 5</li>
+          <li data-i18n="proj1.tech3">Scroll animace</li>
+          <li data-i18n="proj1.tech4">Rezervační formulář</li>
+          <li data-i18n="proj1.tech5">Galerie slider</li>
+        </ul>
+      </div>
+      <div class="proj-cta">
+        <a href="bellavita.html" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a>
+      </div>
+    </div>
+    <div class="proj-right reveal-right">
+      <div class="proj-img-wrap">
+        <img class="proj-img"
+          src="obrazky/bellavita.jpg"
+          alt="Bellavita – italská restaurace" loading="lazy" decoding="async">
+        <img class="proj-img-secondary"
+          src="obrazky/bellavita2.jpg"
+          alt="Bellavita – menu sekce" loading="lazy" decoding="async">
+        <img class="proj-img-tertiary"
+          src="obrazky/bellavita3.jpg"
+          alt="Bellavita – další sekce" loading="lazy" decoding="async">
+        <img class="proj-click-hint" src="obrazky/click.png" alt="Klikněte pro další obrázky" loading="lazy" decoding="async">
+        <div class="proj-img-overlay"><a href="bellavita.html" target="_blank" data-i18n="proj.viewBtn">Zobrazit projekt</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT 5: LeadCRM -->
+<div class="project-block pb-2">
+  <div class="container">
+    <div class="proj-left reveal-left">
+      <div class="proj-title"><h3 data-i18n="proj3.title">LeadCRM</h3></div>
+      <div class="proj-desc">
+        <p data-i18n="proj3.desc">LeadCRM je interní nástroj pro vyhledávání a oslovování klientů. Automaticky prohledává Google Maps, analyzuje kvalitu webů firem a umožňuje hromadné oslovení přes email i WhatsApp. Kanban board s drag & drop, klávesové zkratky, filtrování a export dat.</p>
+      </div>
+      <div class="proj-tags">
+        <p data-i18n="proj.techLabel">Technologie</p>
+        <ul>
+          <li>Python / FastAPI</li>
+          <li>SQLite + async</li>
+          <li>Google Maps API</li>
+          <li data-i18n="proj3.tech4">Analýza webů (BeautifulSoup)</li>
+          <li data-i18n="proj3.tech5">Kanban board + klávesové zkratky</li>
+        </ul>
+      </div>
+    </div>
+    <div class="proj-right reveal-right">
+      <div class="proj-img-wrap" style="cursor:pointer" onclick="openLightbox('obrazky/leadcrm.png')">
+        <img class="proj-img"
+          src="obrazky/leadcrm.png"
+          alt="LeadCRM – kanban board s kontakty" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECT 6: Vizualizace kavarny -->
+<div class="project-block pb-3">
+  <div class="container">
+    <div class="proj-left reveal-left">
+      <div class="proj-title"><h3 data-i18n="proj6.title">Vizualizace — kavárna Náplavka u Bečvy</h3></div>
+      <div class="proj-desc">
+        <p data-i18n="proj6.desc">Zákaznice plánovala pojízdnou kavárnu a potřebovala ukázat, jak bude vypadat na skutečném místě. K dispozici byla jen fotografie lokace a referenční fotky vybavení — stánek, květináče, lehátka a stolky. Výsledkem jsou fotorealistické vizualizace: kavárna usazená do reálného prostoru včetně posezení, zeleně a firemního brandingu na míru.</p>
+      </div>
+      <div class="proj-tags">
+        <p data-i18n="proj6.techLabel">Grafika &amp; vizualizace</p>
+        <ul>
+          <li data-i18n="proj6.tech1">Fotorealistická vizualizace</li>
+          <li data-i18n="proj6.tech2">Kompozice do reálné fotografie</li>
+          <li data-i18n="proj6.tech3">Práce s podklady klienta</li>
+          <li data-i18n="proj6.tech5">Branding v obraze (logo, menu)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="proj-right viz-right">
+      <div class="viz-chain">
+        <div class="viz-group">
+          <span class="viz-label" data-i18n="proj6.inputs">Podklady od klientky</span>
+          <div class="viz-thumbs">
+            <img class="viz-wide" src="obrazky/vizualizace-lokace-puvodni.jpg" alt="Původní fotografie prázdné lokace" loading="lazy" onclick="openLightbox(this.src)">
+            <img src="obrazky/viz-podklad-stanek.jpg" alt="Referenční fotka stánku" loading="lazy" onclick="openLightbox(this.src)">
+            <img src="obrazky/viz-podklad-kvetinac.jpg" alt="Referenční fotka květináče" loading="lazy" onclick="openLightbox(this.src)">
+            <img src="obrazky/viz-podklad-lehatko.jpg" alt="Referenční fotka lehátka" loading="lazy" onclick="openLightbox(this.src)">
+            <img src="obrazky/viz-podklad-stolek.jpg" alt="Referenční fotka stolku se židlemi" loading="lazy" onclick="openLightbox(this.src)">
+          </div>
+        </div>
+        <div class="viz-flow" aria-hidden="true"></div>
+        <div class="viz-group">
+          <span class="viz-label" data-i18n="proj6.result">Výsledná vizualizace</span>
+          <div class="viz-results-imgs">
+            <img src="obrazky/vizualizace-kavarna.jpg" alt="Vizualizace pojízdné kavárny usazené na náměstí" loading="lazy" onclick="openLightbox(this.src)">
+            <img src="obrazky/vizualizace-kavarna-detail.jpg" alt="Detail vizualizace — stánek s menu a logem" loading="lazy" onclick="openLightbox(this.src)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider-gold"></div>
+
+<!-- JAK PROBÍHÁ SPOLUPRÁCE -->
+<div class="how-section">
+  <div class="container" style="flex-direction: column;">
+    <div class="how-header">
+      <h2 data-i18n="how.title">Jak probíhá spolupráce</h2>
+      <p data-i18n="how.subtitle">Od prvního kontaktu po spuštění webu.</p>
+    </div>
+    <div class="how-steps">
+
+      <div class="how-step">
+        <div class="how-step-num">01</div>
+        <div class="how-step-content">
+          <span class="how-step-label" data-i18n="how.s1label">Krok 1</span>
+          <h3 class="how-step-title" data-i18n="how.s1title">Konfigurátor</h3>
+          <p data-i18n-html="how.s1desc">Vyplňte <a href="konfigurator.html" target="_blank" class="cfg-link">online konfigurátor</a>, ve kterém popíšete svou firmu, své zákazníky a to, čeho chcete webem dosáhnout. Můžete si rovnou zvolit barevnou paletu, písmo a nahrát firemní fotky nebo logo.</p>
+        </div>
+        <div class="how-step-img-wrap">
+          <img class="how-step-img" src="obrazky/konfigurator.png" alt="Online konfigurátor webových stránek" loading="lazy" decoding="async">
+          <div class="how-step-img-glow"></div>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step-num">02</div>
+        <div class="how-step-content">
+          <span class="how-step-label" data-i18n="how.s2label">Krok 2</span>
+          <h3 class="how-step-title" data-i18n="how.s2title">Návrh zdarma</h3>
+          <p data-i18n="how.s2desc">Z informací z konfigurátoru navrhnu vše, co dělá web opravdu funkčním — ke komu má mluvit, co má návštěvníkovi říct jako první, jak ho provést až ke kontaktu, a jak to celé bude vypadat. Připravím strukturu stránek, vizuální styl a rozvržení obsahu. Návrh dostanete jako živý odkaz — můžete si ho proklikat na mobilu i počítači, úplně zdarma a bez závazku.</p>
+        </div>
+        <div class="how-step-img-wrap">
+          <img class="how-step-img" src="obrazky/trener_jak.jpg" alt="Ukázka návrhu webových stránek" loading="lazy" decoding="async">
+          <div class="how-step-img-glow"></div>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step-num">03</div>
+        <div class="how-step-content">
+          <span class="how-step-label" data-i18n="how.s3label">Krok 3</span>
+          <h3 class="how-step-title" data-i18n="how.s3title">Úpravy a doladění</h3>
+          <p data-i18n="how.s3desc">Společně doladíme detaily, obsah, design i funkčnost tak, aby výsledek přesně odpovídal vašim očekáváním.</p>
+        </div>
+        <div class="how-step-img-wrap">
+          <img class="how-step-img" src="obrazky/upravy.jpg" alt="Konzultace a úpravy návrhu" loading="lazy" decoding="async">
+          <div class="how-step-img-glow"></div>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step-num">04</div>
+        <div class="how-step-content">
+          <span class="how-step-label" data-i18n="how.s4label">Krok 4</span>
+          <h3 class="how-step-title" data-i18n="how.s4title">Spuštění webu</h3>
+          <p data-i18n="how.s4desc">Po finálním schválení web nasadím, otestuji na všech zařízeních a připravím k ostrému spuštění.</p>
+        </div>
+        <div class="how-step-img-wrap">
+          <img class="how-step-img" src="obrazky/spusten.jpg" alt="Finální spuštění webových stránek" loading="lazy" decoding="async">
+          <div class="how-step-img-glow"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:3rem;">
+        <a href="konfigurator.html" data-i18n="how.cfgBtn2" style="display:inline-block;padding:1.2rem 3rem;background:var(--green-light);color:var(--green-dark);font-family:'Roboto Mono',monospace;font-size:1.3rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;border-radius:4px;text-decoration:none;transition:all 0.3s;">Vyplnit konfigurátor</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CENÍK -->
+<div id="cenik" class="pricing-section">
+  <div class="pricing-header reveal">
+    <h2 data-i18n="pricing.title">Ceník</h2>
+
+  </div>
+  <div class="pricing-grid">
+
+    <div class="pricing-card reveal">
+      <div class="pricing-card-title" data-i18n="pricing.t2">Základní web</div>
+      <div class="pricing-card-price">5 990 Kč</div>
+      <ul>
+        <li data-i18n="pricing.z2">Responzivní design</li>
+        <li data-i18n="pricing.z3">Kontaktní formulář</li>
+        <li data-i18n="pricing.z4">SEO základ</li>
+        <li data-i18n="pricing.z5">Google Analytics</li>
+      </ul>
+      <a href="konfigurator.html" class="pricing-card-cta" data-i18n="pricing.cta">Mám zájem</a>
+    </div>
+
+    <div class="pricing-card reveal">
+      <div class="pricing-card-title" data-i18n="pricing.t3">Pokročilý web</div>
+      <div class="pricing-card-price">8 990 Kč</div>
+      <ul>
+        <li data-i18n="pricing.p1">Vícestránkový web (až 10 stránek)</li>
+        <li data-i18n="pricing.p2">Vlastní grafický návrh</li>
+        <li data-i18n="pricing.p3">Animace a interaktivní prvky</li>
+        <li data-i18n="pricing.p4">Rezervační systém / galerie</li>
+        <li data-i18n="pricing.p5">Správa obsahu (CMS)</li>
+      </ul>
+      <a href="konfigurator.html" class="pricing-card-cta" data-i18n="pricing.cta">Mám zájem</a>
+    </div>
+
+    <div class="pricing-card reveal">
+      <div class="pricing-card-title" data-i18n="pricing.t4">Webová aplikace</div>
+      <div class="pricing-card-price" data-i18n="pricing.individual">Individuální</div>
+      <ul>
+        <li data-i18n="pricing.a1">Nástroj na míru vašim procesům</li>
+        <li data-i18n="pricing.a2">Backend, databáze, API</li>
+        <li data-i18n="pricing.a3">Automatizace a reporty</li>
+        <li data-i18n="pricing.a4">Průběžné konzultace</li>
+        <li data-i18n="pricing.a5">Dlouhodobá podpora</li>
+      </ul>
+      <a href="mailto:jun.milan@outlook.com" class="pricing-card-cta" data-i18n="pricing.ctaContact">Kontaktujte mě</a>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider-gold-center"></div>
+
+<!-- FOOTER / CONTACT -->
+<div id="kontakt">
+  <div class="container">
+    <div class="footer-left reveal">
+      <h4 data-i18n-html="contact.title">Pojďme vytvořit<br>váš web.</h4>
+      <span class="footer-btn-wrap"><a class="footer-btn" href="konfigurator.html" data-i18n="contact.cta">Spustit konfigurátor</a></span>
+      <p class="footer-alt-contact" data-i18n-html="contact.alt">Máte otázku? Napište mi <a href="mailto:jun.milan@outlook.com">email</a></p>
+    </div>
+    <div class="footer-right reveal">
+      <ul>
+        <li><a href="mailto:jun.milan@outlook.com">Email</a></li>
+      </ul>
+    </div>
+    <div class="footer-copy">
+      <span data-i18n-html="footer.copy">© 2025 − <a href="#">Milan Jun</a> − Freelance Webdesigner</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── NAVBAR SCROLL
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ── MOBILE MENU
+const menuBtn = document.getElementById('menuBtn');
+const navM    = document.getElementById('navM');
+const navMM   = document.getElementById('navMM');
+let menuOpen  = false;
+
+menuBtn.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  navM.classList.toggle('open', menuOpen);
+  navMM.classList.toggle('open', menuOpen);
+  document.body.style.overflow = menuOpen ? 'hidden' : '';
+});
+
+function closeMobileMenu() {
+  menuOpen = false;
+  navM.classList.remove('open');
+  navMM.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+    closeMobileMenu();
+  });
+});
+
+// ── SCROLL PROGRESS BAR
+const progressBar = document.getElementById('progressBar');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
+
+// ── HERO PARALLAX + SHRINK
+const heroBg      = document.querySelector('.hero-bg');
+const heroContent = document.querySelector('.hero-content');
+function updateParallax() {
+  const s = window.scrollY;
+  const scale = Math.max(0.82, 1 - s * 0.00026);
+  if (heroBg)      heroBg.style.transform = 'translateY(' + (s * 0.18) + 'px) scale(' + scale + ')';
+  if (heroContent) {
+    heroContent.style.opacity   = Math.max(0, 1 - s * 0.0022);
+    heroContent.style.transform = 'scale(' + Math.max(0.88, 1 - s * 0.00018) + ')';
+  }
+}
+window.addEventListener('scroll', updateParallax, { passive: true });
+
+// ── SCROLL SPY (nav links)
+const spySections = ['o-mne','projekty','cenik','kontakt'].map(id => document.getElementById(id)).filter(Boolean);
+const navLinks    = document.querySelectorAll('.nav-d a[href^="#"]');
+
+function updateScrollSpy() {
+  let activeId = '';
+  spySections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 160) activeId = sec.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('nav-active', a.getAttribute('href') === '#' + activeId);
+  });
+}
+window.addEventListener('scroll', updateScrollSpy, { passive: true });
+
+// ── SCROLL REVEAL (opakuje se při každém průchodu)
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    } else {
+      e.target.classList.remove('visible');
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -5% 0px' });
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
+
+// ── HOW STEPS SCROLL REVEAL + ACTIVE STATE
+const howObserver = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('is-visible'), i * 100);
+    }
+  });
+}, { threshold: 0.15 });
+const allHowSteps = document.querySelectorAll('.how-step');
+document.querySelectorAll('.how-step').forEach(el => howObserver.observe(el));
+
+// Highlight step number closest to cursor
+document.addEventListener('mousemove', e => {
+  let closest = null;
+  let minDist = Infinity;
+  allHowSteps.forEach(step => {
+    const rect = step.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+    if (dist < minDist) { minDist = dist; closest = step; }
+  });
+  allHowSteps.forEach(s => s.classList.remove('is-active'));
+  if (closest && minDist < 600) closest.classList.add('is-active');
+});
+
+// ── CLICK HINT (reappear on scroll, hide on hover)
+const hintObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    const hint = e.target.querySelector('.proj-click-hint');
+    if (!hint) return;
+    if (e.isIntersecting) {
+      hint.classList.remove('active', 'hidden');
+      void hint.offsetWidth;
+      hint.classList.add('active');
+    } else {
+      hint.classList.remove('active', 'hidden');
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.proj-img-wrap').forEach(wrap => {
+  hintObserver.observe(wrap);
+  wrap.querySelectorAll('.proj-img-secondary, .proj-img-tertiary').forEach(img => {
+    img.addEventListener('mouseenter', () => {
+      const hint = wrap.querySelector('.proj-click-hint');
+      if (hint && hint.classList.contains('active')) {
+        hint.classList.remove('active');
+        hint.classList.add('hidden');
+      }
+    });
+  });
+});
+
+// ── SKILL PILLS STAGGER
+const pillObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.skill-pill').forEach((p, i) => {
+        setTimeout(() => p.classList.add('vis'), i * 80);
+      });
+      pillObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+const skillsContainer = document.querySelector('.skills');
+if (skillsContainer) pillObserver.observe(skillsContainer);
+
+// ── BUTTON SHINE (sleduje kurzor kdekoliv na stránce)
+const shineBtn = document.querySelector('.footer-btn');
+if (shineBtn) {
+  document.addEventListener('mousemove', e => {
+    const rect = shineBtn.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%';
+    const y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%';
+    shineBtn.style.setProperty('--mx', x);
+    shineBtn.style.setProperty('--my', y);
+  });
+}
+
+// ── I18N LANGUAGE SWITCHER ──
+const i18n = {
+  en: {
+    'nav.about': 'About',
+    'nav.projects': 'Projects',
+    'nav.contact': 'Contact',
+    'hero.tag': 'Hello, my name is',
+    'hero.sub': 'I\'m a freelance web designer — I create websites for businesses and entrepreneurs<br>who want to be visible online.',
+    'hero.cta': 'Get in touch',
+    'about.title': 'About me',
+    'about.p1': 'My name is Milan Jun and I create websites for small businesses and entrepreneurs. I focus on modern, fast, and clear websites that actually bring new customers — not just a pretty look.',
+    'about.p2': 'I believe a good website doesn\'t have to be expensive or complicated. It needs to be functional, aesthetic, and tailored to the specific business. I treat every project as a partnership — I care about the result just as much as you do.',
+    'about.p3': 'If you\'re looking for someone who communicates directly and delivers honest work — reach out with your idea. I\'ll create the first design for you completely free of charge.',
+    'about.s1': 'HTML / CSS / JS',
+    'about.s2': 'Responsive design',
+    'about.s3': 'UI / UX',
+    'about.s4': 'Bootstrap 5',
+    'about.s5': 'WordPress',
+    'about.s6': 'SEO basics',
+    'about.s7': 'Animations',
+    'about.s8': 'Forms & API',
+    'projects.title': 'Projects',
+    'proj1.desc': 'Presentation website for an Italian restaurant. Elegant design with a reservation system, full-width gallery, and tabbed menu. Luxury animations and parallax effects.',
+    'proj.techLabel': 'Technologies',
+    'proj1.tech3': 'Scroll animations',
+    'proj1.tech4': 'Reservation form',
+    'proj1.tech5': 'Gallery slider',
+    'proj.viewBtn': 'View project',
+    'proj2.title': 'Personal trainer',
+    'proj2.desc': 'Professional website for a personal trainer with a functional booking system (Formspree), service pricing, and scroll animations. Client\'s local photography.',
+    'proj2.tech4': 'Pricing section',
+    'proj2.tech5': 'Responsive layout',
+    'proj4.desc': 'Presentation website for an infrared sauna studio in Brno. Clean modern design with booking, benefits section, gallery, and a contraindications page. Fully bilingual (CZ/EN).',
+    'proj4.tech2': 'Responsive design',
+    'proj4.tech3': 'Booking form',
+    'proj4.tech4': 'CZ + EN versions',
+    'proj4.tech5': 'SEO optimization',
+    'proj5.desc': 'Presentation website for a traditional sheet-metal craftsman company in the Vysočina region. Trustworthy design aimed at older clientele, services section, references gallery with lightbox, and an inquiry form. Focus on honesty and regional reach.',
+    'proj5.tech2': 'Responsive design',
+    'proj5.tech3': 'Gallery + lightbox',
+    'proj5.tech4': 'Inquiry form',
+    'proj5.tech5': 'SEO optimization',
+    'proj3.title': 'LeadCRM',
+    'proj3.desc': 'LeadCRM is an internal tool for finding and contacting potential clients. It automatically searches Google Maps, analyzes company website quality, and enables bulk outreach via email and WhatsApp. Kanban board with drag & drop, keyboard shortcuts, filtering, and data export.',
+    'proj3.tech4': 'Web analysis (BeautifulSoup)',
+    'proj6.title': 'Visualization — Náplavka u Bečvy café',
+    'proj6.desc': 'A client was planning a mobile café and needed to show what it would look like in the actual location. All she had was a photo of the site and reference pictures of the equipment — a stand, planters, deck chairs and tables. The result is a set of photorealistic visualizations: the café placed into the real space, including seating, greenery and custom branding.',
+    'proj6.techLabel': 'Graphics & visualization',
+    'proj6.tech1': 'Photorealistic visualization',
+    'proj6.tech2': 'Composition into a real photo',
+    'proj6.tech3': 'Working with client references',
+    'proj6.tech4': 'Zone layout design',
+    'proj6.tech5': 'In-image branding (logo, menu)',
+    'proj6.inputs': "Client's source materials",
+    'proj6.result': 'Final visualization',
+    'proj3.tech5': 'Kanban board + keyboard shortcuts',
+    'proj3.cta': 'I can build a similar application for you too. Tell me what slows you down or what you do manually over and over — I\'ll design a solution that automates it and saves you hours of work every week.',
+    'how.title': 'How we work together',
+    'how.subtitle': 'From first contact to website launch.',
+    'how.s1label': 'Step 1', 'how.s2label': 'Step 2', 'how.s3label': 'Step 3', 'how.s4label': 'Step 4',
+    'how.s1title': 'Configurator',
+    'how.s2title': 'Free proposal',
+    'how.s3title': 'Revisions & refinement',
+    'how.s4title': 'Website launch',
+    'how.s1desc': 'Fill out the <a href="konfigurator.html" target="_blank" class="cfg-link">online configurator</a> — describe your business, your customers, and what you want your website to achieve. You can also choose a color palette, font, and upload your company photos or logo.',
+    'how.s2desc': 'Based on your configurator input, I\'ll design everything that makes a website truly work — who it speaks to, what it says first, how it guides visitors to contact you, and how it all looks. I\'ll prepare the page structure, visual style, and content layout. You\'ll receive a live link to preview on both mobile and desktop — completely free, no strings attached.',
+    'how.s3desc': 'Together we\'ll fine-tune the details, content, design, and functionality so the result matches your expectations perfectly.',
+    'how.s4desc': 'After final approval, I\'ll deploy the website, test it on all devices, and prepare it for launch.',
+    'how.cfgBtn2': 'Open configurator',
+    'pricing.title': 'Pricing',
+    'pricing.t2': 'Basic website',
+    'pricing.z2': 'Responsive design',
+    'pricing.z3': 'Contact form',
+    'pricing.z4': 'SEO basics',
+    'pricing.z5': 'Google Analytics',
+    'pricing.t3': 'Advanced website',
+    'pricing.p1': 'Multi-page website (up to 10 pages)',
+    'pricing.p2': 'Custom graphic design',
+    'pricing.p3': 'Animations & interactive elements',
+    'pricing.p4': 'Booking system / gallery',
+    'pricing.p5': 'Content management (CMS)',
+    'pricing.t4': 'Web application',
+    'pricing.individual': 'Custom quote',
+    'pricing.a1': 'Tool tailored to your processes',
+    'pricing.a2': 'Backend, database, API',
+    'pricing.a3': 'Automation & reports',
+    'pricing.a4': 'Ongoing consultations',
+    'pricing.a5': 'Long-term support',
+    'pricing.cta': 'I\'m interested',
+    'pricing.ctaContact': 'Contact me',
+    'contact.title': 'Let\'s build<br>your website.',
+    'contact.cta': 'Launch configurator',
+    'contact.alt': 'Have a question? Send me an <a href="mailto:jun.milan@outlook.com">email</a>',
+    'footer.copy': '© 2025 − <a href="#">Milan Jun</a> − Freelance Web Designer'
+  }
+};
+
+const czStore = {}, czHtmlStore = {};
+document.querySelectorAll('[data-i18n]').forEach(el => {
+  czStore[el.getAttribute('data-i18n')] = el.textContent;
+});
+document.querySelectorAll('[data-i18n-html]').forEach(el => {
+  czHtmlStore[el.getAttribute('data-i18n-html')] = el.innerHTML;
+});
+
+function applyLang(lang) {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    el.textContent = lang === 'en' ? (i18n.en[k] || czStore[k]) : czStore[k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const k = el.getAttribute('data-i18n-html');
+    el.innerHTML = lang === 'en' ? (i18n.en[k] || czHtmlStore[k]) : czHtmlStore[k];
+  });
+  document.documentElement.lang = lang === 'en' ? 'en' : 'cs';
+  document.querySelectorAll('.lang-toggle').forEach(b => b.textContent = lang === 'en' ? 'CZ' : 'EN');
+}
+
+function toggleLang() {
+  const cur = localStorage.getItem('lang') || 'cs';
+  const next = cur === 'cs' ? 'en' : 'cs';
+  localStorage.setItem('lang', next);
+  applyLang(next);
+}
+
+if (localStorage.getItem('lang') === 'en') applyLang('en');
+
+// ── LIGHTBOX
+function openLightbox(src) {
+  const lb = document.getElementById('lightbox');
+  lb.querySelector('img').src = src;
+  lb.classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});
+</script>
+
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="Zvětšený náhled" loading="lazy" decoding="async">
+</div>
+</body>
+</html>

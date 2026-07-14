@@ -10,3 +10,11 @@ desktop.ini
 # Environment
 .env
 .env.local
+
+# Osobni dokumenty - NIKDY necommitovat (repo je verejne)
+*CV*
+cv_*
+*.docx
+jun_milan_cv.pdf
+Images_HelpDesk/
+PROMPT_KONFIGURATOR.md
