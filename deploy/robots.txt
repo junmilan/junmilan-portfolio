@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://junmilan-portfolio.vercel.app/sitemap.xml
+Sitemap: https://junlab.cz/sitemap.xml
