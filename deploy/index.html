@@ -182,11 +182,45 @@
     @media (max-width: 900px) {
       .hero .container { flex-wrap: wrap; min-height: unset; padding-bottom: 4rem; padding-top: 2rem; }
     }
-    .hero-bg {
+    .hero-mockups {
       position: absolute; top: 0; right: 0;
-      height: 100%; width: 52%;
+      height: 100%; width: 50%;
+      z-index: 1;
+    }
+    .mockup {
+      position: absolute;
+      width: 74%;
+      padding: 10px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .09);
+      -webkit-backdrop-filter: blur(14px) saturate(1.15);
+      backdrop-filter: blur(14px) saturate(1.15);
+      border: 1px solid rgba(255, 255, 255, .22);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .25);
+      animation: mockFloat 8s ease-in-out infinite;
+    }
+    .mockup-bar {
+      height: 22px;
+      display: flex; align-items: center; gap: 6px; padding: 0 4px 8px;
+    }
+    .mockup-bar i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.35); }
+    .mockup-screen {
+      position: relative; aspect-ratio: 3 / 2;
+      overflow: hidden; border-radius: 8px;
+    }
+    .mockup-screen img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
       object-fit: cover; object-position: center top;
-      opacity: 0.68; z-index: 1;
+      transition: opacity 1.4s ease;
+    }
+    .mockup-screen .scr-b { opacity: 0; }
+    /* pravidelna diagonala: stejna velikost, stejny krok */
+    .m1 { top: 50%; right: 3%; transform: translateY(-50%); z-index: 3; }
+    @keyframes mockFloat {
+      0%, 100% { transform: translateY(-50%); }
+      50% { transform: translateY(calc(-50% - 10px)); }
+    }
     }
     /* Gradient překryv — zleva zelená, zprava průhledná */
     .hero::before {
@@ -202,7 +236,11 @@
       z-index: 1;
       pointer-events: none;
     }
-    @media (max-width: 900px) { .hero-bg { display: none; } }
+    @media (max-width: 900px) {
+      .hero-mockups { position: static; width: 100%; height: auto; margin-top: 2.6rem; }
+      .mockup { position: static; animation: none; transform: none; }
+      .m1 { width: 100%; transform: none; }
+    }
 
     .hero-content { position: relative; z-index: 2; width: 60%; padding-right: 2rem; }
     @media (max-width: 900px) { .hero-content { width: 100%; padding-right: 0; } }
@@ -266,11 +304,6 @@
       transition: all 0.3s;
     }
     .hero-btn:hover { background: white; color: var(--green-dark); }
-    .hero-img-mobile {
-      display: none; width: 100%; margin-top: 3rem;
-      border-radius: 4px; opacity: 0.85;
-    }
-    @media (max-width: 900px) { .hero-img-mobile { display: block; } }
 
     /* ── ABOUT ── */
     #o-mne {
@@ -1133,14 +1166,18 @@
 
 <!-- HERO -->
 <div class="hero">
-  <img class="hero-bg" src="Milan/landing_photo_official2.webp" alt="" fetchpriority="high" decoding="async">
+  <div class="hero-mockups" aria-hidden="true">
+    <div class="mockup m1">
+      <div class="mockup-bar"><i></i><i></i><i></i></div>
+      <div class="mockup-screen"><img class="scr-a" src="obrazky/klempirstvi1.jpg" alt="" decoding="async"><img class="scr-b" src="" alt="" aria-hidden="true"></div>
+    </div>
+  </div>
   <div class="container">
     <div class="hero-content">
       <span class="hero-tag" data-i18n="hero.tag">Dobrý den, jsme</span>
       <h1 class="hero-name">JunLab</h1>
       <p class="hero-sub" data-i18n-html="hero.sub">Webové studio — tvoříme weby pro firmy a živnostníky,<br>kteří chtějí být vidět online.</p>
       <a class="hero-btn" href="#kontakt" data-i18n="hero.cta">Napište nám</a>
-      <img class="hero-img-mobile" src="Milan/landing_photo_official2.webp" alt="Milan Jun" decoding="async">
     </div>
   </div>
 </div>
@@ -1608,8 +1645,40 @@ function updateProgress() {
 }
 window.addEventListener('scroll', updateProgress, { passive: true });
 
+// ── HERO MOCKUPY: plynule stridani ukazek
+(function () {
+  var POOL = [
+    'obrazky/klempirstvi1.jpg',
+    'obrazky/infrashape1.jpg',
+    'obrazky/vizualizace-kavarna.jpg',
+    'obrazky/klempirstvi2.jpg',
+    'obrazky/infrashape2.jpg'
+  ];
+  var screens = Array.prototype.slice.call(document.querySelectorAll('.mockup-screen'));
+  if (!screens.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  POOL.forEach(function (src) { var im = new Image(); im.src = src; });
+
+  var step = 0;
+  setInterval(function () {
+    if (document.hidden) return;
+    step++;
+    screens.forEach(function (s, i) {
+      setTimeout(function () {
+        var a = s.querySelector('.scr-a');
+        var b = s.querySelector('.scr-b');
+        var front = (getComputedStyle(b).opacity === '1') ? b : a;
+        var back  = (front === a) ? b : a;
+        back.src = POOL[(step + i * 2) % POOL.length];
+        back.style.opacity = '1';
+        front.style.opacity = '0';
+      }, i * 900);
+    });
+  }, 11000);
+})();
+
 // ── HERO PARALLAX + SHRINK
-const heroBg      = document.querySelector('.hero-bg');
+const heroBg      = document.querySelector('.hero-mockups');
 const heroContent = document.querySelector('.hero-content');
 function updateParallax() {
   const s = window.scrollY;
