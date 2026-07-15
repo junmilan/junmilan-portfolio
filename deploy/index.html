@@ -85,23 +85,11 @@
       align-items: center;
       justify-content: space-between;
     }
-    .nav-logo {
-      font-family: 'Exo 2', sans-serif;
-      font-weight: 800;
-      font-size: 2rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15rem;
-      color: white;
-    }
-    .navbar.scrolled .nav-logo { color: var(--text); }
-    .nav-logo span {
-      font-family: 'Exo 2', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    .nav-logo { display: inline-flex; align-items: center; }
+    .nav-logo img { height: 44px; width: auto; display: block; }
+    .nav-logo-dark { display: none; }
+    .navbar.scrolled .nav-logo-light { display: none; }
+    .navbar.scrolled .nav-logo-dark { display: block; }
 
     /* Desktop nav */
     .nav-d { display: none; }
@@ -1094,7 +1082,10 @@
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="container">
-    <a href="#" class="nav-logo">Milan <span>Jun</span></a>
+    <a href="#" class="nav-logo" aria-label="JunLab — úvod">
+      <img class="nav-logo-light" src="obrazky/logo-light.png" alt="JunLab" width="406" height="124">
+      <img class="nav-logo-dark" src="obrazky/logo-dark.png" alt="" width="406" height="124">
+    </a>
     <div class="nav-d">
       <a href="#o-mne">O mně</a>
       <a href="#projekty">Projekty</a>
